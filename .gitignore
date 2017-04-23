@@ -3,6 +3,7 @@ Packages/markupsafe/*
 Packages/mdpopups/*
 Packages/pygments/*
 Packages/python-jinja2/*
+Packages/python-markdown/*
 Packages/Settings/*
 Packages/SFTP/*
 Packages/User/Package Control.cache/*
