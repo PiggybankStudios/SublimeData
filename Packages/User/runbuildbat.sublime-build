@@ -1,0 +1,5 @@
+{
+	"shell_cmd": "code\\build.bat",
+	"working_dir": "${project_path:${folder}}",
+	"file_regex": "^(..[^:\\(]+)\\(([0-9]+)\\): ((\\berror\\b)|(\\bwarning\\b)) \\w[0-9]+: ()([\\s\\S]*)",
+}

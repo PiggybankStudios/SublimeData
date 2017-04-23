@@ -1,0 +1,7 @@
+[
+	{
+		"id": "OpenIncludedFile",
+		"caption": "Open Included File",
+		"command": "open_string_file",
+	}
+]

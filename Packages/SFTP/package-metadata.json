@@ -1,0 +1,1 @@
+{"description": "Commercial SFTP/FTP plugin - upload, sync, browse, remote edit, diff and vcs integration", "dependencies": [], "platforms": ["windows"], "url": "https://wbond.net/sublime_packages/sftp", "version": "1.14.1", "sublime_text": ">=3000"}

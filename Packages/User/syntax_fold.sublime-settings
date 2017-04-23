@@ -1,0 +1,19 @@
+{
+    "config":[
+        {
+            "scope": "source.java",
+            "startMarker": "//region",
+            "endMarker":"//endregion"
+        },
+        {
+            "scope": "source.cs",
+            "startMarker":"#region",
+            "endMarker":"#endregion"
+        },
+        {
+            "scope": "source.c++",
+            "startMarker":"#pragma region",
+            "endMarker":"#pragma endregion"
+        }
+    ]
+}

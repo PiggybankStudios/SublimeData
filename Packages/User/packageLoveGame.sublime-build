@@ -1,0 +1,4 @@
+{
+	"working_dir": "${project_path:${folder}}\\gamesrc",
+	"shell_cmd": "del ..\\game.love & 7za a -tzip ..\\game.zip *.* & cd .. & rename game.zip game.love & start game.love"
+}

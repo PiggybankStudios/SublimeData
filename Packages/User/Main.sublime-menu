@@ -1,0 +1,24 @@
+[
+	{
+		"id": "TaylorsCommand",
+		"caption": "Taylor",
+		"children": [
+			{
+				"caption": "Insert \"Hello World!\"",
+				"command": "hello_world",
+			},
+			{
+				"caption": "Taylor Command",
+				"command": "taylor",
+			},
+			{
+				"caption": "Pound Replace",
+				"command": "pound_replace",
+			},
+			{
+				"caption": "View Pound Replace",
+				"command": "view_pound_replace",
+			},
+		],
+	}
+]
