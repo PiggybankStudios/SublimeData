@@ -215,7 +215,7 @@
 	// { "keys": ["ctrl+`", "ctrl+e"], "command": "pound_replace"},
 	{ "keys": ["ctrl+`", "ctrl+r"], "command": "remove_custom_type"},
 	{ "keys": ["ctrl+`", "ctrl+t"], "command": "add_custom_type"},
-	// { "keys": ["ctrl+`", "ctrl+y"], "command": "pound_replace"},
+	{ "keys": ["ctrl+`", "ctrl+y"], "command": "update_custom_types"},
 	{ "keys": ["ctrl+`", "ctrl+u"], "command": "upper_case"},
 	// { "keys": ["ctrl+`", "ctrl+i"], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+o"], "command": "pound_replace"},

@@ -67,7 +67,7 @@ def GetCurrentSyntaxTypes(packagePath):
 	fileContents = file.read()
 	file.close()
 	
-	searchResult = re.search("[\\s]+custom_types:[\\s]+'([A-Za-z0-9_\\|]+)'", fileContents)
+	searchResult = re.search("[\\s]+custom_types:[\\s]+'([A-Za-z0-9_\\|]*)'", fileContents)
 	
 	if (searchResult == None or
 		len(searchResult.groups()) < 1):
@@ -98,7 +98,7 @@ def UpdateSyntaxTypes(packagePath, customTypes):
 	
 	# print("File is " + str(len(fileContents)) + " bytes long")
 	
-	searchResult = re.search("[\\s]+custom_types:[\\s]+'([A-Za-z0-9_\\|]?)'", fileContents)
+	searchResult = re.search("[\\s]+custom_types:[\\s]+'([A-Za-z0-9_\\|]*)'", fileContents)
 	
 	if (searchResult == None or
 		len(searchResult.groups()) < 1):
