@@ -1,1 +1,9 @@
 Local/*
+Packages/markupsafe/*
+Packages/mdpopups/*
+Packages/pygments/*
+Packages/python-jinja2/*
+Packages/Settings/*
+Packages/SFTP/*
+Packages/User/Package Control.cache/*
+Packages/User/Package Control.last-run
