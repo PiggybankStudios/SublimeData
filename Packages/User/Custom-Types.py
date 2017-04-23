@@ -5,6 +5,10 @@ import os
 import zipfile
 import tempfile
 
+# TODO: Clean up error outputs so the user sees if something goes wrong
+# TODO: Add a window to show all types when running list_custom_types command
+# TODO: Move reading and writing of project settings into their own functions
+
 def StringIsValidType(typeString):
 	if (typeString == None):
 		print("Empty string")
