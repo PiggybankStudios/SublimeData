@@ -1,14 +1,17 @@
 {
+	"auto_find_in_selection": true,
+	"caret_style": "phase",
 	"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
-	"fade_fold_buttons": false,
-	"font_size": 11,
+	"drag_text": false,
+	"draw_minimap_border": true,
+	"font_size": 12,
+	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
 		"Vintage"
 	],
-	"rulers":
-	[
-		100
-	],
+	"show_encoding": true,
+	"show_line_endings": true,
+	"translate_tabs_to_spaces": false,
 	"trim_automatic_white_space": false
 }
