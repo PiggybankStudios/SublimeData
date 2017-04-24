@@ -1,9 +1,6 @@
 import sublime
 import sublime_plugin
 import re
-import os
-import zipfile
-import tempfile
 
 # TODO: Clean up error outputs so the user sees if something goes wrong
 # TODO: Add a window to show all types when running list_custom_types command
@@ -29,36 +26,6 @@ def StringIsValidType(typeString):
 		return False
 		
 	return True
-
-def UpdateZipArchiveFile(zipname, filename, data):
-	# generate a temp file
-	tmpfd, tmpname = tempfile.mkstemp(dir=os.path.dirname(zipname))
-	os.close(tmpfd)
-
-	# create a temp copy of the archive without filename            
-	with zipfile.ZipFile(zipname, 'r') as zin:
-		with zipfile.ZipFile(tmpname, 'w') as zout:
-			zout.comment = zin.comment # preserve the comment
-			for item in zin.infolist():
-				if item.filename != filename:
-					zout.writestr(item, zin.read(item.filename))
-
-	# replace with the temp archive
-	os.remove(zipname)
-	os.rename(tmpname, zipname)
-
-	# now add filename with its new data
-	with zipfile.ZipFile(zipname, mode='a', compression=zipfile.ZIP_DEFLATED) as zf:
-		zf.writestr(filename, data)
-		
-def GetZipArchiveFile(zipname, filename):
-	result = ""
-	with zipfile.ZipFile(zipname, 'r') as zin:
-		for item in zin.infolist():
-			if (item.filename == filename):
-				result = zin.read(item.filename)
-	
-	return result
 
 def GetCurrentSyntaxTypes(packagePath):
 	SyntaxFileName = packagePath + "\\User\\My C.sublime-syntax"

@@ -67,7 +67,9 @@ class PopupTestCommand(sublime_plugin.TextCommand):
 	"View Info",
 	"My Google Search",
 	"Update Custom Types",
-	"Custom Types Info"]
+	"Custom Types Info",
+	"Let's Encrypt",
+	"Let's Decrypt"]
 	
 	commandItems = [
 	"open_string_file", 
@@ -78,7 +80,9 @@ class PopupTestCommand(sublime_plugin.TextCommand):
 	"view_info",
 	"my_google_search",
 	"update_custom_types",
-	"list_custom_types"]
+	"list_custom_types",
+	"lets_encrypt",
+	"lets_decrypt"]
 	
 	def popupDone(self, selectedIndex):
 		# print("Selected " + self.popupItems[selectedIndex] + "!")
@@ -237,5 +241,26 @@ class IncludeHoverEventListener(sublime_plugin.ViewEventListener):
 					sublime.HIDE_ON_MOUSE_MOVE_AWAY, point, 
 					100000, 10000, self.OnPopupLinkClicked)
 
+class LetsEncryptCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		for region in self.view.sel():
+			for cIndex in range(region.begin(), region.end()):
+				currentChar = self.view.substr(cIndex)
+				charNum = ord(currentChar)
+				charNum += 5
+				newChar = chr(charNum)
+				replaceRegion = sublime.Region(cIndex, cIndex+1)
+				self.view.replace(edit, replaceRegion, newChar)
+
+class LetsDecryptCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		for region in self.view.sel():
+			for cIndex in range(region.begin(), region.end()):
+				currentChar = self.view.substr(cIndex)
+				charNum = ord(currentChar)
+				charNum -= 5
+				newChar = chr(charNum)
+				replaceRegion = sublime.Region(cIndex, cIndex+1)
+				self.view.replace(edit, replaceRegion, newChar)
 
 
