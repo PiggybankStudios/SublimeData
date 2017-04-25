@@ -62,7 +62,6 @@ class PopupTestCommand(sublime_plugin.TextCommand):
 	"Open String File", 
 	"Kill Word", 
 	"Pound Replace",
-	"Insert Hello World",
 	"Taylor Command",
 	"View Info",
 	"My Google Search",
@@ -75,7 +74,6 @@ class PopupTestCommand(sublime_plugin.TextCommand):
 	"open_string_file", 
 	"kill_word", 
 	"pound_replace",
-	"hello_world",
 	"taylor",
 	"view_info",
 	"my_google_search",
@@ -86,32 +84,50 @@ class PopupTestCommand(sublime_plugin.TextCommand):
 	
 	def popupDone(self, selectedIndex):
 		# print("Selected " + self.popupItems[selectedIndex] + "!")
-		print("Running command \"" + self.commandItems[selectedIndex] + "\"")
-		self.view.run_command(self.commandItems[selectedIndex])
+		if (selectedIndex != -1):
+			print("Running command \"" + self.commandItems[selectedIndex] + "\"")
+			self.view.run_command(self.commandItems[selectedIndex])
 	
 	def run(self, edit):
 		self.view.show_popup_menu(self.popupItems, self.popupDone)
-
-#'Command' will be removed and all capital letters lowercase
-#multiple capital letters results in underscores being added
-class HelloWorldCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
-		self.view.insert(edit, 0, "Hello, World!")
 				
 class TaylorCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
-		for selection in self.view.sel():
-			actualIndex = selection.begin()
-			for cIndex in range(selection.begin(), selection.end()):
-				char = self.view.substr(actualIndex)
-				print("\'" + char + "\'")
-				print(str(ord(char)+1))
-				replaceRange = sublime.Region(actualIndex, actualIndex+1)
-				newChar = chr(ord(char) + 5)
-				newLength = len(newChar)
-				self.view.replace(edit, replaceRange, newChar)
-				actualIndex += newLength
-			self.view.sel().add(sublime.Region(selection.begin(), actualIndex))
+		print("view.is_primary() = " + str(self.view.is_primary()))
+		print("view.file_name() = " + str(self.view.file_name()))
+		print("view.name() = " + str(self.view.name()))
+		print("view.is_loading() = " + str(self.view.is_loading()))
+		print("view.is_dirty() = " + str(self.view.is_dirty()))
+		print("view.is_read_only() = " + str(self.view.is_read_only()))
+		print("view.is_scratch() = " + str(self.view.is_scratch()))
+		print("view.size() = " + str(self.view.size()))
+		print("view.id() = " + str(self.view.id()))
+		print("view.buffer_id() = " + str(self.view.buffer_id()))
+		print("view.visible_region() = " + str(self.view.visible_region()))
+		print("view.viewport_position() = " + str(self.view.viewport_position()))
+		print("view.viewport_extent() = " + str(self.view.viewport_extent()))
+		print("view.layout_extent() = " + str(self.view.layout_extent()))
+		print("view.line_height() = " + str(self.view.line_height()))
+		print("view.em_width() = " + str(self.view.em_width()))
+		print("view.change_count() = " + str(self.view.change_count()))
+		print("view.encoding() = " + str(self.view.encoding()))
+		print("view.line_endings() = " + str(self.view.line_endings()))
+		print("view.overwrite_status() = " + str(self.view.overwrite_status()))
+		print("view.symbols() = " + str(self.view.symbols()))
+		print("view.is_popup_visible() = " + str(self.view.is_popup_visible()))
+		print("view.is_auto_complete_visible() = " + str(self.view.is_auto_complete_visible()))
+		self.view.set_status("Test", "Hello World")
+		window = self.view.window()
+		outputPanel = window.create_output_panel("Test")
+		print("outputPanel = " + str(outputPanel))
+		window.run_command("show_panel", {"panel": "output.Test"})
+		outputPanel.insert(edit, 0, "Hello World!")
+		sublime.set_timeout(self.TimeoutCallback, 2000)
+	
+	def TimeoutCallback(self):
+		self.view.erase_status("Test")
+		self.view.window().destroy_output_panel("Test")
+		print(str(self.view.window().panels()))
 
 class ViewInfoCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
