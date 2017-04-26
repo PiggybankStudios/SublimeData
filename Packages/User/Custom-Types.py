@@ -1,6 +1,7 @@
 import sublime
 import sublime_plugin
 import re
+import os
 
 # TODO: Clean up error outputs so the user sees if something goes wrong
 # TODO: Add a window to show all types when running list_custom_types command
@@ -27,7 +28,6 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 			self.outputPanel.insert(self.editToken, insertPos, fullString)
 			errorRegions = self.outputPanel.get_regions("errorRegions")
 			errorRegions.append(sublime.Region(insertPos, insertPos + fullStringLength))
-			print(self.outputPanel.)
 			self.outputPanel.add_regions("errorRegions", errorRegions, "string")
 			#TODO: Add a region to color the error red
 		# sublime.set_timeout(self.ClosePanelTimeout, 2000)
@@ -56,7 +56,7 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 			return False
 			
 		return True
-		
+	
 	def UpdateSyntaxTypes(self, customTypes):
 		packagePath = sublime.packages_path()
 		while (packagePath == None or packagePath == ""):
@@ -146,7 +146,7 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 					newType in customTypes):
 					self.ShowOutput("Removing type \"" + newType + "\"")
 					customTypes.remove(newType)
-					numTypesRemoved -= 1
+					numTypesRemoved += 1
 				else:
 					self.ShowOutput("Ignoring selection \"" + newType + "\"")
 			self.ShowOutput("Removed " + str(numTypesRemoved) + " type(s)")
@@ -167,3 +167,161 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 		
 		
 		
+
+
+class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
+	outputPanel = None
+	editToken = None
+	
+	def ClosePanelTimeout(self):
+		self.view.window().destroy_output_panel("CustomTypes")
+		# print("Windows: " + str(sublime.windows()))
+
+	def StartOutput(self, edit):
+		self.outputPanel = self.view.window().create_output_panel("CustomTypes")
+		self.view.window().run_command("show_panel", {"panel": "output.CustomTypes"})
+		self.editToken = edit
+	
+	def ShowError(self, errorString):
+		fullString = "ERROR in Custom-Types Plugin:\n" + errorString + "\n"
+		fullStringLength = len(fullString)
+		if (self.outputPanel != None):
+			insertPos = self.outputPanel.size()
+			self.outputPanel.insert(self.editToken, insertPos, fullString)
+			errorRegions = self.outputPanel.get_regions("errorRegions")
+			errorRegions.append(sublime.Region(insertPos, insertPos + fullStringLength))
+			self.outputPanel.add_regions("errorRegions", errorRegions, "string")
+			#TODO: Add a region to color the error red
+		# sublime.set_timeout(self.ClosePanelTimeout, 2000)
+
+	def ShowOutput(self, newString):
+		if (self.outputPanel != None):
+			self.outputPanel.insert(self.editToken, self.outputPanel.size(), newString + "\n")
+
+	def CompleteOutput(self):
+		# self.view.window().destroy_output_panel("CustomTypes")
+		sublime.set_timeout(self.ClosePanelTimeout, 1000)
+	
+	def StringIsValidType(self, typeString):
+		if (typeString == None):
+			self.ShowOutput("Not valid type: Empty string")
+			return False
+		
+		typeStringLength = len(typeString)
+		
+		searchResult = re.search("[A-Za-z0-9_]+", typeString)
+		
+		if (searchResult == None or
+			searchResult.start() != 0 or 
+			searchResult.end() != typeStringLength):
+			self.ShowOutput("Not valid type: Invalid characters")
+			return False
+			
+		return True
+	
+	def UpdateSyntaxConstants(self, customConstants):
+		packagePath = sublime.packages_path()
+		while (packagePath == None or packagePath == ""):
+			packagePath = sublime.packages_path()
+		
+		self.ShowOutput("Packages Path: \"" + str(packagePath) + "\"")
+		SyntaxFileName = packagePath + "\\User\\My C.sublime-syntax"
+		
+		absPath = os.path.abspath(SyntaxFileName)
+		self.ShowOutput("absolute path is \"" + absPath + "\"")
+		
+		# Read the current fileContents
+		file = open(SyntaxFileName, "r")
+		if (file == None):
+			self.ShowError("Couldn't open syntax file for reading")
+			return False
+		fileContents = file.read()
+		file.close()
+		
+		searchResult = re.search("[\\s]+custom_constants:[\\s]+'([A-Za-z0-9_\\|]*)'", fileContents)
+		
+		if (searchResult == None or
+			len(searchResult.groups()) < 1):
+			self.ShowError("Couldn't find custom_constants in sublime-syntax file")
+			return False
+		
+		constListStart = searchResult.start(1)
+		constListEnd = searchResult.end(1)
+		constListStr = searchResult.group(1)
+		
+		newConstListStr = "|".join(customConstants)
+		
+		if (newConstListStr == constListStr):
+			self.ShowError("Constant List in syntax already matches")
+			return False
+		
+		# Replace the old value in the file with our new list
+		fileContents = fileContents[:constListStart] + newConstListStr + fileContents[constListEnd:]
+		
+		# Write the new fileContents
+		file = open(SyntaxFileName, 'w')
+		if (file == None):
+			self.ShowError("Couldn't open syntax file for writing")
+			return False
+		file.write(fileContents)
+		file.close()
+		
+		self.ShowOutput("Syntax constant list updated successfully!")
+		return True
+	
+	def run(self, edit, addSelected = False, removeSelected = False, printInformation = False):
+		window = self.view.window()
+		self.StartOutput(edit)
+		
+		customConstants = []
+		projectSettings = window.project_data()
+		if (projectSettings == None):
+			self.ShowError("No project opened")
+			return
+		
+		if (not "settings" in projectSettings):
+			projectSettings["settings"] = {}
+		if ("custom_constants" in projectSettings["settings"]):
+			customConstants = projectSettings["settings"]["custom_constants"]
+		
+		if (addSelected and removeSelected):
+			self.ShowError("Cannot add AND remove selected items")
+			return
+		
+		if (addSelected):
+			numConstantsAdded = 0
+			for region in self.view.sel():
+				newConst = self.view.substr(region)
+				if (self.StringIsValidType(newConst) and
+					not newConst in customConstants):
+					self.ShowOutput("Adding constant \"" + newConst + "\"")
+					customConstants.append(newConst)
+					numConstantsAdded += 1
+				else:
+					self.ShowOutput("Ignoring selection \"" + newConst + "\"")
+			self.ShowOutput("Addded " + str(numConstantsAdded) + " new constant(s)")
+		elif (removeSelected):
+			numConstantsRemoved = 0
+			for region in self.view.sel():
+				newConst = self.view.substr(region)
+				if (self.StringIsValidType(newConst) and
+					newConst in customConstants):
+					self.ShowOutput("Removing constant \"" + newConst + "\"")
+					customConstants.remove(newConst)
+					numConstantsRemoved += 1
+				else:
+					self.ShowOutput("Ignoring selection \"" + newConst + "\"")
+			self.ShowOutput("Removed " + str(numConstantsRemoved) + " constant(s)")
+		elif (not printInformation):
+			self.ShowError("No arguments specified")
+			return
+		
+		projectSettings["settings"]["custom_constants"] = customConstants
+		
+		if (printInformation):
+			self.ShowOutput("Project Types: " + (", ".join(customConstants)))
+		
+		window.set_project_data(projectSettings)
+		
+		if (self.UpdateSyntaxConstants(customConstants) == True):
+			self.CompleteOutput()
