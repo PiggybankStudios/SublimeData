@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+name: TODO List Syntax
+file-extensions: 
+  - todo
+  - list
+  - notes
+scope: text.todo
+
+contexts: 
+  main:
+    - match: '^[\t ]?\[( |\?)\][^\n]+$'
+      scope: storage.type.checkbox.todo
+    - match: '^[\t ]?\[(X|x|-)\][^\n]+$'
+      scope: comment.checkbox-done.todo
+    - match: '^[\t ]?(\\\\|//)[^\n]+$'
+      scope: comment.escaped.todo
+    - match: '^[\t ]?\#[^\n]+$'
+      scope: keyword.title.todo
+    - match: '^[\t ]?\*[^\n]+$'
+      scope: string.list-item.todo
+    - match: '^[\t ]?\+[^\n]+$'
+      scope: entity.name.list-item.todo
+    - match: '^[\t ]?-[^\n]+$'
+      scope: constant.language.todo
+  

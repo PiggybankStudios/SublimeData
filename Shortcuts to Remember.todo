@@ -1,136 +1,141 @@
-# Sublime Shortcuts To Start Using
-
-# Very Useful
-* alt 1-9               Goto tab 1-9
-* alt left/right        Jump through sub-words
-* alt o                 Goto Header/Source file named the same thing
-* ctrl 1-9              Focus on group 1-9
-* ctrl ;                Goto word/symbol
-* ctrl ]/[              Indent/Unindent
-* ctrl l                Select whole line
-* ctrl m                Move to enclosing/paired bracket
-* ctrl tab              Next view in group
-* ctrl shift j          Select indented contents
-* ctrl shift m          Select bracketed contents
-* ctrl shift space      Select scope
-* ctrl shift k          Kill entire line
-* ctrl w                Close file
-* ctrl shift w          Close window
-* f4                    Next result
-* shift f4              Previous result
-
-# Somewhat Useful
-* alt -                 Jump Back (Add shift to go forward)
-* ctrl up/down          Scroll lines
-* ctrl shift 1-9        Move file to group 1-9
-* ctrl shift ]/[        Fold/Unfold block
-* ctrl shift up/down    Swap line up/down
-* ctrl shift n          New Window
-* ctrl shift r          Goto symbol in project
-* ctrl shift t          Reopen last file
-* ctrl shift v          Paste and indent
-* ctrl k + ctrl j       Unfold all
-* ctrl k + ctrl v       Paste from history
-* shift + f11           Toggle distraction free mode
-
-# Maybe Useful
-* ctrl f9               Sort lines (case sensitive)
-* ctrl j                Join lines
-* ctrl space            Auto-complete
-* ctrl shift backspace  Delete everything before cursor (on line)
-* ctrl shift d          Duplicate line
-* ctrl shift l          Split selection into lines (multi-selection)
-* ctrl alt shift p      Show scope name
-* ctrl k + ctrl b       Toggle sidebar 
-* ctrl k + ctrl c       Center current line
-* f6                    Toggle spell checking
-* shift pageup/down     Select page up/down
-
-# Not Useful Bindings
-* ctrl e                Slurp Find String
-* ctrl 0                Select Side Bar
-* ctrl break            Cancel build
-* ctrl backspace        Delete word
-* ctrl delete           Delete word (forward)
-* ctrl f2               Toggle Bookmark
-* ctrl f3               Find under
-* ctrl f4               Next Misspelling
-* ctrl i                Incremental find
-* ctrl insert           Copy
-* ctrl q                Begin/End recording macro
-* ctrl shift q          Run macro
-* ctrl t                Transpose character
-* ctrl u                Granular(soft) undo
-* ctrl shift u          Granular(soft) redo
-* ctrl y                Redo
-* ctrl shift e          Slurp Replace String
-* ctrl shift backspace  Run macro file to delete
-* ctrl shift delete     Run macro file to delete
-* ctrl shift h          Replace next
-* ctrl shift i          Incremental find (Reverse)
-* ctrl k + ctrl a       Select to mark
-* ctrl k + ctrl backspc Delete to beginning of line macro
-* ctrl k + ctrl space   Set mark
-* ctrl k + ctrl t       Fold tag attributes
-* ctrl k + ctrl w       Delete to mark
-* ctrl k + ctrl x       Swap with mark
-* ctrl k + ctrl y       Yank (mark based command)
-* f2                    Next bookmark
-* shift delete          Cut
-* shift f2              Previous bookmark
-* f3                    Find next
-* shift f3              Find previous
-* shift insert          Paste
-* shift tab             Insert tab
-
-# Shortcuts to shorten key-binding on
-* ctrl k + ctrl up      Create new pane
-* ctrl k + ctrl u/l     Make upper/lower case
-* f12                   Goto definition
-* ctrl k + ctrl j       Unfold all
-* ctrl k + ctrl 0-9     Fold by level
-* ctrl k + ctrl left    Focus neighboring group
-* ctrl k + ctrl c       Center current line
-* ctrl k + ctrl b       Toggle sidebar
-* 
-
-#include "testFile.c"
+# Syntax example:
+	[ ] Unfinished Checkbox Item (Blue)
+	[X] Finished Checkbox Item   (Gray)
+	* List Item                  (Yellow)
+	- Subtraction Item           (Purple)
+	+ Addition Item              (Green)
 
 # New Key Bindings
-# ctrl q:   Focus Neighboring Group
-# ctrl w:   Close File
-# ctrl e:   Reopen Last File
-# ctrl r:   Kill Word
-# ctrl t:   Goto Function
-# ctrl y:   Goto Line
-# ctrl u:   Goto Word
-# ctrl i:   Fold Top-Most Level
-# ctrl o:   Unfold All
-# ctrl p:   Open File...
+	+ ctrl q:   Focus Neighboring Group
+	+ ctrl w:   Close File
+	+ ctrl e:   Reopen Last File
+	+ ctrl r:   Kill Word
+	+ ctrl t:   Goto Function
+	+ ctrl y:   Goto Line
+	+ ctrl u:   Goto Word
+	+ ctrl i:   Fold Top-Most Level
+	+ ctrl o:   Unfold All
+	+ ctrl p:   Open File...
 
-# ctrl a:   Select All
-# ctrl s:   Save File
-# ctrl d:   Select Next Instance
-# ctrl f:   Find...
-# ctrl g:   Select Word
-# ctrl h:   Goto Header/Source File With Same Name
-# ctrl j:   Toggle Distraction Free Mode
-# ctrl k:   Kill Line
-# ctrl l:   Center Cursor
+	+ ctrl a:   Select All
+	+ ctrl s:   Save File
+	+ ctrl d:   Select Next Instance
+	+ ctrl f:   Find...
+	+ ctrl g:   Select Word
+	+ ctrl h:   Goto Header/Source File With Same Name
+	+ ctrl j:   Toggle Distraction Free Mode
+	+ ctrl k:   Kill Line
+	+ ctrl l:   Center Cursor
 
-# ctrl z:   Undo
-# ctrl x:   Cut
-# ctrl c:   Copy
-# ctrl v:   Paste
-# ctrl b:   Build
-# ctrl n:   New File
-# ctrl m:   Duplicate Line
+	+ ctrl z:   Undo
+	+ ctrl x:   Cut
+	+ ctrl c:   Copy
+	+ ctrl v:   Paste
+	+ ctrl b:   Build
+	+ ctrl n:   New File
+	+ ctrl m:   Duplicate Line
 
-# ctrl [    Unindent
-# ctrl ]    Indent
-# ctrl ;    Test Command
-# ctrl '    Open Console
-# ctrl <    Jump Back
-# ctrl >    Jump Forward
-# ctrl /    Toggle Comments
-# ctrl f12  Open File in String/#include
+	+ ctrl [    Unindent
+	+ ctrl ]    Indent
+	+ ctrl ;    Test Command
+	+ ctrl '    Open Console
+	+ ctrl <    Jump Back
+	+ ctrl >    Jump Forward
+	+ ctrl /    Toggle Comments
+	+ ctrl f12  Open File in String/#include
+
+#Sublime Shortcuts To Start Using
+{
+	# Very Useful
+	[ ] alt 1-9               Goto tab 1-9
+	[ ] alt left/right        Jump through sub-words
+	[ ] alt o                 Goto Header/Source file named the same thing
+	[ ] ctrl 1-9              Focus on group 1-9
+	[ ] ctrl ;                Goto word/symbol
+	[ ] ctrl ]/[              Indent/Unindent
+	[ ] ctrl l                Select whole line
+	[ ] ctrl m                Move to enclosing/paired bracket
+	[ ] ctrl tab              Next view in group
+	[ ] ctrl shift j          Select indented contents
+	[ ] ctrl shift m          Select bracketed contents
+	[ ] ctrl shift space      Select scope
+	[ ] ctrl shift k          Kill entire line
+	[ ] ctrl w                Close file
+	[ ] ctrl shift w          Close window
+	[ ] f4                    Next result
+	[ ] shift f4              Previous result
+
+	# Somewhat Useful
+	+ alt -                 Jump Back (Add shift to go forward)
+	+ ctrl up/down          Scroll lines
+	+ ctrl shift 1-9        Move file to group 1-9
+	+ ctrl shift ]/[        Fold/Unfold block
+	+ ctrl shift up/down    Swap line up/down
+	+ ctrl shift n          New Window
+	+ ctrl shift r          Goto symbol in project
+	+ ctrl shift t          Reopen last file
+	+ ctrl shift v          Paste and indent
+	+ ctrl k + ctrl j       Unfold all
+	+ ctrl k + ctrl v       Paste from history
+	+ shift + f11           Toggle distraction free mode
+
+	# Maybe Useful
+	* ctrl f9               Sort lines (case sensitive)
+	* ctrl j                Join lines
+	* ctrl space            Auto-complete
+	* ctrl shift backspace  Delete everything before cursor (on line)
+	* ctrl shift d          Duplicate line
+	* ctrl shift l          Split selection into lines (multi-selection)
+	* ctrl alt shift p      Show scope name
+	* ctrl k + ctrl b       Toggle sidebar 
+	* ctrl k + ctrl c       Center current line
+	* f6                    Toggle spell checking
+	* shift pageup/down     Select page up/down
+}
+
+# Shortcuts to shorten key-binding on
+	[ ] ctrl k + ctrl up      Create new pane
+	[ ] ctrl k + ctrl u/l     Make upper/lower case
+	[ ] f12                   Goto definition
+	[ ] ctrl k + ctrl j       Unfold all
+	[ ] ctrl k + ctrl 0-9     Fold by level
+	[ ] ctrl k + ctrl left    Focus neighboring group
+	[ ] ctrl k + ctrl c       Center current line
+	[ ] ctrl k + ctrl b       Toggle sidebar
+
+# Not Useful Bindings
+	[X] ctrl e                Slurp Find String
+	[X] ctrl 0                Select Side Bar
+	[X] ctrl break            Cancel build
+	[X] ctrl backspace        Delete word
+	[X] ctrl delete           Delete word (forward)
+	[X] ctrl f2               Toggle Bookmark
+	[X] ctrl f3               Find under
+	[X] ctrl f4               Next Misspelling
+	[X] ctrl i                Incremental find
+	[X] ctrl insert           Copy
+	[X] ctrl q                Begin/End recording macro
+	[X] ctrl shift q          Run macro
+	[X] ctrl t                Transpose character
+	[X] ctrl u                Granular(soft) undo
+	[X] ctrl shift u          Granular(soft) redo
+	[X] ctrl y                Redo
+	[X] ctrl shift e          Slurp Replace String
+	[X] ctrl shift backspace  Run macro file to delete
+	[X] ctrl shift delete     Run macro file to delete
+	[X] ctrl shift h          Replace next
+	[X] ctrl shift i          Incremental find (Reverse)
+	[X] ctrl k + ctrl a       Select to mark
+	[X] ctrl k + ctrl backspc Delete to beginning of line macro
+	[X] ctrl k + ctrl space   Set mark
+	[X] ctrl k + ctrl t       Fold tag attributes
+	[X] ctrl k + ctrl w       Delete to mark
+	[X] ctrl k + ctrl x       Swap with mark
+	[X] ctrl k + ctrl y       Yank (mark based command)
+	[X] f2                    Next bookmark
+	[X] shift delete          Cut
+	[X] shift f2              Previous bookmark
+	[X] f3                    Find next
+	[X] shift f3              Find previous
+	[X] shift insert          Paste
+	[X] shift tab             Insert tab
