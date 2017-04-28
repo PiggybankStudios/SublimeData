@@ -1,5 +1,13 @@
 {
-	"shell_cmd": "code\\build.bat",
-	"working_dir": "${project_path:${folder}}",
-	"file_regex": "^(..[^:\\(]+)\\(([0-9]+)\\): ((\\berror\\b)|(\\bwarning\\b)) \\w[0-9]+: ()([\\s\\S]*)",
+	"cmd": "code\\build.bat",
+	"file_regex": "^(\\w\\:[^\\:\\n]+\\.[A-Za-z]+)\\((\\d+)\\)\\: (?:error|warning) \\w\\d+: ()([^\\n]+)$",
+	// "line_regex": "",//Used to match alongside file_regex
+	// "selector": "",  //Used when Tools|Build System|Automatic is set to true
+	"working_dir": "$project_path",
+	// "encoding": "",  //Defaults to UTF-8
+	// "target": "",    //Sublime Text Command to run: Defaults to 'exec'
+	// "env": {"": ""}, //Dictionary of environment variables to meged with current process'
+	"shell": true,      //Run the command in the shell
+	// "path": "",      //Replace the PATH with this value
+	"syntax": "MSVC Build.sublime-syntax",
 }

@@ -1,0 +1,21 @@
+%YAML 1.2
+---
+name: MSVC Build Output
+file-extensions: 
+  - cl
+scope: msvc.build
+
+contexts: 
+  main:
+    - match: '^(\w\:[^\:\n]+\.[A-Za-z]+)\((\d+)\)\: error \w\d+: ()([^\n]+)$'
+      scope: keyword.title.msvc
+    - match: '^(\w\:[^\:\n]+\.[A-Za-z]+)\((\d+)\)\: warning \w\d+: ()([^\n]+)$'
+      scope: string.warning.msvc
+    - match: '^(\w\:[^\:\n]+\.[A-Za-z]+)\((\d+)\)\: note: ()([^\n]+)$'
+      scope: custom.thing.msvc
+    - match: '^Could Not Find [^\n]+$'
+      scope: custom.prefix.msvc
+    - match: '^\[[^\]]+\]+$'
+      scope: custom.type.msvc
+    - match: '^[\t ]*Creating[^\n]+$'
+      scope: entity.name.creation.msvc
