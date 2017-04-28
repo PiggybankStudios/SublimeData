@@ -17,3 +17,9 @@
 @   FFEFB7 custom.string.todo
 |   FF5959 custom.identifier.todo
 =   FD971F custom.thing.todo
+
+
+#TODO List
+	[ ] Figure out why goto header/source file isn't working when they are in seperate folders
+	[ ] Add word wrapping by default to the output panel of Custom-Types plugin
+	[ ] 

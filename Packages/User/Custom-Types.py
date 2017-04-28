@@ -319,9 +319,170 @@ class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
 		projectSettings["settings"]["custom_constants"] = customConstants
 		
 		if (printInformation):
-			self.ShowOutput("Project Types: " + (", ".join(customConstants)))
+			self.ShowOutput("Project Constants: " + (", ".join(customConstants)))
 		
 		window.set_project_data(projectSettings)
 		
 		if (self.UpdateSyntaxConstants(customConstants) == True):
+			self.CompleteOutput()
+
+
+
+
+class UpdateCustomGlobalsCommand(sublime_plugin.TextCommand):
+	outputPanel = None
+	editToken = None
+	
+	def ClosePanelTimeout(self):
+		self.view.window().destroy_output_panel("CustomTypes")
+		# print("Windows: " + str(sublime.windows()))
+
+	def StartOutput(self, edit):
+		self.outputPanel = self.view.window().create_output_panel("CustomTypes")
+		self.view.window().run_command("show_panel", {"panel": "output.CustomTypes"})
+		self.editToken = edit
+		# self.outputPanel.settings()["word_wrap"] = True
+	
+	def ShowError(self, errorString):
+		fullString = "ERROR in Custom-Types Plugin:\n" + errorString + "\n"
+		fullStringLength = len(fullString)
+		if (self.outputPanel != None):
+			insertPos = self.outputPanel.size()
+			self.outputPanel.insert(self.editToken, insertPos, fullString)
+			errorRegions = self.outputPanel.get_regions("errorRegions")
+			errorRegions.append(sublime.Region(insertPos, insertPos + fullStringLength))
+			self.outputPanel.add_regions("errorRegions", errorRegions, "string")
+			#TODO: Add a region to color the error red
+		# sublime.set_timeout(self.ClosePanelTimeout, 2000)
+
+	def ShowOutput(self, newString):
+		if (self.outputPanel != None):
+			self.outputPanel.insert(self.editToken, self.outputPanel.size(), newString + "\n")
+
+	def CompleteOutput(self):
+		# self.view.window().destroy_output_panel("CustomTypes")
+		sublime.set_timeout(self.ClosePanelTimeout, 1000)
+	
+	def StringIsValidType(self, typeString):
+		if (typeString == None):
+			self.ShowOutput("Not valid type: Empty string")
+			return False
+		
+		typeStringLength = len(typeString)
+		
+		searchResult = re.search("[A-Za-z0-9_]+", typeString)
+		
+		if (searchResult == None or
+			searchResult.start() != 0 or 
+			searchResult.end() != typeStringLength):
+			self.ShowOutput("Not valid type: Invalid characters")
+			return False
+			
+		return True
+	
+	def UpdateSyntaxGlobals(self, customGlobals):
+		packagePath = sublime.packages_path()
+		while (packagePath == None or packagePath == ""):
+			packagePath = sublime.packages_path()
+		
+		self.ShowOutput("Packages Path: \"" + str(packagePath) + "\"")
+		SyntaxFileName = packagePath + "\\User\\My C.sublime-syntax"
+		
+		absPath = os.path.abspath(SyntaxFileName)
+		self.ShowOutput("absolute path is \"" + absPath + "\"")
+		
+		# Read the current fileContents
+		file = open(SyntaxFileName, "r")
+		if (file == None):
+			self.ShowError("Couldn't open syntax file for reading")
+			return False
+		fileContents = file.read()
+		file.close()
+		
+		searchResult = re.search("[\\s]+custom_globals:[\\s]+'([A-Za-z0-9_\\|]*)'", fileContents)
+		
+		if (searchResult == None or
+			len(searchResult.groups()) < 1):
+			self.ShowError("Couldn't find custom_globals in sublime-syntax file")
+			return False
+		
+		globalsListStart = searchResult.start(1)
+		globalsListEnd = searchResult.end(1)
+		globalsListStr = searchResult.group(1)
+		
+		newGlobalsListStr = "|".join(customGlobals)
+		
+		if (newGlobalsListStr == globalsListStr):
+			self.ShowError("Globals List in syntax already matches")
+			return False
+		
+		# Replace the old value in the file with our new list
+		fileContents = fileContents[:globalsListStart] + newGlobalsListStr + fileContents[globalsListEnd:]
+		
+		# Write the new fileContents
+		file = open(SyntaxFileName, 'w')
+		if (file == None):
+			self.ShowError("Couldn't open syntax file for writing")
+			return False
+		file.write(fileContents)
+		file.close()
+		
+		self.ShowOutput("Syntax globals list updated successfully!")
+		return True
+	
+	def run(self, edit, addSelected = False, removeSelected = False, printInformation = False):
+		window = self.view.window()
+		self.StartOutput(edit)
+		
+		customGlobals = []
+		projectSettings = window.project_data()
+		if (projectSettings == None):
+			self.ShowError("No project opened")
+			return
+		
+		if (not "settings" in projectSettings):
+			projectSettings["settings"] = {}
+		if ("custom_globals" in projectSettings["settings"]):
+			customGlobals = projectSettings["settings"]["custom_globals"]
+		
+		if (addSelected and removeSelected):
+			self.ShowError("Cannot add AND remove selected items")
+			return
+		
+		if (addSelected):
+			numGlobalsAdded = 0
+			for region in self.view.sel():
+				newGlobal = self.view.substr(region)
+				if (self.StringIsValidType(newGlobal) and
+					not newGlobal in customGlobals):
+					self.ShowOutput("Adding global \"" + newGlobal + "\"")
+					customGlobals.append(newGlobal)
+					numGlobalsAdded += 1
+				else:
+					self.ShowOutput("Ignoring selection \"" + newGlobal + "\"")
+			self.ShowOutput("Addded " + str(numGlobalsAdded) + " new global(s)")
+		elif (removeSelected):
+			numGlobalsRemoved = 0
+			for region in self.view.sel():
+				newGlobal = self.view.substr(region)
+				if (self.StringIsValidType(newGlobal) and
+					newGlobal in customGlobals):
+					self.ShowOutput("Removing global \"" + newGlobal + "\"")
+					customGlobals.remove(newGlobal)
+					numGlobalsRemoved += 1
+				else:
+					self.ShowOutput("Ignoring selection \"" + newGlobal + "\"")
+			self.ShowOutput("Removed " + str(numGlobalsRemoved) + " global(s)")
+		elif (not printInformation):
+			self.ShowError("No arguments specified")
+			return
+		
+		projectSettings["settings"]["custom_globals"] = customGlobals
+		
+		if (printInformation):
+			self.ShowOutput("Project Globals: " + (", ".join(customGlobals)))
+		
+		window.set_project_data(projectSettings)
+		
+		if (self.UpdateSyntaxGlobals(customGlobals) == True):
 			self.CompleteOutput()

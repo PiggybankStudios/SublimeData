@@ -74,6 +74,7 @@
 			<key>name</key><string>Keyword</string>
 			<key>scope</key><string>keyword - (source.c keyword.operator | source.c++ keyword.operator | source.objc keyword.operator | source.objc++ keyword.operator), keyword.operator.word</string>
 			<key>settings</key><dict>
+				<key>fontStyle</key><string>bold</string>
 				<key>foreground</key><string>#F92672</string>
 			</dict>
 		</dict>
@@ -81,6 +82,7 @@
 			<key>name</key><string>JavaScript Dollar</string>
 			<key>scope</key><string>variable.other.dollar.only.js</string>
 			<key>settings</key><dict>
+				<key>fontStyle</key><string>bold</string>
 				<key>foreground</key><string>#F92672</string>
 			</dict>
 		</dict>
@@ -88,7 +90,7 @@
 			<key>name</key><string>Storage</string>
 			<key>scope</key><string>storage</string>
 			<key>settings</key><dict>
-				<key>fontStyle</key><string></string>
+				<key>fontStyle</key><string>bold</string>
 				<key>foreground</key><string>#F92672</string>
 			</dict>
 		</dict>
@@ -301,8 +303,8 @@
 		</dict>
 
 		<dict>
-			<key>name</key><string>Custom Comment</string>
-			<key>scope</key><string>custom.comment</string>
+			<key>name</key><string>Custom Global</string>
+			<key>scope</key><string>custom.global</string>
 			<key>settings</key><dict>
 				<key>foreground</key><string>#CFCFC2</string>
 			</dict>

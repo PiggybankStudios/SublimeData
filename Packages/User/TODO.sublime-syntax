@@ -9,10 +9,16 @@ scope: text.todo
 
 contexts: 
   main:
-    - match: '^[\t ]?\[( |\?)\][^\n]+$'
+    - match: '^[\t ]?\[ \][^\n]+$'
       scope: storage.type.checkbox.todo
-    - match: '^[\t ]?\[(X|x|-)\][^\n]+$'
-      scope: custom.comment.todo
+    - match: '^[\t ]?\[\?\][^\n]+$'
+      scope: custom.type.todo
+    - match: '^[\t ]?\[\!\][^\n]+$'
+      scope: custom.constant.todo
+    - match: '^[\t ]?\[(X|x)\][^\n]+$'
+      scope: custom.global.todo
+    - match: '^[\t ]?\[-\][^\n]+$'
+      scope: comment.check-list.todo
     - match: '^[\t ]?(\\\\|//)[^\n]+$'
       scope: comment.escaped.todo
     - match: '^[\t ]?\#[^\n]+$'

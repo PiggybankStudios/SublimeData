@@ -1,9 +1,19 @@
 # Syntax example:
 	[ ] Unfinished Checkbox Item (Blue)
-	[X] Finished Checkbox Item   (Gray)
+	[?] Question Checkbox Item   (Light Blue)
+	[!] Urgent Checkbox Item     (Light Purple)
+	[X] Finished Checkbox Item   (Light Gray)
+	[-] Subtracted Checkbox Item (Dark Gray)
 	* List Item                  (Yellow)
-	- Subtraction Item           (Purple)
 	+ Addition Item              (Green)
+	- Subtraction Item           (Orange-Red)
+	= Equals Item                (Orange)
+	! Exclamation Item           (Purple)
+	: Colon Item                 (Light Purple)
+	> Carot Item                 (Light Blue)
+	| Pipe Item                  (Dark Green)
+	@ At Item                    (Light Yellow)
+	// Comment                   (Dark Gray)
 
 # New Key Bindings
 	+ ctrl q:   Focus Neighboring Group
