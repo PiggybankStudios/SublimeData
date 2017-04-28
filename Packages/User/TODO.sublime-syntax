@@ -12,7 +12,7 @@ contexts:
     - match: '^[\t ]?\[( |\?)\][^\n]+$'
       scope: storage.type.checkbox.todo
     - match: '^[\t ]?\[(X|x|-)\][^\n]+$'
-      scope: comment.checkbox-done.todo
+      scope: custom.comment.todo
     - match: '^[\t ]?(\\\\|//)[^\n]+$'
       scope: comment.escaped.todo
     - match: '^[\t ]?\#[^\n]+$'
@@ -22,13 +22,17 @@ contexts:
     - match: '^[\t ]?\+[^\n]+$'
       scope: entity.name.list-item.todo
     - match: '^[\t ]?-[^\n]+$'
-      scope: constant.language.todo
+      scope: custom.prefix.todo
     - match: '^[\t ]?\>[^\n]+$'
       scope: custom.type.todo
     - match: '^[\t ]?:[^\n]+$'
       scope: custom.constant.todo
-    - match: '^[\t ]?\![^\n]+$'
-      scope: custom.identifier.todo
     - match: '^[\t ]?\|[^\n]+$'
-      scope: custom.prefix.todo
+      scope: custom.identifier.todo
+    - match: '^[\t ]?\@[^\n]+$'
+      scope: custom.string.todo
+    - match: '^[\t ]?\![^\n]+$'
+      scope: constant.language.todo
+    - match: '^[\t ]?\=[^\n]+$'
+      scope: custom.thing.todo
   

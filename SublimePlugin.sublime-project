@@ -18,6 +18,10 @@
 		],
 		"custom_types":
 		[
+			"Entity_t",
+			"EntityType_t",
+			"CnclPosition_t",
+			"VoxelWorld_t"
 		]
 	}
 }

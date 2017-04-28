@@ -272,7 +272,7 @@
 			<key>name</key><string>Custom Type</string>
 			<key>scope</key><string>custom.type</string>
 			<key>settings</key><dict>
-				<key>foreground</key><string>#FF9F44</string>
+				<key>foreground</key><string>#92E7F7</string>
 			</dict>
 		</dict>
 
@@ -297,6 +297,30 @@
 			<key>scope</key><string>custom.prefix</string>
 			<key>settings</key><dict>
 				<key>foreground</key><string>#FF5959</string>
+			</dict>
+		</dict>
+
+		<dict>
+			<key>name</key><string>Custom Comment</string>
+			<key>scope</key><string>custom.comment</string>
+			<key>settings</key><dict>
+				<key>foreground</key><string>#CFCFC2</string>
+			</dict>
+		</dict>
+
+		<dict>
+			<key>name</key><string>Custom String</string>
+			<key>scope</key><string>custom.string</string>
+			<key>settings</key><dict>
+				<key>foreground</key><string>#FFEFB7</string>
+			</dict>
+		</dict>
+
+		<dict>
+			<key>name</key><string>Custom Thing</string>
+			<key>scope</key><string>custom.thing</string>
+			<key>settings</key><dict>
+				<key>foreground</key><string>#FD971F</string>
 			</dict>
 		</dict>
 

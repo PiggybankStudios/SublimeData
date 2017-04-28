@@ -1,0 +1,19 @@
+# This file should be used alongside the 
+# TODO.sublime-syntax to test the 
+# syntax capabilities
+
+    272822 Background
+    F8F8F0 Foreground
+[ ] 66D9EF storage.type.checkbox.todo
+[-] CFCFC2 custom.comment.todo
+//  75715E comment.escaped.todo
+#   F92672 keyword.title.todo
+*   E6DB74 string.list-item.todo
++   A6E22E entity.name.list-item.todo
+-   829520 custom.prefix.todo
+>   92E7F7 custom.type.todo
+:   E777FF custom.constant.todo
+|   FF5959 custom.identifier.todo
+@   FFEFB7 custom.string.todo
+!   AE81FF constant.language.todo
+=   FD971F custom.thing.todo
