@@ -25,14 +25,14 @@ contexts:
       scope: custom.prefix.todo
     - match: '^[\t ]?\>[^\n]+$'
       scope: custom.type.todo
-    - match: '^[\t ]?:[^\n]+$'
-      scope: custom.constant.todo
-    - match: '^[\t ]?\|[^\n]+$'
-      scope: custom.identifier.todo
-    - match: '^[\t ]?\@[^\n]+$'
-      scope: custom.string.todo
     - match: '^[\t ]?\![^\n]+$'
       scope: constant.language.todo
+    - match: '^[\t ]?:[^\n]+$'
+      scope: custom.constant.todo
+    - match: '^[\t ]?\@[^\n]+$'
+      scope: custom.string.todo
+    - match: '^[\t ]?\|[^\n]+$'
+      scope: custom.identifier.todo
     - match: '^[\t ]?\=[^\n]+$'
       scope: custom.thing.todo
   

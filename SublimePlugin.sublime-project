@@ -14,14 +14,19 @@
 		[
 			"FileType_None",
 			"FileType_Web",
-			"FileType_Source"
+			"FileType_Source",
+			"EntityType_Player",
+			"EntityType_Item"
 		],
 		"custom_types":
 		[
 			"Entity_t",
 			"EntityType_t",
 			"CnclPosition_t",
-			"VoxelWorld_t"
+			"VoxelWorld_t",
+			"VoxelType_t",
+			"GameData_t",
+			"GameInput_t"
 		]
 	}
 }

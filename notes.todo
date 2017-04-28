@@ -11,9 +11,9 @@
 *   E6DB74 string.list-item.todo
 +   A6E22E entity.name.list-item.todo
 -   829520 custom.prefix.todo
->   92E7F7 custom.type.todo
-:   E777FF custom.constant.todo
-|   FF5959 custom.identifier.todo
-@   FFEFB7 custom.string.todo
+>   A9FFFF custom.type.todo
 !   AE81FF constant.language.todo
+:   E777FF custom.constant.todo
+@   FFEFB7 custom.string.todo
+|   FF5959 custom.identifier.todo
 =   FD971F custom.thing.todo

@@ -272,7 +272,7 @@
 			<key>name</key><string>Custom Type</string>
 			<key>scope</key><string>custom.type</string>
 			<key>settings</key><dict>
-				<key>foreground</key><string>#92E7F7</string>
+				<key>foreground</key><string>#A9FFFF</string>
 			</dict>
 		</dict>
 
