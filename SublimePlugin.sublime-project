@@ -3,6 +3,21 @@
 	[
 		{
 			"path": "."
+		},
+		{
+			"path": "C:\\Users\\robbitay\\Documents\\MyStuff\\Programming\\Tools\\Sublime Text Plugin"
 		}
-	]
+	],
+	"settings":
+	{
+		"custom_constants":
+		[
+			"FileType_None",
+			"FileType_Web",
+			"FileType_Source"
+		],
+		"custom_types":
+		[
+		]
+	}
 }
