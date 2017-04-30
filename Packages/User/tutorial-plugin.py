@@ -68,7 +68,8 @@ class PopupTestCommand(sublime_plugin.TextCommand):
 	"Update Custom Types",
 	"Custom Types Info",
 	"Let's Encrypt",
-	"Let's Decrypt"]
+	"Let's Decrypt",
+	"Open Header"]
 	
 	commandItems = [
 	"open_string_file", 
@@ -80,7 +81,8 @@ class PopupTestCommand(sublime_plugin.TextCommand):
 	"update_custom_types",
 	"list_custom_types",
 	"lets_encrypt",
-	"lets_decrypt"]
+	"lets_decrypt",
+	"open_header"]
 	
 	def popupDone(self, selectedIndex):
 		# print("Selected " + self.popupItems[selectedIndex] + "!")
@@ -93,41 +95,8 @@ class PopupTestCommand(sublime_plugin.TextCommand):
 				
 class TaylorCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
-		print("view.is_primary() = " + str(self.view.is_primary()))
-		print("view.file_name() = " + str(self.view.file_name()))
-		print("view.name() = " + str(self.view.name()))
-		print("view.is_loading() = " + str(self.view.is_loading()))
-		print("view.is_dirty() = " + str(self.view.is_dirty()))
-		print("view.is_read_only() = " + str(self.view.is_read_only()))
-		print("view.is_scratch() = " + str(self.view.is_scratch()))
-		print("view.size() = " + str(self.view.size()))
-		print("view.id() = " + str(self.view.id()))
-		print("view.buffer_id() = " + str(self.view.buffer_id()))
-		print("view.visible_region() = " + str(self.view.visible_region()))
-		print("view.viewport_position() = " + str(self.view.viewport_position()))
-		print("view.viewport_extent() = " + str(self.view.viewport_extent()))
-		print("view.layout_extent() = " + str(self.view.layout_extent()))
-		print("view.line_height() = " + str(self.view.line_height()))
-		print("view.em_width() = " + str(self.view.em_width()))
-		print("view.change_count() = " + str(self.view.change_count()))
-		print("view.encoding() = " + str(self.view.encoding()))
-		print("view.line_endings() = " + str(self.view.line_endings()))
-		print("view.overwrite_status() = " + str(self.view.overwrite_status()))
-		print("view.symbols() = " + str(self.view.symbols()))
-		print("view.is_popup_visible() = " + str(self.view.is_popup_visible()))
-		print("view.is_auto_complete_visible() = " + str(self.view.is_auto_complete_visible()))
-		self.view.set_status("Test", "Hello World")
-		window = self.view.window()
-		outputPanel = window.create_output_panel("Test")
-		print("outputPanel = " + str(outputPanel))
-		window.run_command("show_panel", {"panel": "output.Test"})
-		outputPanel.insert(edit, 0, "Hello World!")
-		sublime.set_timeout(self.TimeoutCallback, 2000)
-	
-	def TimeoutCallback(self):
-		self.view.erase_status("Test")
-		self.view.window().destroy_output_panel("Test")
-		print(str(self.view.window().panels()))
+		resources = self.view.window().lookup_symbol_in_index("function")
+		print(str(resources))
 
 class ViewInfoCommand(sublime_plugin.TextCommand):
 	def run(self, edit):

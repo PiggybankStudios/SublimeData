@@ -18,7 +18,7 @@
 	{ "keys": ["ctrl+d"], "command": "find_under_expand"},
 	{ "keys": ["ctrl+f"], "command": "show_panel", "args": {"panel": "find", "reverse": false} },
 	{ "keys": ["ctrl+g"], "command": "expand_selection", "args": {"to": "word"} },
-	{ "keys": ["ctrl+h"], "command": "switch_file", "args": {"extensions": ["cpp", "cxx", "cc", "c", "hpp", "hxx", "hh", "h", "ipp", "inl", "m", "mm"]} },
+	{ "keys": ["ctrl+h"], "command": "open_header", "args": {"extensions": ["cpp", "cxx", "cc", "c", "hpp", "hxx", "hh", "h", "ipp", "inl", "m", "mm"]} },
 	{ "keys": ["ctrl+j"], "command": "toggle_distraction_free"},
 	{ "keys": ["ctrl+k"], "command": "run_macro_file", "args": {"file": "res://Packages/Default/Delete Line.sublime-macro"} },
 	{ "keys": ["ctrl+l"], "command": "show_at_center"}, //Could be better...
