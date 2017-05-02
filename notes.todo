@@ -21,6 +21,7 @@
 c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(346): note: see declaration of 'strncpy'
 
 #TODO List
-	[ ] Figure out why goto header/source file isn't working when they are in seperate folders
+	[X] Figure out why goto header/source file isn't working when they are in seperate folders
 	[ ] Add word wrapping by default to the output panel of Custom-Types plugin
+	[ ] Open Header file in other column
 	[ ] 

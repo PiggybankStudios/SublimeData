@@ -12,12 +12,12 @@ def compare_file_names(x, y):
 	else:
 		return x == y
 
-class OpenHeaderCommand(sublime_plugin.TextCommand):
-	def run(self, edit, extensions=[]):
-		if not self.view.window().active_view():
+class OpenHeaderCommand(sublime_plugin.WindowCommand):
+	def run(self, extensions=[]):
+		if not self.window.active_view():
 			return
 		
-		filePath = self.view.window().active_view().file_name()
+		filePath = self.window.active_view().file_name()
 		if not filePath:
 			return
 		
@@ -47,19 +47,29 @@ class OpenHeaderCommand(sublime_plugin.TextCommand):
 				return
 		
 		projectFolders = None
-		projectData = self.view.window().project_data()
+		projectData = self.window.project_data()
 		if (projectData != None):
 			projectFolders = projectData['folders']
+		projectPath = self.window.project_file_name()
+		projectBaseDir, projectFileName = os.path.split(projectPath)
+		absProjectFolders = []
+		for folder in projectFolders:
+			absPath = os.path.join(projectBaseDir, folder['path'])
+			absProjectFolders.append(absPath)
+			# print("Abs path: \"" + absPath + "\"")
 		
 		# Look for the file in the project folders
-		for folder in projectFolders:
-			for root, dirNames, fileNames in os.walk(folder['path']):
+		for folder in absProjectFolders:
+			for root, dirNames, fileNames in os.walk(folder):
+				# print("Searching \"" + os.path.abspath(root) + "\"")
 				for index in range(0, count):
 					idx = (start + index) % len(extensions)
 					lookupFileName = fileName + '.' + extensions[idx]
 					
 					for newMatch in fnmatch.filter(fileNames, lookupFileName):
 						matchPath = os.path.join(root, newMatch)
-						self.view.window().open_file(matchPath, flags=sublime.FORCE_GROUP)
+						self.window.open_file(matchPath, flags=sublime.FORCE_GROUP)
 						return
+		
+		print("Couldn't find header/source pair.")
 			
