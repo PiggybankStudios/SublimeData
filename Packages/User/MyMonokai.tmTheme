@@ -343,6 +343,14 @@
 			</dict>
 		</dict>
 
+		<dict>
+			<key>name</key><string>Parameter Name</string>
+			<key>scope</key><string>variable.parameter</string>
+			<key>settings</key><dict>
+				<key>foreground</key><string>#CFCFC2</string>
+			</dict>
+		</dict>
+
 	</array>
 	<key>uuid</key><string>D8D5E82E-3D5B-46B5-B38E-8C841C21347D</string>
 </dict>
