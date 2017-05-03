@@ -216,7 +216,7 @@
 	// { "keys": ["ctrl+`", "ctrl+r"], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+t"], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+y"], "command": "pound_replace"},
-	{ "keys": ["ctrl+`", "ctrl+u"], "command": "upper_case"},
+	// { "keys": ["ctrl+`", "ctrl+u"], "command": "pound_replace"},
 	{ "keys": ["ctrl+`", "ctrl+i"], "command": "update_custom_types", "args": { "addSelected": true }},
 	{ "keys": ["ctrl+`", "ctrl+o"], "command": "update_custom_types", "args": { "removeSelected": true }},
 	{ "keys": ["ctrl+`", "ctrl+p"], "command": "update_custom_types", "args": { "printInformation": true }},
