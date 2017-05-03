@@ -10,12 +10,12 @@
 #   F92672 keyword.title.todo
 *   E6DB74 string.list-item.todo
 +   A6E22E entity.name.list-item.todo
--   829520 custom.prefix.todo
+-   FF5959 custom.prefix.todo
 >   A9FFFF custom.type.todo
 !   AE81FF constant.language.todo
 :   E777FF custom.constant.todo
 @   FFEFB7 custom.string.todo
-|   FF5959 custom.identifier.todo
+|   829520 custom.identifier.todo
 =   FD971F custom.thing.todo
 
 c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(346): note: see declaration of 'strncpy'
@@ -24,4 +24,9 @@ c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(346): 
 	[X] Figure out why goto header/source file isn't working when they are in seperate folders
 	[X] Add word wrapping by default to the output panel of Custom-Types plugin
 	[X] Open Header file in other column
+	[X] Add 0b0... syntax to My C
+	[X] Find a way to get recent projects list. Make hotkey for it
+	[ ] Create a naming conventions changer plugin
+	[X] Upgrade MyMonokai theme for JSON
+	[ ] Sort custom types list alphabetically
 	[ ] 
