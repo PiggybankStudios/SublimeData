@@ -56,22 +56,23 @@
 	
 	+ alt b         Move to brackets
 	
-	+c' + ctrl i    Add Custom Type
-	+c' + ctrl o    Remove Custom Type
-	+c' + ctrl p    Update Custom Types
-	+c' + ctrl g    Google Search Selection
-	+c' + ctrl j    Add Custom Constant
-	+c' + ctrl k    Remove Custom Constant
-	+c' + ctrl l    Update Custom Constants
-	+c' + ctrl b    Add Custom Global
-	+c' + ctrl n    Remove Custom Global
-	+c' + ctrl m    Update Custom Globals
-	
 	+ ctrl alt w    Open Recent Workspace
 	+ ctrl alt u    Convert to Uppercase
 	+ ctrl alt l    Convert to Lowercase
 	+ ctrl alt up   Expand selection onto line above
 	+ ctrl alt down Expand selection onto line below
+	
+	> Ctrl '+ ... commands
+	> ctrl i    Add Custom Type
+	> ctrl o    Remove Custom Type
+	> ctrl p    Update Custom Types
+	> ctrl g    Google Search Selection
+	> ctrl j    Add Custom Constant
+	> ctrl k    Remove Custom Constant
+	> ctrl l    Update Custom Constants
+	> ctrl b    Add Custom Global
+	> ctrl n    Remove Custom Global
+	> ctrl m    Update Custom Globals
 	
 
 #Sublime Shortcuts To Start Using
