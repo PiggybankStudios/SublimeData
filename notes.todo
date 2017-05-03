@@ -30,4 +30,7 @@ c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(346): 
 	[X] Upgrade MyMonokai theme for JSON
 	[ ] Sort custom types list alphabetically
 	[ ] Add a shortcut for find and replace
+	[ ] Make a plugin to generate header/source file preface/description/date/creator
+	[ ] Make the open included file open the file in the other group
+	[ ] Make a plugin to add and remove \ on the end of multi-line macros
 	[ ] 
