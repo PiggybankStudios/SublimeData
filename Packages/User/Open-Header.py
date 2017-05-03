@@ -36,6 +36,9 @@ class OpenHeaderCommand(sublime_plugin.WindowCommand):
 					count -= 1
 					break
 		
+		# Target the other group to open the file in if there is another group
+		targetGroup = (self.window.active_group() + 1) % self.window.num_groups()
+		
 		# Look for the file in the same folder
 		for index in range(0, count):
 			idx = (start + index) % len(extensions)
@@ -43,6 +46,7 @@ class OpenHeaderCommand(sublime_plugin.WindowCommand):
 			new_path = base + '.' + extensions[idx]
 			
 			if os.path.exists(new_path):
+				self.window.focus_group(targetGroup)
 				self.window.open_file(new_path, flags=sublime.FORCE_GROUP)
 				return
 		
@@ -68,6 +72,7 @@ class OpenHeaderCommand(sublime_plugin.WindowCommand):
 					
 					for newMatch in fnmatch.filter(fileNames, lookupFileName):
 						matchPath = os.path.join(root, newMatch)
+						self.window.focus_group(targetGroup)
 						self.window.open_file(matchPath, flags=sublime.FORCE_GROUP)
 						return
 		
