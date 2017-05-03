@@ -18,6 +18,9 @@
 			"EntityType_Player",
 			"EntityType_Item"
 		],
+		"custom_globals":
+		[
+		],
 		"custom_types":
 		[
 			"Entity_t",
@@ -26,7 +29,22 @@
 			"VoxelWorld_t",
 			"VoxelType_t",
 			"GameData_t",
-			"GameInput_t"
+			"GameInput_t",
+			"Background",
+			"Foreground",
+			"storage",
+			"custom",
+			"comment",
+			"keyword",
+			"string",
+			"entity",
+			"constant",
+			"type",
+			"escaped",
+			"title",
+			"list",
+			"name",
+			"prefix"
 		]
 	}
 }

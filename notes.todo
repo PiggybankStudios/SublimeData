@@ -22,6 +22,6 @@ c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(346): 
 
 #TODO List
 	[X] Figure out why goto header/source file isn't working when they are in seperate folders
-	[ ] Add word wrapping by default to the output panel of Custom-Types plugin
+	[X] Add word wrapping by default to the output panel of Custom-Types plugin
 	[X] Open Header file in other column
 	[ ] 

@@ -3,8 +3,6 @@ import sublime_plugin
 import re
 import os
 
-# TODO: Clean up error outputs so the user sees if something goes wrong
-# TODO: Add a window to show all types when running list_custom_types command
 # TODO: Move reading and writing of project settings into their own functions
 
 class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
@@ -19,6 +17,7 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 		self.outputPanel = self.view.window().create_output_panel("CustomTypes")
 		self.view.window().run_command("show_panel", {"panel": "output.CustomTypes"})
 		self.editToken = edit
+		self.outputPanel.settings().set("word_wrap", True)
 	
 	def ShowError(self, errorString):
 		fullString = "ERROR in Custom-Types Plugin:\n" + errorString + "\n"
@@ -163,10 +162,8 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 		
 		if (self.UpdateSyntaxTypes(customTypes) == True):
 			self.CompleteOutput()
-		
-		
-		
-		
+
+
 
 
 class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
@@ -174,13 +171,14 @@ class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
 	editToken = None
 	
 	def ClosePanelTimeout(self):
-		self.view.window().destroy_output_panel("CustomTypes")
+		self.view.window().destroy_output_panel("CustomConstants")
 		# print("Windows: " + str(sublime.windows()))
 
 	def StartOutput(self, edit):
-		self.outputPanel = self.view.window().create_output_panel("CustomTypes")
-		self.view.window().run_command("show_panel", {"panel": "output.CustomTypes"})
+		self.outputPanel = self.view.window().create_output_panel("CustomConstants")
+		self.view.window().run_command("show_panel", {"panel": "output.CustomConstants"})
 		self.editToken = edit
+		self.outputPanel.settings().set("word_wrap", True)
 	
 	def ShowError(self, errorString):
 		fullString = "ERROR in Custom-Types Plugin:\n" + errorString + "\n"
@@ -199,7 +197,7 @@ class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
 			self.outputPanel.insert(self.editToken, self.outputPanel.size(), newString + "\n")
 
 	def CompleteOutput(self):
-		# self.view.window().destroy_output_panel("CustomTypes")
+		# self.view.window().destroy_output_panel("CustomConstants")
 		sublime.set_timeout(self.ClosePanelTimeout, 1000)
 	
 	def StringIsValidType(self, typeString):
@@ -334,14 +332,14 @@ class UpdateCustomGlobalsCommand(sublime_plugin.TextCommand):
 	editToken = None
 	
 	def ClosePanelTimeout(self):
-		self.view.window().destroy_output_panel("CustomTypes")
+		self.view.window().destroy_output_panel("CustomGlobals")
 		# print("Windows: " + str(sublime.windows()))
 
 	def StartOutput(self, edit):
-		self.outputPanel = self.view.window().create_output_panel("CustomTypes")
-		self.view.window().run_command("show_panel", {"panel": "output.CustomTypes"})
+		self.outputPanel = self.view.window().create_output_panel("CustomGlobals")
+		self.view.window().run_command("show_panel", {"panel": "output.CustomGlobals"})
 		self.editToken = edit
-		# self.outputPanel.settings()["word_wrap"] = True
+		self.outputPanel.settings().set("word_wrap", True)
 	
 	def ShowError(self, errorString):
 		fullString = "ERROR in Custom-Types Plugin:\n" + errorString + "\n"
@@ -360,7 +358,7 @@ class UpdateCustomGlobalsCommand(sublime_plugin.TextCommand):
 			self.outputPanel.insert(self.editToken, self.outputPanel.size(), newString + "\n")
 
 	def CompleteOutput(self):
-		# self.view.window().destroy_output_panel("CustomTypes")
+		# self.view.window().destroy_output_panel("CustomGlobals")
 		sublime.set_timeout(self.ClosePanelTimeout, 1000)
 	
 	def StringIsValidType(self, typeString):
