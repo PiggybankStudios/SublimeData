@@ -5,6 +5,7 @@ file-extensions:
   - todo
   - list
   - notes
+  - txt
 scope: text.todo
 
 contexts: 

@@ -11,6 +11,7 @@
 	[
 		"Vintage"
 	],
+	"rulers": [64],
 	"show_encoding": true,
 	"show_line_endings": true,
 	"translate_tabs_to_spaces": false,
