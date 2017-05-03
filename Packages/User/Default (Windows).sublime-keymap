@@ -106,9 +106,21 @@
 	//-------------------------------------------------------------------
 	//|                         alt+ Commands                           |
 	//-------------------------------------------------------------------
-	// { "keys": ["alt+q"], "command": "pound_replace"},
-	// { "keys": ["alt+w"], "command": "pound_replace"},
-	// { "keys": ["alt+e"], "command": "pound_replace"},
+	{ "keys": ["alt+q"], "command": "toggle_regex", "context":
+		[
+			{ "key": "setting.is_widget", "operator": "equal", "operand": true }
+		]
+	},
+	{ "keys": ["alt+w"], "command": "toggle_case_sensitive", "context":
+		[
+			{ "key": "setting.is_widget", "operator": "equal", "operand": true }
+		]
+	},
+	{ "keys": ["alt+e"], "command": "toggle_whole_word", "context":
+		[
+			{ "key": "setting.is_widget", "operator": "equal", "operand": true }
+		]
+	},
 	// { "keys": ["alt+r"], "command": "pound_replace"},
 	// { "keys": ["alt+t"], "command": "pound_replace"},
 	// { "keys": ["alt+y"], "command": "pound_replace"},
@@ -274,9 +286,9 @@
 	// { "keys": ["ctrl+alt+p"], "command": "pound_replace"},
 	
 	// { "keys": ["ctrl+alt+a"], "command": "pound_replace"},
-	// { "keys": ["ctrl+alt+s"], "command": "pound_replace"},
+	{ "keys": ["ctrl+alt+s"], "command": "toggle_side_bar"},
 	// { "keys": ["ctrl+alt+d"], "command": "pound_replace"},
-	// { "keys": ["ctrl+alt+f"], "command": "pound_replace"},
+	{ "keys": ["ctrl+alt+f"], "command": "show_panel", "args": {"panel": "replace", "reverse": false} },
 	// { "keys": ["ctrl+alt+g"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+h"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+j"], "command": "pound_replace"},

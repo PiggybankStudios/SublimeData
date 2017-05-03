@@ -54,10 +54,15 @@
 	+ ctrl shift u  Goto Symbol in project
 	+ ctrl shift z  Redo
 	
+	+ alt q         Toggle Regular Expressions in Find Window
+	+ alt w         Toggle Case Sensitive in Find Window
+	+ alt e         Toggle Whole Word in Find Window
 	+ alt b         Move to brackets
 	
 	+ ctrl alt w    Open Recent Workspace
 	+ ctrl alt u    Convert to Uppercase
+	+ ctrl alt s    Toggle Sidebar
+	+ ctrl alt f    Find and Replace
 	+ ctrl alt l    Convert to Lowercase
 	+ ctrl alt up   Expand selection onto line above
 	+ ctrl alt down Expand selection onto line below
