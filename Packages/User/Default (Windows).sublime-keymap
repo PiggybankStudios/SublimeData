@@ -21,7 +21,7 @@
 	{ "keys": ["ctrl+h"], "command": "open_header", "args": {"extensions": ["cpp", "cxx", "cc", "c", "hpp", "hxx", "hh", "h", "ipp", "inl", "m", "mm"]} },
 	{ "keys": ["ctrl+j"], "command": "toggle_distraction_free"},
 	{ "keys": ["ctrl+k"], "command": "run_macro_file", "args": {"file": "res://Packages/Default/Delete Line.sublime-macro"} },
-	{ "keys": ["ctrl+l"], "command": "show_at_center"}, //Could be better...
+	{ "keys": ["ctrl+l"], "command": "show_at_center"},
 	
 	{ "keys": ["ctrl+z"], "command": "undo"},
 	{ "keys": ["ctrl+x"], "command": "cut"},
@@ -58,9 +58,9 @@
 	// { "keys": ["ctrl+shift+w"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+e"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+r"], "command": "pound_replace"},
-	// { "keys": ["ctrl+shift+t"], "command": "pound_replace"},
+	{ "keys": ["ctrl+shift+t"], "command": "goto_symbol_in_project"},
 	// { "keys": ["ctrl+shift+y"], "command": "pound_replace"},
-	{ "keys": ["ctrl+shift+u"], "command": "goto_symbol_in_project"},
+	// { "keys": ["ctrl+shift+u"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+i"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+o"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+p"], "command": "pound_replace"},
@@ -103,6 +103,9 @@
 	// { "keys": ["ctrl+shift+f10"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+f11"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+f12"], "command": "pound_replace"},
+	
+	{ "keys": ["ctrl+shift+up"],   "command": "select_lines", "args": {"forward": true } },
+	{ "keys": ["ctrl+shift+down"], "command": "select_lines", "args": {"forward": false} },
 	//-------------------------------------------------------------------
 	//|                         alt+ Commands                           |
 	//-------------------------------------------------------------------
@@ -311,6 +314,16 @@
 	// { "keys": ["ctrl+alt+."], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+/"], "command": "pound_replace"},
 	
+	{ "keys": ["ctrl+alt+1"], "command": "fold_by_level", "args": {"level": 1} },
+	{ "keys": ["ctrl+alt+2"], "command": "fold_by_level", "args": {"level": 2} },
+	{ "keys": ["ctrl+alt+3"], "command": "fold_by_level", "args": {"level": 3} },
+	{ "keys": ["ctrl+alt+4"], "command": "fold_by_level", "args": {"level": 4} },
+	{ "keys": ["ctrl+alt+5"], "command": "fold_by_level", "args": {"level": 5} },
+	{ "keys": ["ctrl+alt+6"], "command": "fold_by_level", "args": {"level": 6} },
+	{ "keys": ["ctrl+alt+7"], "command": "fold_by_level", "args": {"level": 7} },
+	{ "keys": ["ctrl+alt+8"], "command": "fold_by_level", "args": {"level": 8} },
+	{ "keys": ["ctrl+alt+9"], "command": "fold_by_level", "args": {"level": 9} },
+	
 	// { "keys": ["ctrl+alt+f1"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+f2"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+f3"], "command": "pound_replace"},
@@ -324,8 +337,10 @@
 	// { "keys": ["ctrl+alt+f11"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+f12"], "command": "pound_replace"},
 	
-	{ "keys": ["ctrl+alt+up"], "command": "select_lines", "args": {"forward": false} },
-	{ "keys": ["ctrl+alt+down"], "command": "select_lines", "args": {"forward": true} },
+	{ "keys": ["ctrl+alt+right"], "command": "next_view"},
+	{ "keys": ["ctrl+alt+left"], "command": "prev_view"},
+	// { "keys": ["ctrl+alt+up"], "command": "pound_replace"},
+	// { "keys": ["ctrl+alt+down"], "command": "pound_replace"},
 	//-------------------------------------------------------------------
 	//|                   ctrl+alt+shift+ Commands                      |
 	//-------------------------------------------------------------------

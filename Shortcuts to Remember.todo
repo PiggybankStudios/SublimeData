@@ -16,56 +16,61 @@
 	// Comment                   (Dark Gray)
 
 # New Key Bindings
-	+ ctrl q:       Focus Neighboring Group
-	+ ctrl w:       Close File
-	+ ctrl e:       Reopen Last File
-	+ ctrl r:       Kill Word
-	+ ctrl t:       Goto Function
-	+ ctrl y:       Goto Line
-	+ ctrl u:       Goto Word
-	+ ctrl i:       Fold Top-Most Level
-	+ ctrl o:       Unfold All
-	+ ctrl p:       Open File...
-	+ ctrl a:       Select All
-	+ ctrl s:       Save File
-	+ ctrl d:       Select Next Instance
-	+ ctrl f:       Find...
-	+ ctrl g:       Select Word
-	+ ctrl h:       Goto Header/Source File With Same Name
-	+ ctrl j:       Toggle Distraction Free Mode
-	+ ctrl k:       Kill Line
-	+ ctrl l:       Center Cursor
-	+ ctrl z:       Undo
-	+ ctrl x:       Cut
-	+ ctrl c:       Copy
-	+ ctrl v:       Paste
-	+ ctrl b:       Build
-	+ ctrl n:       New File
-	+ ctrl m:       Duplicate Line
-	+ ctrl [        Unindent
-	+ ctrl ]        Indent
-	+ ctrl ;        Test Command
-	+ ctrl '        Open Console
-	+ ctrl <        Jump Back
-	+ ctrl >        Jump Forward
-	+ ctrl /        Toggle Comments
-	+ ctrl f12      Open File in String/#include
+	+ ctrl q:         Focus Neighboring Group
+	+ ctrl w:         Close File
+	+ ctrl e:         Reopen Last File
+	+ ctrl r:         Kill Word
+	+ ctrl t:         Goto Function
+	+ ctrl y:         Goto Line
+	+ ctrl u:         Goto Word
+	+ ctrl i:         Fold Top-Most Level
+	+ ctrl o:         Unfold All
+	+ ctrl p:         Open File...
+	+ ctrl a:         Select All
+	+ ctrl s:         Save File
+	+ ctrl d:         Select Next Instance
+	+ ctrl f:         Find...
+	+ ctrl g:         Select Word
+	+ ctrl h:         Goto Header/Source File With Same Name
+	+ ctrl j:         Toggle Distraction Free Mode
+	+ ctrl k:         Kill Line
+	+ ctrl l:         Center Cursor
+	+ ctrl z:         Undo
+	+ ctrl x:         Cut
+	+ ctrl c:         Copy
+	+ ctrl v:         Paste
+	+ ctrl b:         Build
+	+ ctrl n:         New File
+	+ ctrl m:         Duplicate Line
+	+ ctrl [          Unindent
+	+ ctrl ]          Indent
+	+ ctrl ;          Test Command
+	+ ctrl '          Open Console
+	+ ctrl <          Jump Back
+	+ ctrl >          Jump Forward
+	+ ctrl /          Toggle Comments
+	+ ctrl f12        Open File in String/#include
 	
-	+ ctrl shift u  Goto Symbol in project
-	+ ctrl shift z  Redo
+	+ ctrl shift u    Goto Symbol in project
+	+ ctrl shift z    Redo
+	+ ctrl shift up   Expand selection onto line above
+	+ ctrl shift down Expand selection onto line below
 	
-	+ alt q         Toggle Regular Expressions in Find Window
-	+ alt w         Toggle Case Sensitive in Find Window
-	+ alt e         Toggle Whole Word in Find Window
-	+ alt b         Move to brackets
+	+ alt q           Toggle Regular Expressions in Find Window
+	+ alt w           Toggle Case Sensitive in Find Window
+	+ alt e           Toggle Whole Word in Find Window
+	+ alt b           Move to brackets
 	
-	+ ctrl alt w    Open Recent Workspace
-	+ ctrl alt u    Convert to Uppercase
-	+ ctrl alt s    Toggle Sidebar
-	+ ctrl alt f    Find and Replace
-	+ ctrl alt l    Convert to Lowercase
-	+ ctrl alt up   Expand selection onto line above
-	+ ctrl alt down Expand selection onto line below
+	+ ctrl alt w      Open Recent Workspace
+	+ ctrl alt u      Convert to Uppercase
+	+ ctrl alt s      Toggle Sidebar
+	+ ctrl alt f      Find and Replace
+	+ ctrl alt l      Convert to Lowercase
+	+ ctrl alt 0-9    Fold by level 0-9
+	+ ctrl alt up     Next Group
+	+ ctrl alt down   Previous Group
+	+ ctrl alt right  Next View
+	+ ctrl alt left   Previous View
 	
 	> Ctrl '+ ... commands
 	> ctrl i    Add Custom Type
