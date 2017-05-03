@@ -67,6 +67,8 @@ contexts:
             1: punctuation.separator.continuation.c
         - match: '\*\*[^\n\*]*\*{0,2}'
           scope: custom.thing.c
+        - match: '\@[^\n\s]*'
+          scope: custom.string.c
         - match: \n
           pop: true
 
