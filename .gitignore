@@ -8,6 +8,7 @@ Packages/python-markdown/*
 Packages/pytz/*
 Packages/Settings/*
 Packages/SFTP/*
+Packages/Pretty JSON/*
 Packages/User/Package Control.cache/*
 Packages/User/Package Control.last-run
 Installed Packages/*
