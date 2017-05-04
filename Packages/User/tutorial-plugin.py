@@ -192,6 +192,8 @@ class OpenStringFileCommand(sublime_plugin.TextCommand):
 		
 		if (len(fileName) > 0):
 			print("Opening file overlay for filename \"" + fileName + "\"")
+			targetGroup = (self.view.window().active_group() + 1) % self.view.window().num_groups()
+			self.view.window().focus_group(targetGroup)
 			self.view.window().run_command("show_overlay", 
 				{"overlay": "goto", "show_files": True, "text": fileName})
 	

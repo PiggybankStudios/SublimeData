@@ -153,6 +153,8 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 			self.ShowError("No arguments specified")
 			return
 		
+		customTypes.sort()
+		
 		projectSettings["settings"]["custom_types"] = customTypes
 		
 		if (printInformation):
@@ -314,6 +316,8 @@ class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
 			self.ShowError("No arguments specified")
 			return
 		
+		customConstants.sort()
+		
 		projectSettings["settings"]["custom_constants"] = customConstants
 		
 		if (printInformation):
@@ -474,6 +478,8 @@ class UpdateCustomGlobalsCommand(sublime_plugin.TextCommand):
 		elif (not printInformation):
 			self.ShowError("No arguments specified")
 			return
+		
+		customGlobals.sort()
 		
 		projectSettings["settings"]["custom_globals"] = customGlobals
 		

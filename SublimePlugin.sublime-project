@@ -15,40 +15,40 @@
 	{
 		"custom_constants":
 		[
-			"FileType_None",
-			"FileType_Web",
-			"FileType_Source",
+			"EntityType_Item",
 			"EntityType_Player",
-			"EntityType_Item"
+			"FileType_None",
+			"FileType_Source",
+			"FileType_Web"
 		],
 		"custom_globals":
 		[
 		],
 		"custom_types":
 		[
-			"Entity_t",
-			"EntityType_t",
+			"Background",
 			"CnclPosition_t",
-			"VoxelWorld_t",
-			"VoxelType_t",
+			"EntityType_t",
+			"Entity_t",
+			"Foreground",
 			"GameData_t",
 			"GameInput_t",
-			"Background",
-			"Foreground",
-			"storage",
-			"custom",
+			"LinkHeader_t",
+			"VoxelType_t",
+			"VoxelWorld_t",
 			"comment",
-			"keyword",
-			"string",
-			"entity",
 			"constant",
-			"type",
+			"custom",
+			"entity",
 			"escaped",
-			"title",
+			"keyword",
 			"list",
 			"name",
 			"prefix",
-			"LinkHeader_t"
+			"storage",
+			"string",
+			"title",
+			"type"
 		]
 	}
 }
