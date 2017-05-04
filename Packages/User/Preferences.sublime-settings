@@ -5,13 +5,16 @@
 	"drag_text": false,
 	"draw_minimap_border": true,
 	"font_face": "Consolas",
-	"font_size": 11,
+	"font_size": 10,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
 		"Vintage"
 	],
-	"rulers": [64],
+	"rulers":
+	[
+		64
+	],
 	"show_encoding": true,
 	"show_line_endings": true,
 	"translate_tabs_to_spaces": false,

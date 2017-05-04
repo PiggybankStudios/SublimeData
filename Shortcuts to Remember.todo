@@ -73,16 +73,17 @@
 	+ ctrl alt left   Previous View
 	
 	> Ctrl '+ ... commands
-	> ctrl u    Convert To UpperFirstLetter
 	> ctrl i    Add Custom Type
 	> ctrl o    Remove Custom Type
 	> ctrl p    Update Custom Types
 	> ctrl d    Convert to ALL_UPPER_CASE
+	> ctrl d    Convert to all_lower_case
 	> ctrl g    Google Search Selection
 	> ctrl j    Add Custom Constant
 	> ctrl k    Remove Custom Constant
 	> ctrl l    Update Custom Constants
 	> ctrl c    Convert to camelCase
+	> ctrl c    Convert to UpperFirstLetter
 	> ctrl b    Add Custom Global
 	> ctrl n    Remove Custom Global
 	> ctrl m    Update Custom Globals
