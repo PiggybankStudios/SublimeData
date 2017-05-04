@@ -47,7 +47,8 @@
 			"title",
 			"list",
 			"name",
-			"prefix"
+			"prefix",
+			"LinkHeader_t"
 		]
 	}
 }

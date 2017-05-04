@@ -248,7 +248,7 @@
 	
 	// { "keys": ["ctrl+`", "ctrl+z"], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+x"], "command": "pound_replace"},
-	// { "keys": ["ctrl+`", "ctrl+c"], "command": "pound_replace"},
+	{ "keys": ["ctrl+`", "ctrl+c"], "command": "change_naming_convention"},
 	// { "keys": ["ctrl+`", "ctrl+v"], "command": "pound_replace"},
 	{ "keys": ["ctrl+`", "ctrl+b"], "command": "update_custom_globals", "args": { "addSelected": true }},
 	{ "keys": ["ctrl+`", "ctrl+n"], "command": "update_custom_globals", "args": { "removeSelected": true }},

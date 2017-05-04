@@ -26,7 +26,7 @@ c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(346): 
 	[X] Open Header file in other column
 	[X] Add 0b0... syntax to My C
 	[X] Find a way to get recent projects list. Make hotkey for it
-	[ ] Create a naming conventions changer plugin
+	[X] Create a naming conventions changer plugin
 	[X] Upgrade MyMonokai theme for JSON
 	[ ] Sort custom types list alphabetically
 	[ ] Add a shortcut for find and replace
@@ -34,3 +34,13 @@ c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(346): 
 	[ ] Make the open included file open the file in the other group
 	[ ] Make a plugin to add and remove \ on the end of multi-line macros
 	[ ] 
+
+
+AnotherNamingConvention
+BLE_Update_Handler_Thing_t
+myCamelCaseConvention
+one_naming_convention
+My314NumberIs15
+_LeadingUnderscore_
+9InvalidIdentifier
+function(uint8_t functionName) { DEBUG_Print("Hello"); }	
