@@ -39,6 +39,7 @@ c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(346): 
 	[ ] Add shortcuts to check off a checklist item in TODO list syntax
 	[ ] A shortcut for adding function documentation
 	[ ] Add #ifndef and #endif prefabs to CreateFileHeaderCommand
+	[ ] Fix problem with adding comment additions breaks Function() parentheses
 	[ ] 
 
 
