@@ -120,7 +120,7 @@
 		</dict>
 		<dict>
 			<key>name</key><string>Function argument</string>
-			<key>scope</key><string>variable.parameter - (source.c | source.c++ | source.objc | source.objc++)</string>
+			<key>scope</key><string>variable.parameter</string>
 			<key>settings</key><dict>
 				<key>fontStyle</key><string>italic</string>
 				<key>foreground</key><string>#FD971F</string>
@@ -340,14 +340,6 @@
 			<key>scope</key><string>punctuation.definition.dictionary</string>
 			<key>settings</key><dict>
 				<key>foreground</key><string>#FD971F</string>
-			</dict>
-		</dict>
-
-		<dict>
-			<key>name</key><string>Parameter Name</string>
-			<key>scope</key><string>variable.parameter</string>
-			<key>settings</key><dict>
-				<key>foreground</key><string>#CFCFC2</string>
 			</dict>
 		</dict>
 

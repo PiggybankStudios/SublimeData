@@ -15,27 +15,45 @@
 	{
 		"custom_constants":
 		[
+			"AMBIENT_LIGHT",
+			"Color_White",
 			"EntityType_Item",
 			"EntityType_Player",
 			"FileType_None",
 			"FileType_Source",
-			"FileType_Web"
+			"FileType_Web",
+			"GRAVITY_ACCEL",
+			"LIGHT_DIRECTION",
+			"NUM_TEXTURES_ACROSS",
+			"Transform_Identity"
 		],
 		"custom_globals":
 		[
+			"GlobalData",
+			"gameData",
+			"gameInput",
+			"world"
 		],
 		"custom_types":
 		[
 			"Background",
 			"CnclPosition_t",
+			"Color_t",
 			"EntityType_t",
 			"Entity_t",
 			"Foreground",
 			"GameData_t",
 			"GameInput_t",
 			"LinkHeader_t",
+			"Transform_t",
+			"Vec2_t",
+			"Vec2i_t",
+			"Vec3_t",
+			"Vertex_t",
+			"VoxelInfo_t",
 			"VoxelType_t",
 			"VoxelWorld_t",
+			"Voxel_t",
 			"comment",
 			"constant",
 			"custom",

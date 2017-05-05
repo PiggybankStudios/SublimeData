@@ -33,7 +33,10 @@ c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(346): 
 	[ ] Make a plugin to generate header/source file preface/description/date/creator
 	[X] Make the open included file open the file in the other group
 	[ ] Make a plugin to add and remove \ on the end of multi-line macros
-	[ ] Handle acronymns in NamingConventions pluing. e.g. "transmitUIDLength"
+	[ ] Handle acronymns in NamingConventions plugin. e.g. "transmitUIDLength"
+	[X] Add some more comment block syntax things to My C.sublime-syntax
+	[X] Add new and delete keywords to My C
+	[ ] Add shortcuts to check off a checklist item in TODO list syntax
 	[ ] 
 
 
