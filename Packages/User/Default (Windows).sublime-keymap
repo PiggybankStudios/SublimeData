@@ -70,7 +70,7 @@
 	// { "keys": ["ctrl+shift+d"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+f"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+g"], "command": "pound_replace"},
-	// { "keys": ["ctrl+shift+h"], "command": "pound_replace"},
+	{ "keys": ["ctrl+shift+h"], "command": "create_file_header"},
 	// { "keys": ["ctrl+shift+j"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+k"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+l"], "command": "pound_replace"},

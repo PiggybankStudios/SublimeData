@@ -52,6 +52,7 @@
 	+ ctrl f12        Open File in String/#include
 	
 	+ ctrl shift u    Goto Symbol in project
+	+ ctrl shift h    Insert file header
 	+ ctrl shift z    Redo
 	+ ctrl shift up   Expand selection onto line above
 	+ ctrl shift down Expand selection onto line below

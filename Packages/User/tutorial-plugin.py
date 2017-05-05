@@ -69,7 +69,8 @@ class PopupTestCommand(sublime_plugin.TextCommand):
 	"Custom Types Info",
 	"Let's Encrypt",
 	"Let's Decrypt",
-	"Open Header"]
+	"Open Header",
+	"Create File Header"]
 	
 	commandItems = [
 	"open_string_file", 
@@ -82,7 +83,8 @@ class PopupTestCommand(sublime_plugin.TextCommand):
 	"list_custom_types",
 	"lets_encrypt",
 	"lets_decrypt",
-	"open_header"]
+	"open_header",
+	"create_file_header"]
 	
 	def popupDone(self, selectedIndex):
 		# print("Selected " + self.popupItems[selectedIndex] + "!")
