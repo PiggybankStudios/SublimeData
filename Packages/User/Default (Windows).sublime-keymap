@@ -51,6 +51,9 @@
 	// { "keys": ["ctrl+f10"], "command": "pound_replace"},
 	// { "keys": ["ctrl+f11"], "command": "pound_replace"},
 	{ "keys": ["ctrl+f12"], "command": "open_string_file"},
+	
+	{ "keys": ["ctrl+up"], "command": "move_to_empty_line", "args": {"forward": false} },
+	{ "keys": ["ctrl+down"], "command": "move_to_empty_line", "args": {"forward": true} },
 	//-------------------------------------------------------------------
 	//|                      ctrl+shift+ Commands                       |
 	//-------------------------------------------------------------------

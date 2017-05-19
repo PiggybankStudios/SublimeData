@@ -94,7 +94,7 @@ class PopupTestCommand(sublime_plugin.TextCommand):
 	
 	def run(self, edit):
 		self.view.show_popup_menu(self.popupItems, self.popupDone)
-				
+	
 class TaylorCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		resources = self.view.window().lookup_symbol_in_index("function")
@@ -251,5 +251,58 @@ class LetsDecryptCommand(sublime_plugin.TextCommand):
 				newChar = chr(charNum)
 				replaceRegion = sublime.Region(cIndex, cIndex+1)
 				self.view.replace(edit, replaceRegion, newChar)
+
+def LineIsEmpty(line):
+	matchResult = re.search("^[\\t ]*$", line);
+	if (matchResult):
+		return True;
+	else:
+		return False;
+
+class MoveToEmptyLineCommand(sublime_plugin.TextCommand):
+	def run(self, edit, forward=True):
+		newSelections = []
+		for region in self.view.sel():
+			originRow, originColumn = self.view.rowcol(region.begin())
+			currentLine = "somethingNotEmpty";
+			currentRow = originRow;
+			foundBeginning = False;
+			foundEnd = False;
+			while (not LineIsEmpty(currentLine)):
+				if (forward): currentRow += 1;
+				else: currentRow -= 1;
+				
+				if (currentRow < 0):
+					currentRow = 0;
+					foundBeginning = True;
+					print("Found beginning of file");
+					break;
+				
+				pos = self.view.text_point(currentRow, 0);
+				currentLine = self.view.substr(self.view.line(pos));
+				
+				if (pos == self.view.size()):
+					print("Found end of file");
+					foundEnd = True;
+					break;
+			
+			print("Found line " + str(currentRow+1));
+			
+			if (foundBeginning):
+				newPos = 0;
+			elif (foundEnd):
+				newPos = self.view.size();
+			else:
+				lineLength = len(currentLine)
+				newPos = self.view.text_point(currentRow, lineLength);
+			
+			newRegion = sublime.Region(newPos, newPos);
+			newSelections.append(newRegion);
+		
+		self.view.sel().clear();
+		self.view.sel().add_all(newSelections);
+		
+		if (len(newSelections) == 1):
+			self.view.run_command("show_at_center");
 
 
