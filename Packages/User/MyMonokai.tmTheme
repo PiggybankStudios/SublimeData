@@ -7,15 +7,16 @@
 	<array>
 		<dict>
 			<key>settings</key><dict>
-				<key>background</key><string>#272822</string>
+				<key>background</key><string>#212121</string>
 				<key>caret</key><string>#F8F8F0</string>
 				<key>foreground</key><string>#F8F8F2</string>
 				<key>invisibles</key><string>#3B3A32</string>
-				<key>lineHighlight</key><string>#3E3D32</string>
-				<key>selection</key><string>#49483E</string>
+				<key>lineHighlight</key><string>#59585E</string>
+				<key>gutterForeground</key><string>#BBBBBB</string>
+				<key>selection</key><string>#444444</string>
 				<key>findHighlight</key><string>#FFE792</string>
 				<key>findHighlightForeground</key><string>#000000</string>
-				<key>selectionBorder</key><string>#222218</string>
+				<key>selectionBorder</key><string>#A0A0A0</string>
 				<key>activeGuide</key><string>#9D550FB0</string>
 
 				<key>bracketsForeground</key><string>#F8F8F2A5</string>
