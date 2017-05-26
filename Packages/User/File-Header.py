@@ -12,7 +12,7 @@ class CreateFileHeaderCommand(sublime_plugin.TextCommand):
 		print("fileNameExt: " + fileNameExt)
 		
 		authorName = "Taylor Robbins"
-		dateString = time.strftime("%d\\%m\\%Y")
+		dateString = time.strftime("%m\\%d\\%Y")
 		
 		headerString = ""
 		selectRegion = False
