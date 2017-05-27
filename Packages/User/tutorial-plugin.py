@@ -70,7 +70,8 @@ class PopupTestCommand(sublime_plugin.TextCommand):
 	"Let's Encrypt",
 	"Let's Decrypt",
 	"Open Header",
-	"Create File Header"]
+	"Create File Header",
+	"Kill Line"]
 	
 	commandItems = [
 	"open_string_file", 
@@ -84,7 +85,8 @@ class PopupTestCommand(sublime_plugin.TextCommand):
 	"lets_encrypt",
 	"lets_decrypt",
 	"open_header",
-	"create_file_header"]
+	"create_file_header",
+	"kill_line"]
 	
 	def popupDone(self, selectedIndex):
 		# print("Selected " + self.popupItems[selectedIndex] + "!")
@@ -305,4 +307,33 @@ class MoveToEmptyLineCommand(sublime_plugin.TextCommand):
 		if (len(newSelections) == 1):
 			self.view.run_command("show_at_center");
 
+
+class KillLineCommand(sublime_plugin.TextCommand):
+	def run(self, edit, next_line=True):
+		newRegions = [];
+		for region in self.view.sel():
+			row, col = self.view.rowcol(region.b);
+			lineRegion = self.view.full_line(region);
+			endRow, endCol = self.view.rowcol(lineRegion.end());
+			newLineRegion = self.view.line(self.view.text_point(endRow, 0));
+			
+			if (newLineRegion.size() >= col):
+				endPosition = self.view.text_point(endRow, col);
+			else:
+				endPosition = self.view.text_point(endRow, newLineRegion.size());
+			
+			print("Row " + str(row) + ", Col " + str(col));
+			print("End: Row " + str(endRow) + ", Col " + str(endCol));
+			print("End Pos: " + str(endPosition));
+			
+			newRegion = sublime.Region(endPosition, endPosition);
+			# newRegions.append(newRegion);
+			self.view.sel().add(newRegion);
+			self.view.sel().subtract(region);
+			
+			self.view.erase(edit, lineRegion);
+			# self.view.sel().add(lineRegion);
+		
+		# self.view.sel().clear();
+		# self.view.sel().add_all(newRegions);
 
