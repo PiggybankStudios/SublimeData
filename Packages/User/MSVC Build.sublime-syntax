@@ -7,11 +7,11 @@ scope: msvc.build
 
 contexts: 
   main:
-    - match: '^((?:\w\:)?[^\:\n]+)\((\d+)\)\: error \w\d+: ([^\n]+)$'
+    - match: '^((?:\w\:)?[^\:\n]+)\((\d+)\)\ ?: error \w\d+: ([^\n]+)$'
       scope: keyword.title.error.msvc
-    - match: '^((?:\w\:)?[^\:\n]+)\((\d+)\)\: warning \w\d+: ([^\n]+)$'
+    - match: '^((?:\w\:)?[^\:\n]+)\((\d+)\)\ ?: warning \w\d+: ([^\n]+)$'
       scope: string.warning.msvc
-    - match: '^((?:\w\:)?[^\:\n]+)\((\d+)\)\: note: ([^\n]+)$'
+    - match: '^((?:\w\:)?[^\:\n]+)\((\d+)\)\ ?: note: ([^\n]+)$'
       scope: constant.numeric.note.msvc
     - match: '^[^\n^\:]* : (?:fatal )?error LNK(\d+): ([^\n]+)$'
       scope: keyword.title.link-error.msvc
