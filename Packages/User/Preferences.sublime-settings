@@ -5,7 +5,11 @@
 	"drag_text": false,
 	"draw_minimap_border": true,
 	"font_face": "Consolas",
+<<<<<<< HEAD
 	"font_size": 12,
+=======
+	"font_size": 10,
+>>>>>>> d530ee36edc251271356f2cba373c4faa6435c29
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
@@ -15,8 +19,9 @@
 	[
 		64
 	],
-	"show_encoding": true,
+	"show_encoding": false,
 	"show_line_endings": true,
 	"translate_tabs_to_spaces": false,
-	"trim_automatic_white_space": false
+	"trim_automatic_white_space": false,
+	"highlight_line": true,
 }
