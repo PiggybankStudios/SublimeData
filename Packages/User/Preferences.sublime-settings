@@ -5,7 +5,7 @@
 	"drag_text": false,
 	"draw_minimap_border": true,
 	"font_face": "Consolas",
-	"font_size": 11,
+	"font_size": 12,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
