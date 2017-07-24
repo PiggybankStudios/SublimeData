@@ -42,3 +42,38 @@ class CreateFileHeaderCommand(sublime_plugin.TextCommand):
 			self.view.sel().clear()
 			self.view.sel().add(newRegion)
 			self.view.run_command("show_at_center")
+
+class CreateLocalHeaderCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		for region in self.view.sel():
+			selectionStr = self.view.substr(region)
+			if (len(selectionStr) == 0):
+				continue
+			lineRegion = self.view.line(region.begin())
+			indentationStr = self.view.substr(sublime.Region(lineRegion.begin(), region.begin()))
+			print("Indentation: \"" + indentationStr + "\"")
+			print("Selection = \"" + selectionStr + "\"")
+			
+			# Pad the string to 32 characters
+			while (len(selectionStr) < 32 - 2):
+				selectionStr = selectionStr + " "
+				if (len(selectionStr) < 32):
+					selectionStr = " " + selectionStr
+			
+			if (len(selectionStr) >= 32 - 2):
+				selectionStr = " " + selectionStr + " "
+				if (len(selectionStr) % 2 != 0):
+					selectionStr = selectionStr + " "
+			
+			headerWidth = len(selectionStr)
+			headerTopStr = ""
+			while (len(headerTopStr) < headerWidth):
+				headerTopStr += "="
+			headerTopStr = "+" + headerTopStr + "+"
+			
+			headerString  = "//" + headerTopStr + "\n" + indentationStr
+			headerString += "//|" + selectionStr + "|" + "\n" + indentationStr
+			headerString += "//" + headerTopStr
+			
+			self.view.replace(edit, region, headerString);
+			
