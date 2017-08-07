@@ -337,3 +337,144 @@ class KillLineCommand(sublime_plugin.TextCommand):
 		# self.view.sel().clear();
 		# self.view.sel().add_all(newRegions);
 
+class ConvertToHexCommand(sublime_plugin.TextCommand):
+	def run(self, edit, undo=False):
+		for region in self.view.sel():
+			regionStr = self.view.substr(region)
+			if (len(regionStr) == 0):
+				continue
+			
+			if (undo):
+				try:
+					integerValue = int(regionStr, 16)
+				except ValueError:
+					print("Could not parse \"" + regionStr + "\" as Base 16 integer")
+					continue
+				
+				replaceStr = "%d" % (integerValue)
+				self.view.replace(edit, region, replaceStr)
+			else:
+				try:
+					integerValue = int(regionStr)
+				except ValueError:
+					print("Could not parse \"" + regionStr + "\" as Base 10 integer")
+					continue
+				
+				replaceStr = "%X" % (integerValue)
+				self.view.replace(edit, region, replaceStr)
+
+class InsertNumsHexCommand(sublime_plugin.TextCommand):
+	def run(self, edit, start_num=0, padding=2):
+		iterator = start_num
+		for region in self.view.sel():
+			replaceStr = "%X" % iterator
+			while (len(replaceStr) < padding):
+				replaceStr = "0" + replaceStr
+			self.view.replace(edit, region, replaceStr)
+			iterator += 1
+
+def ActualLineLength(tabSize, lineStr):
+	result = 0
+	
+	column = 0;
+	for cIndex in range(0, len(lineStr)):
+		if (lineStr[cIndex] == '\t'):
+			actualTabSize = tabSize - (column%tabSize)
+			# print("Tab %s" % actualTabSize)
+			result += actualTabSize
+			column += actualTabSize
+		else:
+			result += 1
+			column += 1
+	
+	return result
+
+class ToggleDefineEndingsCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		tabSize = self.view.settings().get("tab_size")
+		for region in self.view.sel():
+			lineNum, columnNum = self.view.rowcol(region.a)
+			
+			firstLineRegion = self.view.line(region.a)
+			firstLineStr = self.view.substr(firstLineRegion)
+			addingCharacters = True
+			if (len(firstLineStr) > 0 and firstLineStr[-1] == '\\'):
+				addingCharacters = False
+			
+			if (addingCharacters):
+				# Count how many lines we need to go and find
+				# the max line length
+				numLines = 0
+				maxLineLength = 0
+				currentLine = lineNum
+				while (currentLine >= 0):
+					textPoint = self.view.text_point(currentLine, 0)
+					lineRegion = self.view.line(textPoint)
+					lineStr = self.view.substr(lineRegion)
+					lineLength = ActualLineLength(tabSize, lineStr)
+					
+					print("Line %d: %u bytes \"%s\"" % (currentLine, lineLength, lineStr))
+					numLines += 1
+					
+					if (lineLength > maxLineLength):
+						maxLineLength = lineLength
+					
+					match = re.match("^\\s*\#define", lineStr)
+					print("Match: " + str(match))
+					
+					if (match != None):
+						break
+					
+					currentLine -= 1
+				
+				print("%u lines. Max Length: %u bytes" % (numLines, maxLineLength))
+				
+				currentLine = lineNum
+				for lIndex in range(0, numLines):
+					textPoint = self.view.text_point(currentLine, 0)
+					lineRegion = self.view.line(textPoint)
+					lineStr = self.view.substr(lineRegion)
+					lineLength = ActualLineLength(tabSize, lineStr)
+					
+					while(lineLength <= maxLineLength):
+						lineStr += ' '
+						lineLength += 1
+					lineStr += '\\'
+					
+					self.view.replace(edit, lineRegion, lineStr)
+					
+					currentLine -= 1
+			else: # Removing characters
+				
+				# Remove going up
+				currentLine = lineNum
+				while (currentLine >= 0):
+					textPoint = self.view.text_point(currentLine, 0)
+					lineRegion = self.view.line(textPoint)
+					lineStr = self.view.substr(lineRegion)
+					
+					if (len(lineStr) == 0 or lineStr[-1] != '\\'):
+						break;
+					
+					while (lineStr[-1] == '\\' or lineStr[-1] == ' '):
+						lineStr = lineStr[0:-1]
+					
+					self.view.replace(edit, lineRegion, lineStr)
+					currentLine -= 1
+				
+				# Remove going down
+				currentLine = lineNum+1
+				while (True):
+					textPoint = self.view.text_point(currentLine, 0)
+					lineRegion = self.view.line(textPoint)
+					lineStr = self.view.substr(lineRegion)
+					
+					if (len(lineStr) == 0 or lineStr[-1] != '\\'):
+						break;
+					
+					while (lineStr[-1] == '\\' or lineStr[-1] == ' '):
+						lineStr = lineStr[0:-1]
+					
+					self.view.replace(edit, lineRegion, lineStr)
+					currentLine += 1
+				

@@ -18,6 +18,7 @@
 		"Package Control",
 		"Pretty JSON",
 		"SFTP",
-		"Shader Syntax (GLSL HLSL Cg)"
+		"Shader Syntax (GLSL HLSL Cg)",
+		"Whitespace"
 	]
 }

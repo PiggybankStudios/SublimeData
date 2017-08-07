@@ -10,36 +10,38 @@ scope: text.todo
 
 contexts: 
   main:
-    - match: '^[\t ]?\[ \][^\n]+$'
+    - match: '^\s*\[ \][^\n]+$'
       scope: storage.type.checkbox.todo
-    - match: '^[\t ]?\[\?\][^\n]+$'
+    - match: '^\s*\[\?\][^\n]+$'
       scope: custom.type.todo
-    - match: '^[\t ]?\[\!\][^\n]+$'
+    - match: '^\s*\[\!\][^\n]+$'
       scope: custom.constant.todo
-    - match: '^[\t ]?\[(X|x)\][^\n]+$'
+    - match: '^\s*\[(X|x)\][^\n]+$'
       scope: custom.global.todo
-    - match: '^[\t ]?\[-\][^\n]+$'
+    - match: '^\s*\[-\][^\n]+$'
       scope: comment.check-list.todo
-    - match: '^[\t ]?(\\\\|//)[^\n]+$'
+    - match: '^\s*\[#\][^\n]+$'
+      scope: custom.thing.todo
+    - match: '^\s*(\\\\|//)[^\n]+$'
       scope: comment.escaped.todo
-    - match: '^[\t ]?\#[^\n]+$'
+    - match: '^\s*\#[^\n]+$'
       scope: keyword.title.todo
-    - match: '^[\t ]?\*[^\n]+$'
+    - match: '^\s*\*[^\n]+$'
       scope: string.list-item.todo
-    - match: '^[\t ]?\+[^\n]+$'
+    - match: '^\s*\+[^\n]+$'
       scope: entity.name.list-item.todo
-    - match: '^[\t ]?-[^\n]+$'
+    - match: '^\s*-[^\n]+$'
       scope: custom.prefix.todo
-    - match: '^[\t ]?\>[^\n]+$'
+    - match: '^\s*\>[^\n]+$'
       scope: custom.type.todo
-    - match: '^[\t ]?\![^\n]+$'
+    - match: '^\s*\![^\n]+$'
       scope: constant.language.todo
-    - match: '^[\t ]?:[^\n]+$'
+    - match: '^\s*:[^\n]+$'
       scope: custom.constant.todo
-    - match: '^[\t ]?\@[^\n]+$'
+    - match: '^\s*\@[^\n]+$'
       scope: custom.string.todo
-    - match: '^[\t ]?\|[^\n]+$'
+    - match: '^\s*\|[^\n]+$'
       scope: custom.identifier.todo
-    - match: '^[\t ]?\=[^\n]+$'
+    - match: '^\s*\=[^\n]+$'
       scope: custom.thing.todo
   
