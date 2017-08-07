@@ -99,8 +99,19 @@ class PopupTestCommand(sublime_plugin.TextCommand):
 	
 class TaylorCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
-		resources = self.view.window().lookup_symbol_in_index("function")
-		print(str(resources))
+		# resources = self.view.window().lookup_symbol_in_index("function")
+		# print(str(resources))
+		shell_vars = self.view.meta_info("shellVariables", self.view.sel()[0].begin())
+		if not shell_vars:
+			return ([], [])
+		
+		# transform the list of dicts into a single dict
+		all_vars = {}
+		for v in shell_vars:
+			if 'name' in v and 'value' in v:
+				all_vars[v['name']] = v['value']
+		
+		print("Shel Vars: " + str(all_vars))
 
 class ViewInfoCommand(sublime_plugin.TextCommand):
 	def run(self, edit):

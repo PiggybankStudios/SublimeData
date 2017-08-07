@@ -12,7 +12,7 @@
 	{ "keys": ["ctrl+i"], "command": "fold_by_level", "args": {"level": 1} },
 	{ "keys": ["ctrl+o"], "command": "unfold_all"},
 	{ "keys": ["ctrl+p"], "command": "show_overlay", "args": {"overlay": "goto", "show_files": true} },
-	
+
 	{ "keys": ["ctrl+a"], "command": "select_all" },
 	{ "keys": ["ctrl+s"], "command": "save" },
 	{ "keys": ["ctrl+d"], "command": "find_under_expand" },
@@ -22,7 +22,7 @@
 	{ "keys": ["ctrl+j"], "command": "toggle_distraction_free" },
 	{ "keys": ["ctrl+k"], "command": "kill_line" },
 	{ "keys": ["ctrl+l"], "command": "show_at_center" },
-	
+
 	{ "keys": ["ctrl+z"], "command": "undo" },
 	{ "keys": ["ctrl+x"], "command": "cut" },
 	{ "keys": ["ctrl+c"], "command": "copy" },
@@ -30,7 +30,7 @@
 	{ "keys": ["ctrl+b"], "command": "build" },
 	{ "keys": ["ctrl+n"], "command": "new_file" },
 	{ "keys": ["ctrl+m"], "command": "duplicate_line" },
-	
+
 	{ "keys": ["ctrl+["], "command": "unindent" },
 	{ "keys": ["ctrl+]"], "command": "indent" },
 	{ "keys": ["ctrl+;"], "command": "popup_test" },//Test Command (feel free to change)
@@ -38,7 +38,7 @@
 	{ "keys": ["ctrl+,"], "command": "jump_back" },
 	{ "keys": ["ctrl+."], "command": "jump_forward" },
 	{ "keys": ["ctrl+/"], "command": "toggle_comment", "args": { "block": false } },
-	
+
 	// { "keys": ["ctrl+f1"], "command": "pound_replace"},
 	// { "keys": ["ctrl+f2"], "command": "pound_replace"},
 	// { "keys": ["ctrl+f3"], "command": "pound_replace"},
@@ -51,7 +51,7 @@
 	// { "keys": ["ctrl+f10"], "command": "pound_replace"},
 	// { "keys": ["ctrl+f11"], "command": "pound_replace"},
 	{ "keys": ["ctrl+f12"], "command": "open_string_file"},
-	
+
 	{ "keys": ["ctrl+up"], "command": "move_to_empty_line", "args": {"forward": false} },
 	{ "keys": ["ctrl+down"], "command": "move_to_empty_line", "args": {"forward": true} },
 	//-------------------------------------------------------------------
@@ -67,7 +67,7 @@
 	// { "keys": ["ctrl+shift+i"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+o"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+p"], "command": "pound_replace"},
-	
+
 	// { "keys": ["ctrl+shift+a"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+s"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+d"], "command": "pound_replace"},
@@ -77,7 +77,7 @@
 	{ "keys": ["ctrl+shift+j"], "command": "create_local_header"},
 	// { "keys": ["ctrl+shift+k"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+l"], "command": "pound_replace"},
-	
+
 	{ "keys": ["ctrl+shift+z"], "command": "redo"},
 	// { "keys": ["ctrl+shift+x"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+c"], "command": "pound_replace"},
@@ -85,7 +85,7 @@
 	// { "keys": ["ctrl+shift+b"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+n"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+m"], "command": "pound_replace"},
-	
+
 	// { "keys": ["ctrl+shift+["], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+]"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+;"], "command": "pound_replace"},
@@ -93,7 +93,7 @@
 	// { "keys": ["ctrl+shift+,"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+."], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+/"], "command": "pound_replace"},
-	
+
 	// { "keys": ["ctrl+shift+f1"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+f2"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+f3"], "command": "pound_replace"},
@@ -106,7 +106,7 @@
 	// { "keys": ["ctrl+shift+f10"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+f11"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+f12"], "command": "pound_replace"},
-	
+
 	{ "keys": ["ctrl+shift+up"],   "command": "select_lines", "args": {"forward": false} },
 	{ "keys": ["ctrl+shift+down"], "command": "select_lines", "args": {"forward": true } },
 	//-------------------------------------------------------------------
@@ -134,7 +134,7 @@
 	// { "keys": ["alt+i"], "command": "pound_replace"},
 	// { "keys": ["alt+o"], "command": "pound_replace"},
 	// { "keys": ["alt+p"], "command": "pound_replace"},
-	
+
 	// { "keys": ["alt+a"], "command": "pound_replace"},
 	// { "keys": ["alt+s"], "command": "pound_replace"},
 	// { "keys": ["alt+d"], "command": "pound_replace"},
@@ -144,7 +144,7 @@
 	// { "keys": ["alt+j"], "command": "pound_replace"},
 	// { "keys": ["alt+k"], "command": "pound_replace"},
 	// { "keys": ["alt+l"], "command": "pound_replace"},
-	
+
 	// { "keys": ["alt+z"], "command": "pound_replace"},
 	// { "keys": ["alt+x"], "command": "pound_replace"},
 	// { "keys": ["alt+c"], "command": "pound_replace"},
@@ -152,7 +152,7 @@
 	{ "keys": ["alt+b"], "command": "move_to", "args": {"to": "brackets"} },
 	// { "keys": ["alt+n"], "command": "pound_replace"},
 	// { "keys": ["alt+m"], "command": "pound_replace"},
-	
+
 	// { "keys": ["alt+["], "command": "pound_replace"},
 	// { "keys": ["alt+]"], "command": "pound_replace"},
 	// { "keys": ["alt+;"], "command": "pound_replace"},
@@ -160,7 +160,7 @@
 	// { "keys": ["alt+,"], "command": "pound_replace"},
 	// { "keys": ["alt+."], "command": "pound_replace"},
 	// { "keys": ["alt+/"], "command": "pound_replace"},
-	
+
 	// { "keys": ["alt+f1"], "command": "pound_replace"},
 	// { "keys": ["alt+f2"], "command": "pound_replace"},
 	// { "keys": ["alt+f3"], "command": "pound_replace"},
@@ -186,7 +186,7 @@
 	{ "keys": ["alt+shift+i"], "command": "update_custom_types", "args": { "addSelected": true }},
 	{ "keys": ["alt+shift+o"], "command": "update_custom_types", "args": { "removeSelected": true }},
 	{ "keys": ["alt+shift+p"], "command": "update_custom_types", "args": { "printInformation": true }},
-	
+
 	// { "keys": ["alt+shift+a"], "command": "pound_replace"},
 	// { "keys": ["alt+shift+s"], "command": "pound_replace"},
 	// { "keys": ["alt+shift+d"], "command": "pound_replace"},
@@ -196,7 +196,7 @@
 	{ "keys": ["alt+shift+j"], "command": "update_custom_constants", "args": { "addSelected": true }},
 	{ "keys": ["alt+shift+k"], "command": "update_custom_constants", "args": { "removeSelected": true }},
 	{ "keys": ["alt+shift+l"], "command": "update_custom_constants", "args": { "printInformation": true }},
-	
+
 	// { "keys": ["alt+shift+z"], "command": "pound_replace"},
 	// { "keys": ["alt+shift+x"], "command": "pound_replace"},
 	// { "keys": ["alt+shift+c"], "command": "pound_replace"},
@@ -204,7 +204,7 @@
 	{ "keys": ["alt+shift+b"], "command": "update_custom_globals", "args": { "addSelected": true }},
 	{ "keys": ["alt+shift+n"], "command": "update_custom_globals", "args": { "removeSelected": true }},
 	{ "keys": ["alt+shift+m"], "command": "update_custom_globals", "args": { "printInformation": true }},
-	
+
 	// { "keys": ["alt+shift+["], "command": "pound_replace"},
 	// { "keys": ["alt+shift+]"], "command": "pound_replace"},
 	// { "keys": ["alt+shift+;"], "command": "pound_replace"},
@@ -212,7 +212,7 @@
 	// { "keys": ["alt+shift+,"], "command": "pound_replace"},
 	// { "keys": ["alt+shift+."], "command": "pound_replace"},
 	// { "keys": ["alt+shift+/"], "command": "pound_replace"},
-	
+
 	// { "keys": ["alt+shift+f1"], "command": "pound_replace"},
 	// { "keys": ["alt+shift+f2"], "command": "pound_replace"},
 	// { "keys": ["alt+shift+f3"], "command": "pound_replace"},
@@ -238,7 +238,7 @@
 	// { "keys": ["ctrl+`", "ctrl+i"], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+o"], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+p"], "command": "pound_replace"},
-	
+
 	// { "keys": ["ctrl+`", "ctrl+a"], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+s"], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+d"], "command": "pound_replace"},
@@ -248,7 +248,7 @@
 	// { "keys": ["ctrl+`", "ctrl+j"], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+k"], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+l"], "command": "pound_replace"},
-	
+
 	// { "keys": ["ctrl+`", "ctrl+z"], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+x"], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+c"], "command": "pound_replace"},
@@ -256,7 +256,7 @@
 	// { "keys": ["ctrl+`", "ctrl+b"], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+n"], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+m"], "command": "pound_replace"},
-	
+
 	// { "keys": ["ctrl+`", "ctrl+["], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+]"], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+;"], "command": "pound_replace"},
@@ -264,7 +264,7 @@
 	// { "keys": ["ctrl+`", "ctrl+,"], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+."], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+/"], "command": "pound_replace"},
-	
+
 	// { "keys": ["ctrl+`", "ctrl+f1"], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+f2"], "command": "pound_replace"},
 	// { "keys": ["ctrl+`", "ctrl+f3"], "command": "pound_replace"},
@@ -284,13 +284,13 @@
 	{ "keys": ["ctrl+alt+w"], "command": "prompt_select_workspace"},
 	// { "keys": ["ctrl+alt+e"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+r"], "command": "pound_replace"},
-	// { "keys": ["ctrl+alt+t"], "command": "pound_replace"},
+	{ "keys": ["ctrl+alt+t"], "command": "remove_trailing_whitespace"},
 	// { "keys": ["ctrl+alt+y"], "command": "pound_replace"},
 	{ "keys": ["ctrl+alt+u"], "command": "upper_case"},
 	// { "keys": ["ctrl+alt+i"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+o"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+p"], "command": "pound_replace"},
-	
+
 	{ "keys": ["ctrl+alt+a"], "command": "alignment"},
 	{ "keys": ["ctrl+alt+s"], "command": "toggle_side_bar"},
 	{ "keys": ["ctrl+alt+d"], "command": "toggle_define_endings"},
@@ -300,7 +300,7 @@
 	// { "keys": ["ctrl+alt+j"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+k"], "command": "pound_replace"},
 	{ "keys": ["ctrl+alt+l"], "command": "lower_case"},
-	
+
 	{ "keys": ["ctrl+alt+z"], "command": "change_naming_convention", "args": {"convention": "upper_first"}},
 	{ "keys": ["ctrl+alt+x"], "command": "change_naming_convention", "args": {"convention": "lower_underscores"}},
 	{ "keys": ["ctrl+alt+c"], "command": "change_naming_convention", "args": {"convention": "upper_underscores"}},
@@ -308,7 +308,7 @@
 	{ "keys": ["ctrl+alt+b"], "command": "insert_nums_hex", "args": { "start_num": 0, "padding": 2 } },
 	{ "keys": ["ctrl+alt+n"], "command": "prompt_insert_nums"},
 	{ "keys": ["ctrl+alt+m"], "command": "insert_nums", "args": {"format": "0:1"}},
-	
+
 	// { "keys": ["ctrl+alt+["], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+]"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+;"], "command": "pound_replace"},
@@ -316,7 +316,7 @@
 	// { "keys": ["ctrl+alt+,"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+."], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+/"], "command": "pound_replace"},
-	
+
 	{ "keys": ["ctrl+alt+1"], "command": "fold_by_level", "args": {"level": 1} },
 	{ "keys": ["ctrl+alt+2"], "command": "fold_by_level", "args": {"level": 2} },
 	{ "keys": ["ctrl+alt+3"], "command": "fold_by_level", "args": {"level": 3} },
@@ -326,7 +326,7 @@
 	{ "keys": ["ctrl+alt+7"], "command": "fold_by_level", "args": {"level": 7} },
 	{ "keys": ["ctrl+alt+8"], "command": "fold_by_level", "args": {"level": 8} },
 	{ "keys": ["ctrl+alt+9"], "command": "fold_by_level", "args": {"level": 9} },
-	
+
 	// { "keys": ["ctrl+alt+f1"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+f2"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+f3"], "command": "pound_replace"},
@@ -339,7 +339,7 @@
 	// { "keys": ["ctrl+alt+f10"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+f11"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+f12"], "command": "pound_replace"},
-	
+
 	{ "keys": ["ctrl+alt+right"], "command": "next_view"},
 	{ "keys": ["ctrl+alt+left"],  "command": "prev_view"},
 	{ "keys": ["ctrl+alt+up"],    "command": "focus_neighboring_group", "args": {"forward": true } },
@@ -357,7 +357,7 @@
 	// { "keys": ["ctrl+alt+shift+i"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+shift+o"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+shift+p"], "command": "pound_replace"},
-	
+
 	// { "keys": ["ctrl+alt+shift+a"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+shift+s"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+shift+d"], "command": "pound_replace"},
@@ -367,7 +367,7 @@
 	// { "keys": ["ctrl+alt+shift+j"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+shift+k"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+shift+l"], "command": "pound_replace"},
-	
+
 	// { "keys": ["ctrl+alt+shift+z"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+shift+x"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+shift+c"], "command": "pound_replace"},
@@ -375,7 +375,7 @@
 	{ "keys": ["ctrl+alt+shift+b"], "command": "insert_nums_hex", "args": { "start_num": 0, "padding": 8 } },
 	// { "keys": ["ctrl+alt+shift+n"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+shift+m"], "command": "pound_replace"},
-	
+
 	// { "keys": ["ctrl+alt+shift+["], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+shift+]"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+shift+;"], "command": "pound_replace"},
@@ -383,7 +383,7 @@
 	// { "keys": ["ctrl+alt+shift+,"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+shift+."], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+shift+/"], "command": "pound_replace"},
-	
+
 	// { "keys": ["ctrl+alt+shift+f1"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+shift+f2"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+shift+f3"], "command": "pound_replace"},

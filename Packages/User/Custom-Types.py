@@ -5,6 +5,34 @@ import os
 
 # TODO: Move reading and writing of project settings into their own functions
 
+class CustomTypesEventListener(sublime_plugin.EventListener):
+	def on_query_completions(self, view, prefix, locations):
+		result = []
+		# print("Listener!")
+		
+		projectSettings = view.window().project_data()
+		if (projectSettings == None):
+			return
+		
+		if ("settings" in projectSettings):
+			if ("custom_types" in projectSettings["settings"]):
+				for customType in projectSettings["settings"]["custom_types"]:
+					# print("Type: \"" + customType + "\"")
+					result.append([customType + "\t" + "Custom Type", customType])
+			if ("custom_constants" in projectSettings["settings"]):
+				for customConstant in projectSettings["settings"]["custom_constants"]:
+					# print("Type: \"" + customConstant + "\"")
+					result.append([customConstant + "\t" + "Custom Constant", customConstant])
+			if ("custom_globals" in projectSettings["settings"]):
+				for customGlobal in projectSettings["settings"]["custom_globals"]:
+					# print("Type: \"" + customGlobal + "\"")
+					result.append([customGlobal + "\t" + "Custom Global", customGlobal])
+		
+		return result
+
+
+
+
 class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 	outputPanel = None
 	editToken = None
