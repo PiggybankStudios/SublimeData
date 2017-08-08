@@ -282,7 +282,7 @@
 	//-------------------------------------------------------------------
 	{ "keys": ["ctrl+alt+q"], "command": "close_workspace"},
 	{ "keys": ["ctrl+alt+w"], "command": "prompt_select_workspace"},
-	// { "keys": ["ctrl+alt+e"], "command": "pound_replace"},
+	{ "keys": ["ctrl+alt+e"], "command": "ascii_to_hex", "args": { "undo": false, "add_prefix": false } },
 	// { "keys": ["ctrl+alt+r"], "command": "pound_replace"},
 	{ "keys": ["ctrl+alt+t"], "command": "remove_trailing_whitespace"},
 	// { "keys": ["ctrl+alt+y"], "command": "pound_replace"},
@@ -349,7 +349,7 @@
 	//-------------------------------------------------------------------
 	// { "keys": ["ctrl+alt+shift+q"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+shift+w"], "command": "pound_replace"},
-	// { "keys": ["ctrl+alt+shift+e"], "command": "pound_replace"},
+	{ "keys": ["ctrl+alt+shift+e"], "command": "ascii_to_hex", "args": { "undo": true } },
 	// { "keys": ["ctrl+alt+shift+r"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+shift+t"], "command": "pound_replace"},
 	// { "keys": ["ctrl+alt+shift+y"], "command": "pound_replace"},

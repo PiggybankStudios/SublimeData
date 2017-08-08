@@ -489,3 +489,65 @@ class ToggleDefineEndingsCommand(sublime_plugin.TextCommand):
 					self.view.replace(edit, lineRegion, lineStr)
 					currentLine += 1
 				
+def IsHexChar(character):
+	if (character.lower() >= 'a' and character.lower() <= 'f'):
+		return True
+	elif (character >= '0' and character <= '9'):
+		return True
+	else:
+		return False
+
+class AsciiToHexCommand(sublime_plugin.TextCommand):
+	def run(self, edit, undo=False, add_prefix=False, add_spaces=True):
+		for region in self.view.sel():
+			regionStr = self.view.substr(region)
+			
+			if (undo):
+				replaceStr = ""
+				cIndex = 0
+				while (cIndex < len(regionStr)):
+					currentChar = regionStr[cIndex]
+					nextChar = 0
+					if (cIndex < len(regionStr)-1):
+						nextChar = regionStr[cIndex+1]
+					
+					if (currentChar == ' '):
+						cIndex += 1
+						continue
+					elif (currentChar == '0' and nextChar == 'x'):
+						cIndex += 2
+						continue
+					elif (cIndex >= len(regionStr)-1 or
+						not IsHexChar(currentChar) or not IsHexChar(nextChar)):
+						replaceStr += '?'
+						cIndex += 1
+						continue
+					else:
+						hexStr = currentChar + nextChar
+						hexValue = int(hexStr, 16)
+						newChar = chr(hexValue)
+						replaceStr += newChar
+						
+						cIndex += 2 
+				
+				self.view.replace(edit, region, replaceStr)
+			else:
+				replaceStr = ""
+				wasNewLine = False
+				for cIndex in range(0, len(regionStr)):
+					if (regionStr[cIndex] =='\n' or regionStr[cIndex] == '\r'):
+						replaceStr += regionStr[cIndex]
+						
+						wasNewLine = True
+					else:
+						if (cIndex != 0 and wasNewLine == False and add_spaces):
+							replaceStr += " "
+						if (add_prefix):
+							replaceStr += "0x"
+						
+						charNum = ord(regionStr[cIndex])
+						replaceStr += ("%02X" % charNum)
+						
+						wasNewLine = False
+				
+				self.view.replace(edit, region, replaceStr)
