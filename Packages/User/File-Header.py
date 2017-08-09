@@ -44,23 +44,23 @@ class CreateFileHeaderCommand(sublime_plugin.TextCommand):
 			self.view.run_command("show_at_center")
 
 class CreateLocalHeaderCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
+	def run(self, edit, width=32, bold=True):
 		for region in self.view.sel():
 			selectionStr = self.view.substr(region)
 			if (len(selectionStr) == 0):
 				continue
 			lineRegion = self.view.line(region.begin())
 			indentationStr = self.view.substr(sublime.Region(lineRegion.begin(), region.begin()))
-			print("Indentation: \"" + indentationStr + "\"")
-			print("Selection = \"" + selectionStr + "\"")
+			# print("Indentation: \"" + indentationStr + "\"")
+			# print("Selection = \"" + selectionStr + "\"")
 			
 			# Pad the string to 32 characters
-			while (len(selectionStr) < 32 - 2):
+			while (len(selectionStr) < width - 2):
 				selectionStr = selectionStr + " "
-				if (len(selectionStr) < 32):
+				if (len(selectionStr) < width):
 					selectionStr = " " + selectionStr
 			
-			if (len(selectionStr) >= 32 - 2):
+			if (len(selectionStr) >= width - 2):
 				selectionStr = " " + selectionStr + " "
 				if (len(selectionStr) % 2 != 0):
 					selectionStr = selectionStr + " "
@@ -68,12 +68,24 @@ class CreateLocalHeaderCommand(sublime_plugin.TextCommand):
 			headerWidth = len(selectionStr)
 			headerTopStr = ""
 			while (len(headerTopStr) < headerWidth):
-				headerTopStr += "="
+				if (bold):
+					headerTopStr += "="
+				else:
+					headerTopStr += "-"
 			headerTopStr = "+" + headerTopStr + "+"
 			
-			headerString  = "//" + headerTopStr + "\n" + indentationStr
-			headerString += "//|" + selectionStr + "|" + "\n" + indentationStr
-			headerString += "//" + headerTopStr
+			commentStr = "// "
+			metaInfo = self.view.meta_info("shellVariables", region.begin())
+			if (metaInfo != None):
+				for item in metaInfo:
+					if ('name' in item and 'value' in item and item['name'] == "TM_COMMENT_START"):
+						commentStr = item['value']
+						break
+			
+			headerString  = commentStr + headerTopStr + "\n" + indentationStr
+			headerString += commentStr + "|" + selectionStr + "|" + "\n" + indentationStr
+			headerString += commentStr + headerTopStr
 			
 			self.view.replace(edit, region, headerString);
-			
+
+

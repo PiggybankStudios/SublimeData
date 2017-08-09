@@ -16,9 +16,9 @@ variables:
   microsoft_types: '__int8|__int16|__int32|__int64'
   windows_types: 'APIENTRY|ATOM|BOOL|BOOLEAN|BYTE|CALLBACK|CCHAR|CHAR|COLORREF|CONST|DWORD|DWORDLONG|DWORD_PTR|DWORD32|DWORD64|FLOAT|HACCEL|HALF_PTR|HANDLE|HBITMAP|HBRUSH|HCOLORSPACE|HCONV|HCONVLIST|HCURSOR|HDC|HDDEDATA|HDESK|HDROP|HDWP|HENHMETAFILE|HFILE|HFONT|HGDIOBJ|HGLOBAL|HHOOK|HICON|HINSTANCE|HKEY|HKL|HLOCAL|HMENU|HMETAFILE|HMODULE|HMONITOR|HPALETTE|HPEN|HRESULT|HRGN|HRSRC|HSZ|HWINSTA|HWND|INT|INT_PTR|INT8|INT16|INT32|INT64|LANGID|LCID|LCTYPE|LGRPID|LONG|LONGLONG|LONG_PTR|LONG32|LONG64|LPARAM|LPBOOL|LPBYTE|LPCOLORREF|LPCSTR|LPCTSTR|LPCVOID|LPCWSTR|LPDWORD|LPHANDLE|LPINT|LPLONG|LPSTR|LPTSTR|LPVOID|LPWORD|LPWSTR|LRESULT|PBOOL|PBOOLEAN|PBYTE|PCHAR|PCSTR|PCTSTR|PCWSTR|PDWORD|PDWORDLONG|PDWORD_PTR|PDWORD32|PDWORD64|PFLOAT|PHALF_PTR|PHANDLE|PHKEY|PINT|PINT_PTR|PINT8|PINT16|PINT32|PINT64|PLCID|PLONG|PLONGLONG|PLONG_PTR|PLONG32|PLONG64|POINTER_32|POINTER_64|POINTER_SIGNED|POINTER_UNSIGNED|PSHORT|PSIZE_T|PSSIZE_T|PSTR|PTBYTE|PTCHAR|PTSTR|PUCHAR|PUHALF_PTR|PUINT|PUINT_PTR|PUINT8|PUINT16|PUINT32|PUINT64|PULONG|PULONGLONG|PULONG_PTR|PULONG32|PULONG64|PUSHORT|PVOID|PWCHAR|PWORD|PWSTR|QWORD|SC_HANDLE|SC_LOCK|SERVICE_STATUS_HANDLE|SHORT|SIZE_T|SSIZE_T|TBYTE|TCHAR|UCHAR|UHALF_PTR|UINT|UINT_PTR|UINT8|UINT16|UINT32|UINT64|ULONG|ULONGLONG|ULONG_PTR|ULONG32|ULONG64|UNICODE_STRING|USHORT|USN|VOID|WCHAR|WINAPI|WORD'
   stdint: 'u8|u16|u32|u64|i8|i16|i32|i64|r32|r64|bool32|flags8|int8|int16|int32|int64|uint8|uint16|uint32|uint64|real32|real64|byte|byte_t|int8_t|int16_t|int32_t|int64_t|uint8_t|uint16_t|uint32_t|uint64_t|int_least8_t|int_least16_t|int_least32_t|int_least64_t|uint_least8_t|uint_least16_t|uint_least32_t|uint_least64_t|int_fast8_t|int_fast16_t|int_fast32_t|int_fast64_t|uint_fast8_t|uint_fast16_t|uint_fast32_t|uint_fast64_t|intptr_t|uintptr_t|intmax_t|intmax_t|uintmax_t|uintmax_t'
-  custom_types: 'SomeStruct_t'
-  custom_constants: 'ALERT_OUTPUT_ENABLED|ANALOG|CLEARED|DEBUG_BAUD_RATE|DEBUG_BRG_CONFIG|DEBUG_FIFO_BUFFER_SIZE|DEBUG_OUTPUT_ENABLED|DEBUG_READ_LINE_BUFFER_SIZE|DEBUG_UART_PRINT_BUFFER_SIZE|DIGITAL|DISABLED|ECHO_INPUT_CHARACTERS|ENABLED|FILLED|HIGH|INFO_OUTPUT_ENABLED|INPUT|INSTRUCTION_CLOCK_FREQUENCY|LED_OFF|LED_ON|LOW|MHz|MegaHertz|NOTIFY_OUTPUT_ENABLED|OUTPUT|OutputLevel_Alert|OutputLevel_Debug|OutputLevel_Info|OutputLevel_Notify|PERIPHERAL_BUS_CLOCK_FREQUENCY|PRESSED|PRINT_OUTPUT_LEVEL_DEF|RELEASED|SYSTEM_CLOCK_FREQUENCY|USE_SMALL_PRINTF|WINDOWS_STYLE_LINE_ENDINGS|kHz|kiloHertz'
-  custom_globals: ''
+  custom_types: 'OutputLevel_t'
+  custom_constants: 'ALERT_OUTPUT_ENABLED|ANALOG|BASE|CAD_DETECT_ENABLED|CLEARED|CURRENT|DEBUG_BAUD_RATE|DEBUG_BRG_CONFIG|DEBUG_FIFO_BUFFER_SIZE|DEBUG_OUTPUT_ENABLED|DEBUG_READ_LINE_BUFFER_SIZE|DEBUG_UART_PRINT_BUFFER_SIZE|DECRYPT|DIGITAL|DISABLED|ECHO_INPUT_CHARACTERS|ENABLED|ENABLE_TCXO|ENCRYPT|FILLED|HIGH|HIGH_BAND_FREQUENCY|INFO_OUTPUT_ENABLED|INPUT|INSTRUCTION_CLOCK_FREQUENCY|LAST|LED_OFF|LED_ON|LIBRARY_DEBUG_OUT|LIB_DEBUG_PRINT_STATE|LOW|LOW_BAND_FREQUENCY|MAX_HOPPING_FREQUENCIES|MAX_RETRY_WAIT_PACKETS|MHz|MID_BAND_FREQUENCY|MegaHertz|NEXT|NOTIFY_OUTPUT_ENABLED|NUM_HOPPING_TABLES|OUTPUT|OutputLevel_Alert|OutputLevel_Debug|OutputLevel_Info|OutputLevel_Notify|PERIPHERAL_BUS_CLOCK_FREQUENCY|PRESSED|PRINT_OUTPUT_LEVEL_DEF|RADIO_CHIP_SELECT_VALUE|RADIO_DEBUG_PRINT_STATE|RADIO_TURNAROUND_TIME|RELEASED|RX_FIFO_BASE_ADDR|SX1276_CLKOUT|SYSTEM_CLOCK_FREQUENCY|TCXO_FREQUENCY|TX_FIFO_BASE_ADDR|USE_50_FH_TABLES|USE_72_FH_TABLES|USE_85_FH_TABLES|USE_RADIO_ENCRYPTION|USE_SMALL_PRINTF|WINDOWS_STYLE_LINE_ENDINGS|kHz|kiloHertz'
+  custom_globals: 'GetRadioData|TickCounter|WaitTxDone'
   declspec: '__declspec\(\s*\w+(?:\([^)]+\))?\s*\)'
   storage_classes: 'static|extern|register|{{declspec}}'
   type_qualifier: 'const|volatile'
@@ -85,7 +85,7 @@ contexts:
           scope: custom.string.c
         - match: '[\+\-\=]{3,}$'
           scope: custom.string.c
-        - match: '\| *((?:[A-Za-z0-9_\\\/\-]+\s?){1,}) +\|$'
+        - match: '\| +((?:[^\s\|]+\s?){1,}) +\|$'
           scope: custom.string.c
           captures:
             1: entity.name.function.header.c
@@ -161,6 +161,53 @@ contexts:
       scope: custom.constant.c
     - match: \b(__FILE__|__FUNCTION__|__LINE__)\b
       scope: support.constant.c
+    # PIC GPIO Registers
+    - match: \b(TRIS[A-Z](?:bits)?(?:\s*\.\s*TRIS[A-Z][0-9]{1,2}){0,1})\b
+      scope: custom.global.c
+    - match: \b(PORT[A-Z](?:bits)?(?:\s*\.\s*R[A-Z][0-9]{1,2}){0,1})\b
+      scope: custom.global.c
+    - match: \b(LAT[A-Z](?:bits)?(?:\s*\.\s*LAT[A-Z][0-9]{1,2}){0,1})\b
+      scope: custom.global.c
+    - match: \b(ANSEL[A-Z](?:bits)?(?:\s*\.\s*ANS[A-Z][0-9]{1,2}){0,1})\b
+      scope: custom.global.c
+    - match: \b(CNPU[A-Z](?:bits)?(?:\s*\.\s*CNPU[A-Z][0-9]{1,2}){0,1})\b
+      scope: custom.global.c
+    - match: \b(CNPD[A-Z](?:bits)?(?:\s*\.\s*CNPD[A-Z][0-9]{1,2}){0,1})\b
+      scope: custom.global.c
+    - match: \b(ODC[A-Z](?:bits)?(?:\s*\.\s*ODC[A-Z][0-9]{1,2}){0,1})\b
+      scope: custom.global.c
+    - match: \b(CNF[A-Z](?:bits)?(?:\s*\.\s*CNF[A-Z][0-9]{1,2}){0,1})\b
+      scope: custom.global.c
+    - match: \b(CNEN[A-Z](?:bits)?(?:\s*\.\s*CNIE[A-Z][0-9]{1,2}){0,1})\b
+      scope: custom.global.c
+    - match: \b(CNNE[A-Z](?:bits)?(?:\s*\.\s*CNNE[A-Z][0-9]{1,2}){0,1})\b
+      scope: custom.global.c
+    - match: \b(IPC[0-9]{1,2}(?:bits)?(?:\s*\.\s*[A-Z0-9]*I(P|S)){0,1})\b
+      scope: custom.global.c
+    - match: \b(IEC[0-9]{1,2}(?:bits)?(?:\s*\.\s*[A-Z0-9]*IE){0,1})\b
+      scope: custom.global.c
+    - match: \b(IFS[0-9]{1,2}(?:bits)?(?:\s*\.\s*[A-Z0-9]*IF){0,1})\b
+      scope: custom.global.c
+    - match: \b(RPOR[0-9]{1,2}(?:bits)?(?:\s*\.\s*RP[0-9]{1,2}R){0,1})\b
+      scope: custom.global.c
+    - match: \b(RPINR[0-9]{1,2}(?:bits)?(?:\s*\.\s*[A-Z0-9]+R){0,1})\b
+      scope: custom.global.c
+    - match: \b(RP[A-Z][0-9]{1,2}R(?:bits)?(?:\s*\.\s*RP[A-Z][0-9]{1,2}R){0,1})\b
+      scope: custom.global.c
+    - match: \b(U[0-9]MODE(?:bits)?(?:\s*\.\s*[A-Z0-9]*){0,1})\b
+      scope: custom.global.c
+    - match: \b(U[0-9]STA(?:bits)?(?:\s*\.\s*[A-Z0-9]*){0,1})\b
+      scope: custom.global.c
+    - match: \b(U[0-9]BRG(?:bits)?(?:\s*\.\s*[A-Z0-9]*){0,1})\b
+      scope: custom.global.c
+    - match: \b(SPI[0-9]CON[0-9]?(?:bits)?(?:\s*\.\s*[A-Z0-9]*){0,1})\b
+      scope: custom.global.c
+    - match: \b(SPI[0-9]STAT(?:bits)?(?:\s*\.\s*[A-Z0-9]*){0,1})\b
+      scope: custom.global.c
+    - match: \b(SPI[0-9]BRG(?:bits)?(?:\s*\.\s*[A-Z0-9]*){0,1})\b
+      scope: custom.global.c
+    - match: \b(SPI[0-9]BUF(?:bits)?(?:\s*\.\s*[A-Z0-9]*){0,1})\b
+      scope: custom.global.c
     # common C constant naming idiom -- kConstantVariable
     - match: '\bk[A-Z]\w*\b'
       scope: constant.other.variable.mac-classic.c

@@ -36,6 +36,7 @@ c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(346): 
 	[-] Handle acronymns in NamingConventions plugin. e.g. "transmitUIDLength"
 	[X] Add some more comment block syntax things to My C.sublime-syntax
 	[X] Add new and delete keywords to My C
+	[X] Add common PIC register definitions to My C.sublime-syntax
 	[ ] Add shortcuts to check off a checklist item in TODO list syntax
 	[ ] A shortcut for adding function documentation
 	[ ] Add #ifndef and #endif prefabs to CreateFileHeaderCommand
@@ -44,8 +45,8 @@ c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(346): 
 	[ ] Fix My C so that definition lookups still work. Maybe look at command for f12 binding?
 	[ ] Change ctrl+D to be case sensitive
 	[!] Add spaces to NamingConventions plugin to allow seperating identifiers to and from regularly spaced words
+	[ ] Make the CreateLocalHeaderCommand work with already created headers to reformat them
 	[ ] 
-
 
 AnotherNamingConvention
 BLE_Update_Handler_Thing_t

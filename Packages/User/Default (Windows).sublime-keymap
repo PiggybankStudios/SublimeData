@@ -74,10 +74,10 @@
 	// { "keys": ["ctrl+shift+f"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+g"], "command": "pound_replace"},
 	{ "keys": ["ctrl+shift+h"], "command": "create_file_header"},
-	{ "keys": ["ctrl+shift+j"], "command": "create_local_header"},
-	// { "keys": ["ctrl+shift+k"], "command": "pound_replace"},
+	{ "keys": ["ctrl+shift+j"], "command": "create_local_header", "args": { "width": 32, "bold": true } },
+	{ "keys": ["ctrl+shift+k"], "command": "create_local_header", "args": { "width": 64, "bold": false } },
 	// { "keys": ["ctrl+shift+l"], "command": "pound_replace"},
-
+	
 	{ "keys": ["ctrl+shift+z"], "command": "redo"},
 	// { "keys": ["ctrl+shift+x"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+c"], "command": "pound_replace"},
