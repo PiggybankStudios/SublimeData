@@ -43,8 +43,8 @@ c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(346): 
 	[ ] Fix problem with adding comment additions breaks Function() parentheses
 	[X] Change the kill line command so it places the cursor on the next line at the same column
 	[ ] Fix My C so that definition lookups still work. Maybe look at command for f12 binding?
-	[ ] Change ctrl+D to be case sensitive
-	[!] Add spaces to NamingConventions plugin to allow seperating identifiers to and from regularly spaced words
+	[!] Change ctrl+D to be case sensitive
+	[ ] Add spaces to NamingConventions plugin to allow seperating identifiers to and from regularly spaced words
 	[ ] Make the CreateLocalHeaderCommand work with already created headers to reformat them
 	[ ] 
 

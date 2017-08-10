@@ -1,0 +1,17 @@
+<snippet>
+	<content><![CDATA[
+//Input @${1:SOMENAME} ${2:X}${3:9} (TP${4:#})
+#define ${1:SOMENAME}_DIRECTION      TRIS${2:X}bits.TRIS${2:X}${3:9}
+#define ${1:SOMENAME}_MODE          ANSEL${2:X}bits. ANS${2:X}${3:9}
+#define ${1:SOMENAME}_PULLUP         CNPU${2:X}bits.CNPU${2:X}${3:9}
+#define ${1:SOMENAME}_PULLDOWN       CNPD${2:X}bits.CNPD${2:X}${3:9}
+#define ${1:SOMENAME}_CN_FLAG         CNF${2:X}bits. CNF${2:X}${3:9}
+#define ${1:SOMENAME}_CN_RISE_EDGE   CNEN${2:X}bits.CNIE${2:X}${3:9}
+#define ${1:SOMENAME}_CN_FALL_EDGE   CNNE${2:X}bits.CNNE${2:X}${3:9}
+#define ${1:SOMENAME}_VALUE          PORT${2:X}bits.   R${2:X}${3:9}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>PIN_INPUT</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c</scope>
+</snippet>

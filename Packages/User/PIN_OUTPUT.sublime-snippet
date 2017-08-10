@@ -1,0 +1,13 @@
+<snippet>
+	<content><![CDATA[
+//Output @${1:SOMENAME} ${2:X}${3:9} (TP${4:#})
+#define ${1:SOMENAME}_DIRECTION      TRIS${2:X}bits.TRIS${2:X}${3:9}
+#define ${1:SOMENAME}_MODE          ANSEL${2:X}bits. ANS${2:X}${3:9}
+#define ${1:SOMENAME}_OPEN_DRAIN      ODC${2:X}bits. ODC${2:X}${3:9}
+#define ${1:SOMENAME}_VALUE           LAT${2:X}bits. LAT${2:X}${3:9}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>PIN_OUTPUT</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c</scope>
+</snippet>

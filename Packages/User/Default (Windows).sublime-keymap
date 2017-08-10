@@ -5,7 +5,7 @@
 	{ "keys": ["ctrl+q"], "command": "focus_neighboring_group"},
 	{ "keys": ["ctrl+w"], "command": "close"},
 	{ "keys": ["ctrl+e"], "command": "reopen_last_file"},
-	{ "keys": ["ctrl+r"], "command": "kill_word"},
+	{ "keys": ["ctrl+r"], "command": "grab_next", "args": { "case_sensitive": true, "forward": true, "word_bounded": false } },
 	{ "keys": ["ctrl+t"], "command": "show_overlay", "args": {"overlay": "goto", "text": "@"} },
 	{ "keys": ["ctrl+y"], "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} },
 	{ "keys": ["ctrl+u"], "command": "show_overlay", "args": {"overlay": "goto", "text": "#"} },
@@ -15,9 +15,9 @@
 
 	{ "keys": ["ctrl+a"], "command": "select_all" },
 	{ "keys": ["ctrl+s"], "command": "save" },
-	{ "keys": ["ctrl+d"], "command": "find_under_expand" },
+	{ "keys": ["ctrl+d"], "command": "find_under_expand" }, //TODO: Rebind me!
 	{ "keys": ["ctrl+f"], "command": "show_panel", "args": {"panel": "find", "reverse": false} },
-	{ "keys": ["ctrl+g"], "command": "expand_selection", "args": {"to": "word"} },
+	{ "keys": ["ctrl+g"], "command": "expand_selection", "args": {"to": "word"} }, //TODO: Rebind me?
 	{ "keys": ["ctrl+h"], "command": "open_header", "args": {"extensions": ["cpp", "c", "h", "hpp"]} },
 	{ "keys": ["ctrl+j"], "command": "toggle_distraction_free" },
 	{ "keys": ["ctrl+k"], "command": "kill_line" },
@@ -60,7 +60,7 @@
 	// { "keys": ["ctrl+shift+q"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+w"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+e"], "command": "pound_replace"},
-	// { "keys": ["ctrl+shift+r"], "command": "pound_replace"},
+	{ "keys": ["ctrl+shift+r"], "command": "grab_next", "args": { "case_sensitive": true, "forward": false, "word_bounded": false } },
 	{ "keys": ["ctrl+shift+t"], "command": "goto_symbol_in_project"},
 	// { "keys": ["ctrl+shift+y"], "command": "pound_replace"},
 	// { "keys": ["ctrl+shift+u"], "command": "pound_replace"},
