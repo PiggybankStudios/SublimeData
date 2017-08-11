@@ -117,7 +117,7 @@ class GrabNextCommand(sublime_plugin.TextCommand):
 			self.view.window().status_message("%u/%u Selected: %u above, %u middle, %u below" % (numSelected, len(findResults), numUnselectedAbove, numUnselectedMiddle, numUnselectedBelow))
 		
 		if (show_at_center):
-			self.view.run_command("show_at_center")
+			self.view.show_at_center(findResults[newSelectionIndex])
 		
 		# if (forward):
 		# 	findResult = self.view.find(regexStr, lastRegion.end(), regexFlags)
