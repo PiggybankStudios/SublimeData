@@ -273,10 +273,13 @@ def LineIsEmpty(line):
 		return False;
 
 class MoveToEmptyLineCommand(sublime_plugin.TextCommand):
-	def run(self, edit, forward=True):
+	def run(self, edit, forward=True, expand_selection=False, show_at_center=True):
 		newSelections = []
 		for region in self.view.sel():
-			originRow, originColumn = self.view.rowcol(region.begin())
+			originPos = region.begin()
+			if (forward):
+				originPos = region.end()
+			originRow, originColumn = self.view.rowcol(originPos)
 			currentLine = "somethingNotEmpty";
 			currentRow = originRow;
 			foundBeginning = False;
@@ -309,14 +312,20 @@ class MoveToEmptyLineCommand(sublime_plugin.TextCommand):
 				lineLength = len(currentLine)
 				newPos = self.view.text_point(currentRow, lineLength);
 			
-			newRegion = sublime.Region(newPos, newPos);
+			if (expand_selection):
+				if (forward):
+					newRegion = sublime.Region(region.begin(), newPos);
+				else:
+					newRegion = sublime.Region(region.end(), newPos);
+			else:
+				newRegion = sublime.Region(newPos, newPos);
 			newSelections.append(newRegion);
 		
 		self.view.sel().clear();
 		self.view.sel().add_all(newSelections);
 		
-		if (len(newSelections) == 1):
-			self.view.run_command("show_at_center");
+		if (show_at_center and len(newSelections) == 1):
+			self.view.show_at_center(newSelections[0].b);
 
 
 class KillLineCommand(sublime_plugin.TextCommand):

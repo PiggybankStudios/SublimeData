@@ -12,7 +12,7 @@ def RegionInSelections(region, selections):
 	return False
 
 class GrabNextCommand(sublime_plugin.TextCommand):
-	def run(self, edit, case_sensitive=True, forward=True, word_bounded=False, do_selection=True, show_at_center=True, print_success_info=True, expand_to_word=True):
+	def run(self, edit, case_sensitive=True, forward=True, word_bounded=False, do_selection=True, show_at_center=True, print_success_info=True, expand_to_word=True, loop_around=True):
 		selections = self.view.sel()
 		if (selections == None or len(selections) == 0):
 			self.view.window().status_message("No selections!")
@@ -21,12 +21,14 @@ class GrabNextCommand(sublime_plugin.TextCommand):
 		lastRegion = selections[-1]
 		lastRegionStr = self.view.substr(lastRegion)
 		
+		# If the last selection is an empty string we can't do a search for anything
 		if (len(lastRegionStr) == 0):
 			self.view.window().status_message("Last selection is empty")
 			if (expand_to_word):
 				self.view.run_command("expand_selection", {"to": "word"})
 			return
 		
+		# Build the regular expression we will use to search
 		regexFlags = 0
 		regexStr = re.escape(lastRegionStr)
 		if (case_sensitive == False):
@@ -35,18 +37,26 @@ class GrabNextCommand(sublime_plugin.TextCommand):
 			regexStr = "\\b" + regexStr + "\\b"
 		# print("Regular expression: " + str(regexStr))
 		
+		# Find all the instances in the file
 		findResults = self.view.find_all(regexStr, regexFlags)
-		isSelected = []
 		
+		isSelected = []
 		numSelected = 0
+		
 		firstSelectionIndex = 0
 		lastSelectionIndex = 0
+		
 		numUnselectedAbove = 0
 		numUnselectedMiddle = 0
 		numUnselectedBelow = 0
+		
 		sIndex = 0
 		allSelected = True
 		foundFirstSelected = False
+		
+		# Loop through the regions we found and see which
+		# ones are selected (filling the isSelected array)
+		# We also count various things for later use
 		for region in findResults:
 			if (RegionInSelections(region, selections)):
 				# print("Selected: " + str(region))
@@ -70,7 +80,6 @@ class GrabNextCommand(sublime_plugin.TextCommand):
 			
 			sIndex += 1
 		
-		
 		if (allSelected):
 			self.view.window().status_message("All regions already selected")
 			return
@@ -81,6 +90,9 @@ class GrabNextCommand(sublime_plugin.TextCommand):
 		else:
 			sIndex = len(findResults)-1
 		newSelectionIndex = None
+		
+		# Loop through the selections (forward or backward) and choose
+		# an unselected region to select next
 		while (True):
 			if (isSelected[sIndex]):
 				foundSelected = True
@@ -91,14 +103,21 @@ class GrabNextCommand(sublime_plugin.TextCommand):
 			if (forward):
 				sIndex += 1
 				if (sIndex >= len(findResults)):
+					if (loop_around == False):
+						self.view.window().status_message("Reached end of file")
+						return
 					sIndex = 0
 			else:
 				sIndex -= 1
 				if (sIndex < 0):
+					if (loop_around == False):
+						self.view.window().status_message("Reached beginning of file")
+						return
 					sIndex = len(findResults)-1
 		
 		if (newSelectionIndex == None):
 			print("ERROR: I don't know how we got here")
+			# We should have returned above if all of the regions were selected
 			return
 		
 		if (do_selection):
@@ -120,31 +139,5 @@ class GrabNextCommand(sublime_plugin.TextCommand):
 		
 		if (show_at_center):
 			self.view.show_at_center(findResults[newSelectionIndex])
-		
-		# if (forward):
-		# 	findResult = self.view.find(regexStr, lastRegion.end(), regexFlags)
-			
-		# 	if (findResult.a == -1): # No result found
-		# 		findResult = self.view.find(regexStr, 0, regexFlags)
-				
-		# 		while (findResult.a != -1 and findResult in selections and findResult.begin() < lastRegion.begin()):
-		# 			findResult = self.view.find(regexStr, findResult.end(), regexFlags)
-				
-		# 		if (findResult.a == -1):
-		# 			print("Selection doesn't exist anywhere else")
-		# 			return
-		# 		if (findResult.begin() >= lastRegion.begin()):
-		# 			print("All instances selected")
-		# 			return
-			
-		# else:
-		# 	print("Backward search currently isn't supported")
-		# 	return
-		
-		# if (findResult in selections):
-		# 	print("Next item is already selected")
-		# 	return
-		
-		# self.view.sel().add(findResult)
 
 
