@@ -12,7 +12,7 @@ def RegionInSelections(region, selections):
 	return False
 
 class GrabNextCommand(sublime_plugin.TextCommand):
-	def run(self, edit, case_sensitive=True, forward=True, word_bounded=False, do_selection=True, show_at_center=True, print_success_info=True):
+	def run(self, edit, case_sensitive=True, forward=True, word_bounded=False, do_selection=True, show_at_center=True, print_success_info=True, expand_to_word=True):
 		selections = self.view.sel()
 		if (selections == None or len(selections) == 0):
 			self.view.window().status_message("No selections!")
@@ -23,6 +23,8 @@ class GrabNextCommand(sublime_plugin.TextCommand):
 		
 		if (len(lastRegionStr) == 0):
 			self.view.window().status_message("Last selection is empty")
+			if (expand_to_word):
+				self.view.run_command("expand_selection", {"to": "word"})
 			return
 		
 		regexFlags = 0
