@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: My Regular Expressions File
+file-extensions: 
+  - rgx
+scope: text.myregex
+
+contexts: 
+  main:
+    - match: '^\s*#[^\n]*$'
+      scope: comment.myregex
+    - match: '^\s*([_A-Za-z][_A-Za-z0-9]*)(\:)\s+'
+      captures:
+        1: identifier.myregex
+        2: operator.seperator.myregex
+      push: 'Packages/Regular Expressions/RegExp.sublime-syntax'
+      with_prototype:
+        - match: (?=\n)
+          pop: true

@@ -214,7 +214,7 @@
 				<key>foreground</key><string>#F8F8F2</string>
 			</dict>
 		</dict>
-
+		
 		<dict>
 			<key>name</key><string>diff.header</string>
 			<key>scope</key><string>meta.diff, meta.diff.header</string>
@@ -263,7 +263,10 @@
 				<key>foreground</key><string>#F83333</string>
 			</dict>
 		</dict>
-
+		
+		<!-- +----------------------------------------------------------------+ -->
+		<!-- |                          Custom Types                          | -->
+		<!-- +----------------------------------------------------------------+ -->
 		<dict>
 			<key>name</key><string>Custom Type</string>
 			<key>scope</key><string>custom.type</string>
@@ -341,6 +344,38 @@
 			<key>scope</key><string>punctuation.definition.dictionary</string>
 			<key>settings</key><dict>
 				<key>foreground</key><string>#FD971F</string>
+			</dict>
+		</dict>
+		
+		<dict>
+			<key>name</key><string>My Regex Identifier</string>
+			<key>scope</key><string>identifier.myregex</string>
+			<key>settings</key><dict>
+				<key>foreground</key><string>#A6E22E</string>
+			</dict>
+		</dict>
+		
+		<dict>
+			<key>name</key><string>Regular Expression Quantifier</string>
+			<key>scope</key><string>source.regexp keyword.operator.quantifier</string>
+			<key>settings</key><dict>
+				<key>foreground</key><string>#FD971F</string>
+			</dict>
+		</dict>
+
+		<dict>
+			<key>name</key><string>Custom Global</string>
+			<key>scope</key><string>source.regexp constant.character.escape</string>
+			<key>settings</key><dict>
+				<key>foreground</key><string>#CFCFC2</string>
+			</dict>
+		</dict>
+
+		<dict>
+			<key>name</key><string>Custom Global</string>
+			<key>scope</key><string>(source.regexp keyword.control.group | source.regexp keyword.control.set)</string>
+			<key>settings</key><dict>
+				<key>foreground</key><string>#66D9EF</string>
 			</dict>
 		</dict>
 
