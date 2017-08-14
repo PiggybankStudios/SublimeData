@@ -9,7 +9,7 @@ contexts:
   main:
     - match: '^\s*#[^\n]*$'
       scope: comment.myregex
-    - match: '^\s*((?:[_A-Za-z0-9]*\s?){1,})(\:)\s+'
+    - match: '^\s*((?:[_A-Za-z0-9]*\s?){1,})(\:)\s*'
       captures:
         1: identifier.myregex
         2: operator.seperator.myregex
