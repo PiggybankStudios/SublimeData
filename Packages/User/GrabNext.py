@@ -12,7 +12,7 @@ def RegionInSelections(region, selections):
 	return False
 
 class GrabNextCommand(sublime_plugin.TextCommand):
-	def run(self, edit, case_sensitive=True, forward=True, word_bounded=False, do_selection=True, show_at_center=True, print_success_info=True, expand_to_word=True, loop_around=True):
+	def run(self, edit, case_sensitive=True, forward=True, word_bounded=False, do_selection=True, show_new_location=True, print_success_info=True, expand_to_word=True, loop_around=True):
 		selections = self.view.sel()
 		if (selections == None or len(selections) == 0):
 			self.view.window().status_message("No selections!")
@@ -137,7 +137,7 @@ class GrabNextCommand(sublime_plugin.TextCommand):
 		if (print_success_info):
 			self.view.window().status_message("%u/%u Selected: %u above, %u middle, %u below" % (numSelected, len(findResults), numUnselectedAbove, numUnselectedMiddle, numUnselectedBelow))
 		
-		if (show_at_center):
-			self.view.show_at_center(findResults[newSelectionIndex])
+		if (show_new_location):
+			self.view.show(findResults[newSelectionIndex])
 
 

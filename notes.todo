@@ -18,8 +18,6 @@
 |   829520 custom.identifier.todo
 =   FD971F custom.thing.todo
 
-c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(346): note: see declaration of 'strncpy'
-
 #TODO List
 	[X] Figure out why goto header/source file isn't working when they are in seperate folders
 	[X] Add word wrapping by default to the output panel of Custom-Types plugin
@@ -46,7 +44,7 @@ c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(346): 
 	[X] Change ctrl+D to be case sensitive
 	[ ] Add spaces to NamingConventions plugin to allow seperating identifiers to and from regularly spaced words
 	[ ] Make the CreateLocalHeaderCommand work with already created headers to reformat them
-	[ ] Create a better show_at_center function that doesn't recenter the view unless the item is too far up or down in the viewport
+	[-] Create a better show_at_center function that doesn't recenter the view unless the item is too far up or down in the viewport
 
 AnotherNamingConvention
 BLE_Update_Handler_Thing_t
@@ -55,4 +53,5 @@ one_naming_convention
 My314NumberIs15
 _LeadingUnderscore_
 9InvalidIdentifier
-function(uint8_t functionName) { DEBUG_Print("Hello"); }	
+function(uint8_t functionName) { DEBUG_Print("Hello"); }
+Name With Spaces

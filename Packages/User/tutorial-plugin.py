@@ -560,3 +560,8 @@ class AsciiToHexCommand(sublime_plugin.TextCommand):
 						wasNewLine = False
 				
 				self.view.replace(edit, region, replaceStr)
+
+# class ShowPositionCommand(sublime_plugin.TextCommand):
+# 	def run(self, edit, position, buffer_size=5):
+# 		row, col = self.view.rowcol(position)
+# 		
