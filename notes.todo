@@ -45,6 +45,12 @@
 	[ ] Add spaces to NamingConventions plugin to allow seperating identifiers to and from regularly spaced words
 	[ ] Make the CreateLocalHeaderCommand work with already created headers to reformat them
 	[-] Create a better show_at_center function that doesn't recenter the view unless the item is too far up or down in the viewport
+	[ ] Make the selection functionality in MoveToEmptyLine work backwards to unselect stuff if I went to far
+	[ ] Add a hot key to jump to next/last function definition (or header)
+
+[!] These characters don't work in view.find_all! https://forum.sublimetext.com/t/view-find-all-doesnt-work-with-certain-characters/30609
+' < > `
+radioVersion<build
 
 AnotherNamingConvention
 BLE_Update_Handler_Thing_t

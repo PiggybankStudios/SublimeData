@@ -39,6 +39,7 @@ class GrabNextCommand(sublime_plugin.TextCommand):
 		
 		# Find all the instances in the file
 		findResults = self.view.find_all(regexStr, regexFlags)
+		# print("Occurrences: " + str(findResults))
 		
 		isSelected = []
 		numSelected = 0

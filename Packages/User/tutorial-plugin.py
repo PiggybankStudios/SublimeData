@@ -325,7 +325,7 @@ class MoveToEmptyLineCommand(sublime_plugin.TextCommand):
 		self.view.sel().add_all(newSelections);
 		
 		if (show_at_center and len(newSelections) == 1):
-			self.view.show_at_center(newSelections[0].b);
+			self.view.show(newSelections[0].b);
 
 
 class KillLineCommand(sublime_plugin.TextCommand):
