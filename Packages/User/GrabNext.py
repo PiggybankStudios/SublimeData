@@ -31,6 +31,13 @@ class GrabNextCommand(sublime_plugin.TextCommand):
 		# Build the regular expression we will use to search
 		regexFlags = 0
 		regexStr = re.escape(lastRegionStr)
+		# NOTE: These characters are different in BOOST regular expressions
+		#		from python's regular expressions so we need to un-escape them
+		regexStr = regexStr.replace("\\<", "<")
+		regexStr = regexStr.replace("\\>", ">")
+		regexStr = regexStr.replace("\\'", "'")
+		regexStr = regexStr.replace("\\`", "`")
+		
 		if (case_sensitive == False):
 			regexFlags = sublime.IGNORECASE
 		if (word_bounded):
