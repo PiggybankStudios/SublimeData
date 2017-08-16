@@ -16,8 +16,9 @@
 				<key>selection</key><string>#000000</string>
 				<key>findHighlight</key><string>#FFE792</string>
 				<key>findHighlightForeground</key><string>#000000</string>
-				<key>selectionBorder</key><string>#66D9EF</string>
+				<key>selectionBorder</key><string>#F92672</string>
 				<key>activeGuide</key><string>#9D550FB0</string>
+				<key>inactiveSelection</key><string>#3B3A32</string>
 
 				<key>bracketsForeground</key><string>#F8F8F2A5</string>
 				<key>bracketsOptions</key><string>underline</string>
