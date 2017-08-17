@@ -1,6 +1,9 @@
 {
 	"auto_find_in_selection": true,
 	"caret_style": "phase",
+	"caret_extra_top": 0,
+    "caret_extra_bottom": 0,
+    "caret_extra_width": 0,
 	"color_scheme": "Packages/User/MyMonokai.tmTheme",
 	"drag_text": false,
 	"draw_minimap_border": true,
@@ -19,5 +22,6 @@
 	"show_encoding": false,
 	"show_line_endings": true,
 	"translate_tabs_to_spaces": false,
-	"trim_automatic_white_space": false
+	"trim_automatic_white_space": false,
+	"match_selection": true,
 }
