@@ -51,6 +51,7 @@
 	[ ] Add a PromptInsertNumsHexCommand
 	[ ] Make a command that gets rid of the empty/unindented lines by indenting them to their neighbors indentation level
 	[X] Make a command that finds the next/last region of characters that match a specific scope and jumps to them
+	[ ] Fix the KillLineCommand so multiple selection on consecutive lines works correctly
 
 !@#$%^&*()_+1234567890-={}[]:";'<>?,./|\~`
 !@#$%^&*()_+1234567890-={}[]:";'<>?,./|\~`
