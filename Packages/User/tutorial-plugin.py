@@ -648,6 +648,8 @@ class GotoNextScopeCommand(sublime_plugin.TextCommand):
 		newRegion = sublime.Region(min(firstIndex, lastIndex), min(firstIndex, lastIndex))
 		if (select_whole):
 			newRegion = sublime.Region(max(firstIndex, lastIndex), min(firstIndex, lastIndex))
+		regionStr = self.view.substr(newRegion)
+		self.view.window().status_message("Found %s" % regionStr)
 		if (success):
 			if (show_centered):
 				self.view.show_at_center(newRegion.b)
@@ -657,7 +659,7 @@ class GotoNextScopeCommand(sublime_plugin.TextCommand):
 				self.view.sel().clear()
 				self.view.sel().add(newRegion)
 		else:
-			print("No Entities Found")
+			self.view.window().status_message("No Matching Scopes Found")
 
 # class ShowPositionCommand(sublime_plugin.TextCommand):
 # 	def run(self, edit, position, buffer_size=5):

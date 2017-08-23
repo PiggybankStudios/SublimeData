@@ -53,7 +53,7 @@ contexts:
           scope: custom.thing.c
         - match: '\*\*[^\n\*\/]*\*{0,2}[^\/\*]'
           scope: custom.string.c
-        - match: '^\s*([A-Za-z0-9_ ]+)\:([\sA-Za-z0-9_\\\.]*)'
+        - match: '^\s*([A-Za-z0-9_ ]+)\:\s*([^\n]*)'
           captures: 
             1: custom.identifier.documentation.c
             2: entity.name.function-documentation.c
