@@ -46,12 +46,21 @@
 	[ ] Make the CreateLocalHeaderCommand work with already created headers to reformat them
 	[-] Create a better show_at_center function that doesn't recenter the view unless the item is too far up or down in the viewport
 	[ ] Make the selection functionality in MoveToEmptyLine work backwards to unselect stuff if I went too far
-	[ ] Add a hot key to jump to next/last function definition (or header)
+	[X] Add a hot key to jump to next/last function definition (or header)
 	[X] These characters don't work in view.find_all! https://forum.sublimetext.com/t/view-find-all-doesnt-work-with-certain-characters/30609
 	[ ] Add a PromptInsertNumsHexCommand
 	[ ] Make a command that gets rid of the empty/unindented lines by indenting them to their neighbors indentation level
 	[X] Make a command that finds the next/last region of characters that match a specific scope and jumps to them
 	[ ] Fix the KillLineCommand so multiple selection on consecutive lines works correctly
+	[!] Make a command to auto-indent empty lines to the same level as above line
+	[X] Make a command to align the next character to the same character in the next line
+	[X] See if we can unbind ALT key from selecting the menu bar?
+	[ ] Fix slight width difference in make local header command
+	[ ] Rebind Jump to Next/Last Function hotkey to something other than ctrl+d
+	[ ] Move each command into it's only file (all of them into a folder?)
+	[ ] Add Custom Functions to the Custom Types plugin simply for Auto-Complete purposes
+	[X] Add an option to my google search to remove text that was searched
+	[ ] Add a command that folds indented sections that align with the cursors indentation level
 
 !@#$%^&*()_+1234567890-={}[]:";'<>?,./|\~`
 !@#$%^&*()_+1234567890-={}[]:";'<>?,./|\~`
@@ -65,3 +74,9 @@ _LeadingUnderscore_
 9InvalidIdentifier
 function(uint8_t functionName) { DEBUG_Print("Hello"); }
 Name With Spaces
+
+ALT Hotkey can be disabled using AutoHotKey: 
+1. Install
+2. Make a file named noAlt.ahk with contents "~LAlt Up:: return"
+3. Right click and compile hotkey script
+4. Run the executable

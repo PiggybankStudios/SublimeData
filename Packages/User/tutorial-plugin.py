@@ -151,12 +151,12 @@ class KillWordCommand(sublime_plugin.TextCommand):
 		for region in self.view.sel():
 			word = self.view.word(region)
 			self.view.erase(edit, word)
-
+			
 class MyGoogleSearchCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
+	def run(self, edit, remove_text=False):
 		# print("Running")
 		searchString = ""
-		for region in self.view.sel():
+		for region in self.view.sel(): 
 			if (searchString != ""):
 				searchString = searchString + " "
 			searchString = searchString + self.view.substr(region)
@@ -168,6 +168,11 @@ class MyGoogleSearchCommand(sublime_plugin.TextCommand):
 			webbrowser.open("https://www.google.com/search?q=" + searchString)
 		else:
 			print("Nothing selected to search for")
+		
+		if (remove_text):
+			for region in self.view.sel():
+				self.view.erase(edit, region)
+			# self.view.sel().clear()
 
 def LineIsInclude(view, region):
 	matchRegex = "#include"
@@ -661,7 +666,125 @@ class GotoNextScopeCommand(sublime_plugin.TextCommand):
 		else:
 			self.view.window().status_message("No Matching Scopes Found")
 
+class DoNothingCommand(sublime_plugin.TextCommand):
+	def run(self):
+		print("Doing nothing!")
+
+def TextPointColumn(view, textPoint):
+	tabSize = view.settings().get("tab_size")
+	lineRegion = view.line(textPoint)
+	
+	if (lineRegion.size() == 0 or textPoint < lineRegion.begin() or textPoint >= lineRegion.end()):
+		return 0
+	
+	result = 0
+	for cIndex in range(0, textPoint-lineRegion.begin()):
+		c = view.substr(sublime.Region(lineRegion.begin() + cIndex, lineRegion.begin() + cIndex + 1))
+		if (c == "\t"):
+			actualTabSize = tabSize - (result%tabSize)
+			result += actualTabSize
+		else:
+			result += 1
+	
+	return result
+
+def RowColumnTextPoint(view, row, column):
+	tabSize = view.settings().get("tab_size")
+	lineRegion = view.line(view.text_point(row, 0))
+	
+	if (column == 0 or lineRegion.size() == 0):
+		return lineRegion.begin()
+	
+	currentCol = 0
+	result = lineRegion.begin();
+	for cIndex in range(0, lineRegion.size()):
+		c = view.substr(sublime.Region(lineRegion.begin() + cIndex, lineRegion.begin() + cIndex + 1))
+		if (c == "\t"):
+			actualTabSize = tabSize - (currentCol%tabSize)
+			currentCol += actualTabSize
+		else:
+			currentCol += 1
+		result += 1
+		
+		if (currentCol >= column):
+			break
+	
+	return result
+
+class AlignCharacterCommand(sublime_plugin.TextCommand):
+	def run(self, edit, case_sensitive=False):
+		
+		regions = self.view.sel()
+		
+		for rIndex in reversed(range(0, len(regions))):
+			region = regions[rIndex]
+			textPos = region.b
+			row, col = self.view.rowcol(textPos)
+			currentCol = TextPointColumn(self.view, textPos)
+			lineRegion = self.view.line(textPos)
+			lineStr = self.view.substr(lineRegion)
+			currentChar = self.view.substr(sublime.Region(textPos, textPos+1))
+			
+			if (len(currentChar) == 0):
+				print("No character after the cursor on line %d" % (row+1))
+				continue
+			
+			print("Char \'%c\' at line %d currentCol %d:\n%s" % (currentChar, row+1, currentCol, lineStr))
+			
+			nextLineStr = " "
+			nextLineRow = row
+			nextLineRegion = None
+			foundEndOfFile = False
+			while (LineIsEmpty(nextLineStr)):
+				nextLineRow += 1
+				nextLineRegion = self.view.line(self.view.text_point(nextLineRow, 0))
+				
+				if (nextLineRegion.begin() < lineRegion.end() or nextLineRegion.begin() >= self.view.size()):
+					foundEndOfFile = True
+					break
+				
+				nextLineStr = self.view.substr(nextLineRegion)
+			
+			if (foundEndOfFile):
+				print("End of file without finding a non-empty line")
+				continue
+			
+			print("Checking line %d:\n%s" % (nextLineRow, nextLineStr))
+			
+			nextTextPos = RowColumnTextPoint(self.view, nextLineRow, currentCol)
+			nextLineIndex = nextTextPos - nextLineRegion.begin()
+			
+			foundMatch  = False
+			matchColumn = 0
+			while (nextLineIndex < nextLineRegion.size()):
+				nextLineChar = self.view.substr(sublime.Region(nextLineRegion.begin() + nextLineIndex, nextLineRegion.begin() + nextLineIndex + 1))
+				if (nextLineChar == None):
+					nextLineIndex += 1
+					continue
+				
+				print("Char %d: \'%c\'" % (nextLineIndex, nextLineChar))
+				
+				if (nextLineChar == currentChar or (not case_sensitive and nextLineChar.lower() == currentChar.lower())):
+					foundMatch = True
+					matchColumn = TextPointColumn(self.view, nextLineRegion.begin() + nextLineIndex)
+					break
+				
+				nextLineIndex += 1
+			
+			if (foundMatch):
+				print("Found match at column %d" % (matchColumn))
+				print("Moving from column %d" % (currentCol))
+				
+				insertString = " " * (matchColumn - currentCol)
+				self.view.insert(edit, textPos, insertString)
+			else:
+				print("No match found in next line")
+
+
 # class ShowPositionCommand(sublime_plugin.TextCommand):
 # 	def run(self, edit, position, buffer_size=5):
 # 		row, col = self.view.rowcol(position)
 # 		
+
+# H
+#          h  Hello
