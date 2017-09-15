@@ -64,7 +64,7 @@
 	// { "keys": ["ctrl+shift+t"], "command": "do_nothing"},
 	// { "keys": ["ctrl+shift+y"], "command": "do_nothing"},
 	// { "keys": ["ctrl+shift+u"], "command": "do_nothing"},
-	// { "keys": ["ctrl+shift+i"], "command": "do_nothing"},
+	{ "keys": ["ctrl+shift+i"], "command": "indent_blank_lines"},
 	// { "keys": ["ctrl+shift+o"], "command": "do_nothing"},
 	// { "keys": ["ctrl+shift+p"], "command": "do_nothing"},
 

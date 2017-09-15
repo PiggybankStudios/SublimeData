@@ -780,6 +780,45 @@ class AlignCharacterCommand(sublime_plugin.TextCommand):
 			else:
 				print("No match found in next line")
 
+def GetLineIndentation(lineStr):
+	result = ""
+	
+	for cIndex in range(len(lineStr)):
+		if (lineStr[cIndex] =='\t' or lineStr[cIndex] == ' '):
+			result += lineStr[cIndex]
+		else:
+			break
+	
+	return result
+
+class IndentBlankLinesCommand(sublime_plugin.TextCommand):
+	def run(self, edit, use_tabs=True):
+		tabSize = self.view.settings().get("tab_size")
+		
+		rowIndex = 0
+		textPoint = 0
+		while (textPoint < self.view.size()):
+			textPoint = self.view.text_point(rowIndex, 0)
+			lineRegion = self.view.line(textPoint)
+			lineStr = self.view.substr(lineRegion)
+			
+			if (rowIndex > 0 and LineIsEmpty(lineStr) and len(lineStr) == 0):
+				lastLineRegion = self.view.line(self.view.text_point(rowIndex-1, 0))
+				lastLineStr = self.view.substr(lastLineRegion)
+				lastLineIndentation = GetLineIndentation(lastLineStr)
+				
+				if (ActualLineLength(tabSize, lineStr) < ActualLineLength(tabSize, lastLineIndentation)):
+					newLineStr = lineStr
+					while (ActualLineLength(tabSize, newLineStr) < ActualLineLength(tabSize, lastLineIndentation)):
+						if (use_tabs):
+							newLineStr += '\t'
+						else:
+							newLineStr += ' '
+					self.view.replace(edit, lineRegion, newLineStr)
+			
+			rowIndex += 1
+			textPoint = lineRegion.end()
+
 
 # class ShowPositionCommand(sublime_plugin.TextCommand):
 # 	def run(self, edit, position, buffer_size=5):
