@@ -38,7 +38,7 @@
 	[ ] Add shortcuts to check off a checklist item in TODO list syntax
 	[?] A shortcut for adding function documentation
 	[X] Add #ifndef and #endif prefabs to CreateFileHeaderCommand
-	[ ] Fix problem with adding comment additions breaks Function() parentheses
+	[-] Fix problem with adding comment additions breaks Function() parentheses
 	[X] Change the kill line command so it places the cursor on the next line at the same column
 	[ ] Fix My C so that definition lookups still work. Maybe look at command for f12 binding?
 	[X] Change ctrl+D to be case sensitive
@@ -56,11 +56,13 @@
 	[X] Make a command to align the next character to the same character in the next line
 	[X] See if we can unbind ALT key from selecting the menu bar?
 	[ ] Fix slight width difference in make local header command
-	[ ] Rebind Jump to Next/Last Function hotkey to something other than ctrl+d
+	[!] Rebind Jump to Next/Last Function hotkey to something other than ctrl+d (ctrl+alt+up/down)
 	[ ] Move each command into it's only file (all of them into a folder?)
 	[ ] Add Custom Functions to the Custom Types plugin simply for Auto-Complete purposes
 	[X] Add an option to my google search to remove text that was searched
 	[ ] Add a command that folds indented sections that align with the cursors indentation level
+	[ ] Rebind ctrl+d as jump to next match of selection
+	[ ] Combine common functions together into a single .py file that can be included
 
 !@#$%^&*()_+1234567890-={}[]:";'<>?,./|\~`
 !@#$%^&*()_+1234567890-={}[]:";'<>?,./|\~`
