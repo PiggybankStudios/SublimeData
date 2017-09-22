@@ -1,157 +1,31 @@
-import sublime
-import sublime_plugin
-import re
+import os, sys, sublime, sublime_plugin
+sys.path.append(os.path.dirname(__file__))
+import MyFunctions
 
+import re
 import webbrowser
 
-def GetCString(view, region):
-	startIndex = region.begin()
-	endIndex = region.end()
-	viewSize = view.size()
-	
-	if (startIndex == 0):
-		return "";
-	
-	# Step back till we find the (non-escaped) quotation mark or the beginning of line/file
-	currentChar = view.substr(startIndex-1)
-	while (startIndex > 0):
-		if (currentChar == '\"' and (startIndex <= 0 or view.substr(startIndex-2) != "\\")):
-			break
-		if (currentChar == '\n' or currentChar == '\r'):
-			# startIndex = startIndex + 1
-			return ""
-		if (currentChar == '<'):
-			break
-		if (endIndex - startIndex > 256):
-			break
-		# print("<" + currentChar)
-		startIndex = startIndex - 1
-		currentChar = view.substr(startIndex-1)
-	
-	if (startIndex == 0):
-		return "";
-	
-	# Step forward till we find the (non-escaped) quotation mark or the end of line/file
-	currentChar = view.substr(endIndex)
-	while (endIndex < viewSize):
-		if (currentChar == '\"' and (endIndex <= 0 or view.substr(endIndex-1) != "\\")):
-			break
-		if (currentChar == '\n' or currentChar == '\r'):
-			return ""
-		if (currentChar == '>'):
-			break;
-		if (endIndex - startIndex > 256):
-			break
-		# print(">" + currentChar)
-		endIndex = endIndex + 1
-		currentChar = view.substr(endIndex)
-	
-	if (endIndex >= viewSize):
-		return ""
-	
-	fileNameRegion = sublime.Region(startIndex, endIndex)
-	fileNameLength = endIndex - startIndex
-	fileName = view.substr(fileNameRegion)
-	# Enable this to escaped quotes into regular quotes in the result
-	# fileName = fileName.replace("\\\"", "\"")
-	
-	return fileName
-
-class PopupTestCommand(sublime_plugin.TextCommand):
-	popupItems = [
-	"Open String File", 
-	"Kill Word", 
-	"Pound Replace",
-	"Taylor Command",
-	"View Info",
-	"My Google Search",
-	"Update Custom Types",
-	"Custom Types Info",
-	"Let's Encrypt",
-	"Let's Decrypt",
-	"Open Header",
-	"Create File Header",
-	"Kill Line"]
-	
-	commandItems = [
-	"open_string_file", 
-	"kill_word", 
-	"pound_replace",
-	"taylor",
-	"view_info",
-	"my_google_search",
-	"update_custom_types",
-	"list_custom_types",
-	"lets_encrypt",
-	"lets_decrypt",
-	"open_header",
-	"create_file_header",
-	"kill_line"]
-	
-	def popupDone(self, selectedIndex):
-		# print("Selected " + self.popupItems[selectedIndex] + "!")
-		if (selectedIndex != -1):
-			print("Running command \"" + self.commandItems[selectedIndex] + "\"")
-			self.view.run_command(self.commandItems[selectedIndex])
-	
-	def run(self, edit):
-		self.view.show_popup_menu(self.popupItems, self.popupDone)
-	
-class TaylorCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
-		# resources = self.view.window().lookup_symbol_in_index("function")
-		# print(str(resources))
-		shell_vars = self.view.meta_info("shellVariables", self.view.sel()[0].begin())
-		if not shell_vars:
-			return ([], [])
-		
-		# transform the list of dicts into a single dict
-		all_vars = {}
-		for v in shell_vars:
-			if 'name' in v and 'value' in v:
-				all_vars[v['name']] = v['value']
-		
-		print("Shel Vars: " + str(all_vars))
-
-class ViewInfoCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
-		view = self.view
-		
-		visibleRegion = view.visible_region()
-		print("Visible region: [{}, {}]".format(visibleRegion.begin(), visibleRegion.end()))
-
-class ViewPoundReplaceCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
-		visibleRegion = self.view.visible_region()
-		
-		for cIndex in range(visibleRegion.begin(), visibleRegion.end()):
-			charRegion = sublime.Region(cIndex, cIndex+1)
-			currentChar = self.view.substr(charRegion)
-			
-			if (currentChar != '\n' and currentChar != '\r' and
-				currentChar != '\t' and currentChar != ' '):
-				self.view.replace(edit, charRegion, '#')
-
-class PoundReplaceCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
-		
+# Replaces the selected characters in the file with a specified character
+# This function skips replaces new line characters and tabs
+class CharacterReplaceCommand(sublime_plugin.TextCommand):
+	def run(self, edit, character="#"):
 		for region in self.view.sel():
-			
 			for cIndex in range(region.begin(), region.end()):
 				charRegion = sublime.Region(cIndex, cIndex+1)
 				currentChar = self.view.substr(charRegion)
-				
-				if (currentChar != '\n' and currentChar != '\r' and
-					currentChar != '\t' and currentChar != ' '):
-					self.view.replace(edit, charRegion, '#')
+				if (currentChar != '\n' and currentChar != '\r' and currentChar != '\t'):
+					self.view.replace(edit, charRegion, character)
 
-# This is a simple command that deletes the word(s) your cursor is inside
+# Expands each selection to word bounderies and then removes the characters in the selection
 class KillWordCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		for region in self.view.sel():
 			word = self.view.word(region)
 			self.view.erase(edit, word)
-			
+
+# Opens	up a web browser and searches the selected text on google
+# Multiple selections will be concatenated together with spaces into a single search
+# If remove_text is true then the selected text will be deleted at the same time
 class MyGoogleSearchCommand(sublime_plugin.TextCommand):
 	def run(self, edit, remove_text=False):
 		# print("Running")
@@ -174,25 +48,9 @@ class MyGoogleSearchCommand(sublime_plugin.TextCommand):
 				self.view.erase(edit, region)
 			# self.view.sel().clear()
 
-def LineIsInclude(view, region):
-	matchRegex = "#include"
-	matchLength = len(matchRegex)
-	lineRegion = view.line(region)
-	line = view.substr(lineRegion)
-	
-	if (len(line) < len(matchRegex) or 
-		line[0:matchLength] != matchRegex):
-		return False
-	
-	fileName = GetCString(view, region)
-	fileNameLength = len(fileName)
-	
-	return len(fileName) > 0
-	
-
-# This is a simple function that opens the goto window
-# with the name of the #include header file that your
-# cursor is on already entered into the text box
+# If the cursor is within the quotation marks or angle brackets of a C #include line
+# then this command will attempt to extract the file name and open up the goto window
+# with the file name pre-entered
 class OpenStringFileCommand(sublime_plugin.TextCommand):
 	
 	def want_event(self):
@@ -228,6 +86,8 @@ class OpenStringFileCommand(sublime_plugin.TextCommand):
 		
 		return LineIsInclude(self.view, region)
 
+# This listener works in tandem with the OpenStringFileCommand to provide a little
+# helpful window that shows up when hovering over a C #include line
 class IncludeHoverEventListener(sublime_plugin.ViewEventListener):
 	
 	def OnPopupLinkClicked(self, link):
@@ -248,35 +108,8 @@ class IncludeHoverEventListener(sublime_plugin.ViewEventListener):
 					sublime.HIDE_ON_MOUSE_MOVE_AWAY, point, 
 					100000, 10000, self.OnPopupLinkClicked)
 
-class LetsEncryptCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
-		for region in self.view.sel():
-			for cIndex in range(region.begin(), region.end()):
-				currentChar = self.view.substr(cIndex)
-				charNum = ord(currentChar)
-				charNum += 5
-				newChar = chr(charNum)
-				replaceRegion = sublime.Region(cIndex, cIndex+1)
-				self.view.replace(edit, replaceRegion, newChar)
-
-class LetsDecryptCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
-		for region in self.view.sel():
-			for cIndex in range(region.begin(), region.end()):
-				currentChar = self.view.substr(cIndex)
-				charNum = ord(currentChar)
-				charNum -= 5
-				newChar = chr(charNum)
-				replaceRegion = sublime.Region(cIndex, cIndex+1)
-				self.view.replace(edit, replaceRegion, newChar)
-
-def LineIsEmpty(line):
-	matchResult = re.search("^[\\t ]*$", line);
-	if (matchResult):
-		return True;
-	else:
-		return False;
-
+# This command moves each cursor to the next empty line from where it's currently at
+# It's designed to be a general purpose command with lots of options that can be set
 class MoveToEmptyLineCommand(sublime_plugin.TextCommand):
 	def run(self, edit, forward=True, expand_selection=False, show_at_center=True):
 		newSelections = []
@@ -332,7 +165,10 @@ class MoveToEmptyLineCommand(sublime_plugin.TextCommand):
 		if (show_at_center and len(newSelections) == 1):
 			self.view.show(newSelections[0].b);
 
-
+# This command simply removes the line that each cursor currently resides on.
+# If it resides on multiple it will kill all the lines it touches.
+# We also attempt to place the cursor on the next line following the one killed
+# at the same column that it was before you killed the line.
 class KillLineCommand(sublime_plugin.TextCommand):
 	def run(self, edit, next_line=True):
 		newRegions = [];
@@ -362,6 +198,8 @@ class KillLineCommand(sublime_plugin.TextCommand):
 		# self.view.sel().clear();
 		# self.view.sel().add_all(newRegions);
 
+# This command convertes to and from Decimal to Hexidecimal.
+# It works entirely on ASCII representations of numbers
 class ConvertToHexCommand(sublime_plugin.TextCommand):
 	def run(self, edit, undo=False):
 		for region in self.view.sel():
@@ -388,32 +226,10 @@ class ConvertToHexCommand(sublime_plugin.TextCommand):
 				replaceStr = "%X" % (integerValue)
 				self.view.replace(edit, region, replaceStr)
 
-class InsertNumsHexCommand(sublime_plugin.TextCommand):
-	def run(self, edit, start_num=0, padding=2):
-		iterator = start_num
-		for region in self.view.sel():
-			replaceStr = "%X" % iterator
-			while (len(replaceStr) < padding):
-				replaceStr = "0" + replaceStr
-			self.view.replace(edit, region, replaceStr)
-			iterator += 1
-
-def ActualLineLength(tabSize, lineStr):
-	result = 0
-	
-	column = 0;
-	for cIndex in range(0, len(lineStr)):
-		if (lineStr[cIndex] == '\t'):
-			actualTabSize = tabSize - (column%tabSize)
-			# print("Tab %s" % actualTabSize)
-			result += actualTabSize
-			column += actualTabSize
-		else:
-			result += 1
-			column += 1
-	
-	return result
-
+# This command is helpful when writing multi-line macros in C. It allows you to easily
+# add and remove \ characters to the end of each line from the cursor up to the line that
+# contains #define. If you are removing the \ characters then the function also removes
+# all \ on consecutive lines below and trailing whitespace that results.
 class ToggleDefineEndingsCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		tabSize = self.view.settings().get("tab_size")
@@ -502,17 +318,15 @@ class ToggleDefineEndingsCommand(sublime_plugin.TextCommand):
 					
 					self.view.replace(edit, lineRegion, lineStr)
 					currentLine += 1
-				
-def IsHexChar(character):
-	if (character.lower() >= 'a' and character.lower() <= 'f'):
-		return True
-	elif (character >= '0' and character <= '9'):
-		return True
-	else:
-		return False
 
+# This command takes any selection and turns it into a string of Hexadecimal numbers
+# For example, "Hello" becomes "0x48 0x65 0x6C 0x6C 0x6F"
+# The prefix and seperator string can be defined as whatever string you want
+# If undo is true then we will attempt to take the selected string of hex numbers
+# and convert them back into ASCII characters. This process can produce invalid ASCII
+# characters so be careful with it. It will also only work with spaces and "0x" prefixes 
 class AsciiToHexCommand(sublime_plugin.TextCommand):
-	def run(self, edit, undo=False, add_prefix=False, add_spaces=True):
+	def run(self, edit, undo=False, prefix="0x", seperator=" "):
 		for region in self.view.sel():
 			regionStr = self.view.substr(region)
 			
@@ -554,10 +368,9 @@ class AsciiToHexCommand(sublime_plugin.TextCommand):
 						
 						wasNewLine = True
 					else:
-						if (cIndex != 0 and wasNewLine == False and add_spaces):
-							replaceStr += " "
-						if (add_prefix):
-							replaceStr += "0x"
+						if (cIndex != 0 and wasNewLine == False):
+							replaceStr += seperator
+						replaceStr += prefix
 						
 						charNum = ord(regionStr[cIndex])
 						replaceStr += ("%02X" % charNum)
@@ -566,19 +379,11 @@ class AsciiToHexCommand(sublime_plugin.TextCommand):
 				
 				self.view.replace(edit, region, replaceStr)
 
-def SplitScopesString(scopeString):
-	scopes = []
-	
-	parts = scopeString.split(" ")
-	for part in parts:
-		scopeName = part.strip()
-		if (len(scopeName) == 0):
-			continue
-		# print("Scope: \"" + scopeName + "\"")
-		scopes.append(scopeName)
-	
-	return scopes
-
+# This command attempts to jump to the next scope match from the cursor
+# It can be used to jump between Function/Class definitions or any other syntax scope
+# If select_whole is true it will also set the selection to the extent of the matching scope text (e.g. the whole function name)
+# If show_centered is true it will bring the match into the center of the screen
+# If loop_around is true then the function will loop around the end of the file to the beginning (or vice versa)
 class GotoNextScopeCommand(sublime_plugin.TextCommand):
 	def run(self, edit, forward=True, loop_around=False, scope_match="entity.", show_only=False, select_whole=True, show_centered=True):
 		scopeMatchLen = len(scope_match)
@@ -666,51 +471,15 @@ class GotoNextScopeCommand(sublime_plugin.TextCommand):
 		else:
 			self.view.window().status_message("No Matching Scopes Found")
 
+# This command is simply a placeholder that's useful for holding the place for an unbound hotkey
 class DoNothingCommand(sublime_plugin.TextCommand):
 	def run(self):
 		print("Doing nothing!")
 
-def TextPointColumn(view, textPoint):
-	tabSize = view.settings().get("tab_size")
-	lineRegion = view.line(textPoint)
-	
-	if (lineRegion.size() == 0 or textPoint < lineRegion.begin() or textPoint >= lineRegion.end()):
-		return 0
-	
-	result = 0
-	for cIndex in range(0, textPoint-lineRegion.begin()):
-		c = view.substr(sublime.Region(lineRegion.begin() + cIndex, lineRegion.begin() + cIndex + 1))
-		if (c == "\t"):
-			actualTabSize = tabSize - (result%tabSize)
-			result += actualTabSize
-		else:
-			result += 1
-	
-	return result
-
-def RowColumnTextPoint(view, row, column):
-	tabSize = view.settings().get("tab_size")
-	lineRegion = view.line(view.text_point(row, 0))
-	
-	if (column == 0 or lineRegion.size() == 0):
-		return lineRegion.begin()
-	
-	currentCol = 0
-	result = lineRegion.begin();
-	for cIndex in range(0, lineRegion.size()):
-		c = view.substr(sublime.Region(lineRegion.begin() + cIndex, lineRegion.begin() + cIndex + 1))
-		if (c == "\t"):
-			actualTabSize = tabSize - (currentCol%tabSize)
-			currentCol += actualTabSize
-		else:
-			currentCol += 1
-		result += 1
-		
-		if (currentCol >= column):
-			break
-	
-	return result
-
+# This function attempts to search through the next non-empty line following the line the cursor is
+# on and find a character that matches the one immediately following the cursor and is on a column
+# farther to the right than the cursor. If found it will add spaces to the current cursors location
+# until the two matching characters are aligned on the same column 
 class AlignCharacterCommand(sublime_plugin.TextCommand):
 	def run(self, edit, case_sensitive=False):
 		
@@ -780,17 +549,8 @@ class AlignCharacterCommand(sublime_plugin.TextCommand):
 			else:
 				print("No match found in next line")
 
-def GetLineIndentation(lineStr):
-	result = ""
-	
-	for cIndex in range(len(lineStr)):
-		if (lineStr[cIndex] =='\t' or lineStr[cIndex] == ' '):
-			result += lineStr[cIndex]
-		else:
-			break
-	
-	return result
-
+# This command searches the whole file and tries to fill empty lines with tabs/spaces until it matches
+# the indentation of the previous line.
 class IndentBlankLinesCommand(sublime_plugin.TextCommand):
 	def run(self, edit, use_tabs=True):
 		tabSize = self.view.settings().get("tab_size")
@@ -819,11 +579,3 @@ class IndentBlankLinesCommand(sublime_plugin.TextCommand):
 			rowIndex += 1
 			textPoint = lineRegion.end()
 
-
-# class ShowPositionCommand(sublime_plugin.TextCommand):
-# 	def run(self, edit, position, buffer_size=5):
-# 		row, col = self.view.rowcol(position)
-# 		
-
-# H
-#          h  Hello

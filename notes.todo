@@ -42,7 +42,7 @@
 	[X] Change the kill line command so it places the cursor on the next line at the same column
 	[ ] Fix My C so that definition lookups still work. Maybe look at command for f12 binding?
 	[X] Change ctrl+D to be case sensitive
-	[ ] Add spaces to NamingConventions plugin to allow seperating identifiers to and from regularly spaced words
+	[X] Add spaces to NamingConventions plugin to allow seperating identifiers to and from regularly spaced words
 	[ ] Make the CreateLocalHeaderCommand work with already created headers to reformat them
 	[-] Create a better show_at_center function that doesn't recenter the view unless the item is too far up or down in the viewport
 	[ ] Make the selection functionality in MoveToEmptyLine work backwards to unselect stuff if I went too far
@@ -52,23 +52,24 @@
 	[ ] Make a command that gets rid of the empty/unindented lines by indenting them to their neighbors indentation level
 	[X] Make a command that finds the next/last region of characters that match a specific scope and jumps to them
 	[ ] Fix the KillLineCommand so multiple selection on consecutive lines works correctly
-	[!] Make a command to auto-indent empty lines to the same level as above line
+	[X] Make a command to auto-indent empty lines to the same level as above line
 	[X] Make a command to align the next character to the same character in the next line
 	[X] See if we can unbind ALT key from selecting the menu bar?
-	[ ] Fix slight width difference in make local header command
-	[!] Rebind Jump to Next/Last Function hotkey to something other than ctrl+d (ctrl+alt+up/down)
-	[ ] Move each command into it's only file (all of them into a folder?)
+	[X] Fix slight width difference in make local header command
+	[X] Rebind Jump to Next/Last Function hotkey to something other than ctrl+d (ctrl+alt+up/down)
+	[!] Move each command into it's only file (all of them into a folder?)
 	[ ] Add Custom Functions to the Custom Types plugin simply for Auto-Complete purposes
 	[X] Add an option to my google search to remove text that was searched
-	[ ] Add a command that folds indented sections that align with the cursors indentation level
-	[ ] Rebind ctrl+d as jump to next match of selection
-	[ ] Combine common functions together into a single .py file that can be included
+	[!] Add a command that folds indented sections that align with the cursors indentation level
+	[X] Rebind alt+s as jump to next match of selection
+	[!] Combine common functions together into a single .py file that can be included
+	[ ] Make GrabNextCommand auto-choose whether or not to make the regex word bounded by whether or not the selection is word bounded (however the auto-highlight functionality works)
 
 !@#$%^&*()_+1234567890-={}[]:";'<>?,./|\~`
 !@#$%^&*()_+1234567890-={}[]:";'<>?,./|\~`
 
 AnotherNamingConvention
-BLE_Update_Handler_Thing_t
+BleUpdateHandlerThing_t
 myCamelCaseConvention
 one_naming_convention
 My314NumberIs15
@@ -76,6 +77,13 @@ _LeadingUnderscore_
 9InvalidIdentifier
 function(uint8_t functionName) { DEBUG_Print("Hello"); }
 Name With Spaces
+
+1234567
+12345678
+123456789
+1234567890
+
+
 
 ALT Hotkey can be disabled using AutoHotKey: 
 1. Install

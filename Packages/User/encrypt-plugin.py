@@ -1,5 +1,7 @@
-import sublime
-import sublime_plugin
+import os, sys, sublime, sublime_plugin
+sys.path.append(os.path.dirname(__file__))
+import MyFunctions
+
 
 def Encrypt(string):
 	encryptedStr = ""

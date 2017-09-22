@@ -1,65 +1,9 @@
-import sublime
-import sublime_plugin
-import os
+import os, sys, sublime, sublime_plugin
+sys.path.append(os.path.dirname(__file__))
+import MyFunctions
+
 import re
 import time
-
-def IsLower(char):
-	return ord(char) >= ord('a') and ord(char) <= ord('z')
-
-def IsUpper(char):
-	return ord(char) >= ord('A') and ord(char) <= ord('Z')
-
-def IsLetter(char):
-	return IsLower() or IsUpper()
-
-def IsNumber(char):
-	return ord(char) >= ord('0') and ord(char) <= ord('9')
-
-def GetNameParts(name):
-	parts = []
-	currIndex = 0
-	lastIndex = 0
-	lastCharWasUpper = False
-	lastCharWasNumber = False
-	while (currIndex < len(name)):
-		char = name[currIndex]
-		if (IsUpper(char) and not lastCharWasUpper):
-			if (currIndex > lastIndex):
-				newPart = name[lastIndex:currIndex].lower()
-				# print("Part: \"" + newPart + "\"")
-				parts.append(newPart)
-			lastIndex = currIndex
-		elif (IsNumber(char) and not lastCharWasNumber):
-			if (currIndex > lastIndex):
-				newPart = name[lastIndex:currIndex].lower()
-				# print("Part: \"" + newPart + "\"")
-				parts.append(newPart)
-			lastIndex = currIndex
-		elif (char == '_'):
-			if (currIndex > lastIndex):
-				newPart = name[lastIndex:currIndex].lower()
-				# print("Part: \"" + newPart + "\"")
-				parts.append(newPart)
-			lastIndex = currIndex+1
-		
-		lastCharWasUpper = (ord(char) >= ord('A') and ord(char) <= ord('Z'))
-		lastCharWasNumber = (ord(char) >= ord('0') and ord(char) <= ord('9'))
-		currIndex += 1
-	
-	if (currIndex > lastIndex):
-		newPart = name[lastIndex:currIndex].lower()
-		# print("Part: \"" + newPart + "\"")
-		parts.append(newPart)
-	
-	return parts
-
-def LineIsEmpty(line):
-	matchResult = re.search("^[\\t ]*$", line);
-	if (matchResult):
-		return True;
-	else:
-		return False;
 
 class CreateFileHeaderCommand(sublime_plugin.TextCommand):
 	def run(self, edit, headerExtensions=[".h", ".hpp"], sourceExtensions=[".c", ".cpp", ".py"], authorName="Taylor Robbins"):
@@ -148,15 +92,18 @@ class CreateLocalHeaderCommand(sublime_plugin.TextCommand):
 			# print("Selection = \"" + selectionStr + "\"")
 			
 			# Pad the string to 32 characters
-			while (len(selectionStr) < width - 2):
-				selectionStr = selectionStr + " "
-				if (len(selectionStr) < width):
-					selectionStr = " " + selectionStr
 			
 			if (len(selectionStr) >= width - 2):
 				selectionStr = " " + selectionStr + " "
 				if (len(selectionStr) % 2 != 0):
 					selectionStr = selectionStr + " "
+			else:
+				while (len(selectionStr) < width-2):
+					selectionStr = selectionStr + " "
+					if (len(selectionStr) < width-2):
+						selectionStr = " " + selectionStr
+			
+			print("SelectionStr = \"%s\"" % (selectionStr))
 			
 			headerWidth = len(selectionStr)
 			headerTopStr = ""

@@ -1,86 +1,11 @@
-import sublime
-import sublime_plugin
+import os, sys, sublime, sublime_plugin
+sys.path.append(os.path.dirname(__file__))
+import MyFunctions
+
 import re
 
 #TODO: Should we handle getting rid of trailing _t on types?
 #TODO: Add options to keep leading and trailing _ and trailing _t
-
-def FullyMatchesRegex(string, regex):
-	searchResult = re.search(regex, string)
-	if (searchResult.start() != 0):
-		# print("start: " + str(searchResult.start()))
-		return False
-	if (searchResult.end() != len(string)):
-		# print("end: " + str(searchResult.end()))
-		return False
-	
-	return True
-
-def IsLower(char):
-	return ord(char) >= ord('a') and ord(char) <= ord('z')
-
-def IsUpper(char):
-	return ord(char) >= ord('A') and ord(char) <= ord('Z')
-
-def IsLetter(char):
-	return IsLower() or IsUpper()
-
-def IsNumber(char):
-	return ord(char) >= ord('0') and ord(char) <= ord('9')
-
-def ToUpper(char):
-	if (not IsLower(char)):
-		return char
-	return chr(ord(char) - 32)
-
-def ToLower(char):
-	if (not IsUpper(char)):
-		return char
-	return chr(ord(char) + 32)
-
-def GetNameParts(name):
-	parts = []
-	currIndex = 0
-	lastIndex = 0
-	lastCharWasUpper = False
-	lastCharWasNumber = False
-	while (currIndex < len(name)):
-		char = name[currIndex]
-		if (IsUpper(char) and not lastCharWasUpper):
-			if (currIndex > lastIndex):
-				newPart = name[lastIndex:currIndex].lower()
-				# print("Part: \"" + newPart + "\"")
-				parts.append(newPart)
-			lastIndex = currIndex
-		elif (IsNumber(char) and not lastCharWasNumber):
-			if (currIndex > lastIndex):
-				newPart = name[lastIndex:currIndex].lower()
-				# print("Part: \"" + newPart + "\"")
-				parts.append(newPart)
-			lastIndex = currIndex
-		elif (char == '_'):
-			if (currIndex > lastIndex):
-				newPart = name[lastIndex:currIndex].lower()
-				# print("Part: \"" + newPart + "\"")
-				parts.append(newPart)
-			lastIndex = currIndex+1
-		
-		lastCharWasUpper = (ord(char) >= ord('A') and ord(char) <= ord('Z'))
-		lastCharWasNumber = (ord(char) >= ord('0') and ord(char) <= ord('9'))
-		currIndex += 1
-	
-	if (currIndex > lastIndex):
-		newPart = name[lastIndex:currIndex].lower()
-		# print("Part: \"" + newPart + "\"")
-		parts.append(newPart)
-	
-	return parts
-
-def UpperFirst(string):
-	if (len(string) == 0):
-		return string
-	
-	return ToUpper(string[0]) + string[1:]
 
 class ChangeNamingConventionCommand(sublime_plugin.TextCommand):
 	def run(self, edit, convention="upper_first", conserve_prefix=True, conserve_suffix=True):
@@ -89,7 +14,7 @@ class ChangeNamingConventionCommand(sublime_plugin.TextCommand):
 			if (len(originalName) == 0):
 				print("Skipping empty selection")
 				continue
-			if (not FullyMatchesRegex(originalName, "[A-Za-z_][A-Za-z0-9_]*")):
+			if (not FullyMatchesRegex(originalName, "[A-Za-z_][A-Za-z0-9_ ]*")):
 				print("\"" + originalName + "\" is not a valid identifier")
 				continue
 			
@@ -100,7 +25,7 @@ class ChangeNamingConventionCommand(sublime_plugin.TextCommand):
 					originalName = originalName[1:]
 			suffix = ""
 			if (conserve_suffix):
-				searchResult = re.search("([_]+[A-Za-z0-9]?)$", originalName)
+				searchResult = re.search("([_]+[A-Za-z0-9 ]?)$", originalName)
 				if (searchResult):
 					suffix = searchResult.group(1);
 					originalName = originalName[:searchResult.start()]
@@ -137,6 +62,26 @@ class ChangeNamingConventionCommand(sublime_plugin.TextCommand):
 				newName = nameParts[0].upper()
 				for pIndex in range(1, len(nameParts)):
 					newName += "_" + nameParts[pIndex].upper()
+			elif (convention == "lower_words"):
+				newName = ""
+				for newPart in nameParts:
+					if (newName != ""):
+						newName += " "
+					newName += newPart.lower()
+			elif (convention == "upper_first_words"):
+				newName = ""
+				for newPart in nameParts:
+					if (newName != ""):
+						newName += " "
+					newName += UpperFirst(newPart)
+			elif (convention == "sentence"):
+				newName = ""
+				for newPart in nameParts:
+					if (newName != ""):
+						newName += " "
+						newName += newPart.lower()
+					else:
+						newName += UpperFirst(newPart)
 			else:
 				print("Unknown convention type: \"" + convention + "\"")
 			

@@ -1,5 +1,7 @@
-import sublime
-import sublime_plugin
+import os, sys, sublime, sublime_plugin
+sys.path.append(os.path.dirname(__file__))
+import MyFunctions
+
 import re
 
 def RegionInSelections(region, selections):
@@ -12,7 +14,7 @@ def RegionInSelections(region, selections):
 	return False
 
 class GrabNextCommand(sublime_plugin.TextCommand):
-	def run(self, edit, case_sensitive=True, forward=True, word_bounded=False, do_selection=True, show_new_location=True, print_success_info=True, expand_to_word=True, loop_around=True):
+	def run(self, edit, case_sensitive=True, forward=True, word_bounded=False, do_selection=True, show_new_location=True, print_success_info=True, expand_to_word=True, loop_around=True, add_to_selection=True):
 		selections = self.view.sel()
 		if (selections == None or len(selections) == 0):
 			self.view.window().status_message("No selections!")
@@ -129,7 +131,11 @@ class GrabNextCommand(sublime_plugin.TextCommand):
 			return
 		
 		if (do_selection):
+			if (add_to_selection == False):
+				self.view.sel().clear()
+			
 			self.view.sel().add(findResults[newSelectionIndex])
+				
 			numSelected += 1
 			if (newSelectionIndex < firstSelectionIndex):
 				if (numUnselectedAbove > 1):
