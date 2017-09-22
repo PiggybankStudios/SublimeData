@@ -9,6 +9,7 @@
 		{
 			"name": "User Packages",
 			"path": "Packages/User",
+			// "file_include_patterns": [ "*.py" ],
 		},
 		{
 			"name": "Work Folder",

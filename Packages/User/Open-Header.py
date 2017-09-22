@@ -1,6 +1,6 @@
 import os, sys, sublime, sublime_plugin
 sys.path.append(os.path.dirname(__file__))
-import MyFunctions
+from User.MyFunctions import *
 
 import os.path
 import platform

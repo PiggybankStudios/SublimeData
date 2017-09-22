@@ -33,7 +33,7 @@
 	
 	{ "keys": ["ctrl+["],   "command": "unindent" },
 	{ "keys": ["ctrl+]"],   "command": "indent" },
-	// { "keys": ["ctrl+;"],   "command": "do_nothing" },
+	{ "keys": ["ctrl+;"],   "command": "taylor" },
 	{ "keys": ["ctrl+'"],   "command": "show_panel", "args": {"panel": "console", "toggle": true} },
 	{ "keys": ["ctrl+,"],   "command": "ascii_to_hex", "args": { "undo": false, "prefix": "0x", "seperator": " "} },
 	// { "keys": ["ctrl+."],   "command": "do_nothing" },
