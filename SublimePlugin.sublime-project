@@ -2,12 +2,24 @@
 	"folders":
 	[
 		{
+			"name": "AppData Folder",
+			"path": "./",
+			"folder_exclude_patterns": [ "*" ],
+		},
+		{
+			"name": "User Packages",
+			"path": "Packages/User",
+		},
+		{
+			"name": "Work Folder",
 			"path": "C:\\MyStuff\\Personal\\projects\\Sublime Plugin"
 		},
 		{
-			"path": "."
-		}
+			"name": "Home Folder",
+			"path": "W:\\projects\\SublimePlugin"
+		},
 	],
+	
 	"settings":
 	{
 		"custom_constants":
