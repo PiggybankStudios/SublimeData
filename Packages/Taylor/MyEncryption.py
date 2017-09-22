@@ -1,6 +1,5 @@
 import os, sys, sublime, sublime_plugin
-sys.path.append(os.path.dirname(__file__))
-from User.MyFunctions import *
+from Taylor.Functions import *
 
 
 def Encrypt(string):

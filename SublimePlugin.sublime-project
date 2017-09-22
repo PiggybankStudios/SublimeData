@@ -2,14 +2,20 @@
 	"folders":
 	[
 		{
+			"folder_exclude_patterns":
+			[
+				"*"
+			],
 			"name": "AppData Folder",
-			"path": "./",
-			"folder_exclude_patterns": [ "*" ],
+			"path": "./"
 		},
 		{
-			"name": "User Packages",
-			"path": "Packages/User",
-			// "file_include_patterns": [ "*.py" ],
+			"name": "User Settings",
+			"path": "Packages/User"
+		},
+		{
+			"name": "My Plugins",
+			"path": "Packages/Taylor"
 		},
 		{
 			"name": "Work Folder",
@@ -18,9 +24,8 @@
 		{
 			"name": "Home Folder",
 			"path": "W:\\projects\\SublimePlugin"
-		},
+		}
 	],
-	
 	"settings":
 	{
 		"custom_constants":
@@ -31,7 +36,10 @@
 		],
 		"custom_types":
 		[
-			"SomeStruct_t"
+			"AppData_t",
+			"SomeStruct_t",
+			"Structure_t",
+			"Type_t"
 		]
 	}
 }
