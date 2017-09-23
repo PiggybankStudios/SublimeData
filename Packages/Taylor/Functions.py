@@ -1,6 +1,8 @@
 # This file contains all of the common functions that my commands might use.
 # Any general purpose functions can be placed in here
 
+import os, sys, sublime, sublime_plugin, re
+
 def FullyMatchesRegex(string, regex):
 	searchResult = re.search(regex, string)
 	if (searchResult.start() != 0):

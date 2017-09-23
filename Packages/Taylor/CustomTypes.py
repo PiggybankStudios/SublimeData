@@ -19,16 +19,25 @@ class CustomTypesEventListener(sublime_plugin.EventListener):
 				for customType in projectSettings["settings"]["custom_types"]:
 					# print("Type: \"" + customType + "\"")
 					result.append([customType + "\t" + "Custom Type", customType])
+				#
+			#
 			if ("custom_constants" in projectSettings["settings"]):
 				for customConstant in projectSettings["settings"]["custom_constants"]:
 					# print("Type: \"" + customConstant + "\"")
 					result.append([customConstant + "\t" + "Custom Constant", customConstant])
+				#
+			#
 			if ("custom_globals" in projectSettings["settings"]):
 				for customGlobal in projectSettings["settings"]["custom_globals"]:
 					# print("Type: \"" + customGlobal + "\"")
 					result.append([customGlobal + "\t" + "Custom Global", customGlobal])
+				#
+			#
+		#
 		
 		return result
+	#
+#
 
 
 
@@ -40,12 +49,14 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 	def ClosePanelTimeout(self):
 		self.view.window().destroy_output_panel("CustomTypes")
 		# print("Windows: " + str(sublime.windows()))
-
+	#
+	
 	def StartOutput(self, edit):
 		self.outputPanel = self.view.window().create_output_panel("CustomTypes")
 		self.view.window().run_command("show_panel", {"panel": "output.CustomTypes"})
 		self.editToken = edit
 		self.outputPanel.settings().set("word_wrap", True)
+	#
 	
 	def ShowError(self, errorString):
 		fullString = "ERROR in Custom-Types Plugin:\n" + errorString + "\n"
@@ -57,12 +68,16 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 			errorRegions.append(sublime.Region(insertPos, insertPos + fullStringLength))
 			self.outputPanel.add_regions("errorRegions", errorRegions, "string")
 			#TODO: Add a region to color the error red
+		#
 		# sublime.set_timeout(self.ClosePanelTimeout, 2000)
-
+	#
+	
 	def ShowOutput(self, newString):
 		if (self.outputPanel != None):
 			self.outputPanel.insert(self.editToken, self.outputPanel.size(), newString + "\n")
-
+		#
+	#
+	
 	def CompleteOutput(self):
 		# self.view.window().destroy_output_panel("CustomTypes")
 		sublime.set_timeout(self.ClosePanelTimeout, 1000)
@@ -71,6 +86,7 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 		if (typeString == None):
 			self.ShowOutput("Not valid type: Empty string")
 			return False
+		#
 		
 		typeStringLength = len(typeString)
 		
@@ -81,13 +97,16 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 			searchResult.end() != typeStringLength):
 			self.ShowOutput("Not valid type: Invalid characters")
 			return False
-			
+		#
+		
 		return True
+	#
 	
 	def UpdateSyntaxTypes(self, customTypes):
 		packagePath = sublime.packages_path()
 		while (packagePath == None or packagePath == ""):
 			packagePath = sublime.packages_path()
+		#
 		
 		self.ShowOutput("Packages Path: \"" + str(packagePath) + "\"")
 		SyntaxFileName = packagePath + "\\User\\My C.sublime-syntax"
@@ -100,6 +119,7 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 		if (file == None):
 			self.ShowError("Couldn't open syntax file for reading")
 			return False
+		#
 		fileContents = file.read()
 		file.close()
 		
@@ -109,6 +129,7 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 			len(searchResult.groups()) < 1):
 			self.ShowError("Couldn't find custom_types in sublime-syntax file")
 			return False
+		#
 		
 		typeListStart = searchResult.start(1)
 		typeListEnd = searchResult.end(1)
@@ -119,6 +140,7 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 		if (newTypeListStr == typeListStr):
 			self.ShowError("Type List in syntax already matches")
 			return False
+		#
 		
 		# Replace the old value in the file with our new list
 		fileContents = fileContents[:typeListStart] + newTypeListStr + fileContents[typeListEnd:]
@@ -128,11 +150,13 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 		if (file == None):
 			self.ShowError("Couldn't open syntax file for writing")
 			return False
+		#
 		file.write(fileContents)
 		file.close()
 		
 		self.ShowOutput("Syntax type list updated successfully!")
 		return True
+	#
 	
 	def run(self, edit, addSelected = False, removeSelected = False, printInformation = False):
 		window = self.view.window()
@@ -143,6 +167,7 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 		if (projectSettings == None):
 			self.ShowError("No project opened")
 			return
+		#
 		
 		if (not "settings" in projectSettings):
 			projectSettings["settings"] = {}
@@ -152,6 +177,7 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 		if (addSelected and removeSelected):
 			self.ShowError("Cannot add AND remove selected items")
 			return
+		#
 		
 		if (addSelected):
 			numTypesAdded = 0
@@ -162,9 +188,13 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 					self.ShowOutput("Adding type \"" + newType + "\"")
 					customTypes.append(newType)
 					numTypesAdded += 1
+				#
 				else:
 					self.ShowOutput("Ignoring selection \"" + newType + "\"")
+				#
+			#
 			self.ShowOutput("Addded " + str(numTypesAdded) + " new type(s)")
+		#
 		elif (removeSelected):
 			numTypesRemoved = 0
 			for region in self.view.sel():
@@ -174,12 +204,16 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 					self.ShowOutput("Removing type \"" + newType + "\"")
 					customTypes.remove(newType)
 					numTypesRemoved += 1
+				#
 				else:
 					self.ShowOutput("Ignoring selection \"" + newType + "\"")
+				#
 			self.ShowOutput("Removed " + str(numTypesRemoved) + " type(s)")
+		#
 		elif (not printInformation):
 			self.ShowError("No arguments specified")
 			return
+		#
 		
 		customTypes.sort()
 		
@@ -192,7 +226,9 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 		
 		if (self.UpdateSyntaxTypes(customTypes) == True):
 			self.CompleteOutput()
-
+		#
+	#
+#
 
 
 
@@ -203,12 +239,14 @@ class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
 	def ClosePanelTimeout(self):
 		self.view.window().destroy_output_panel("CustomConstants")
 		# print("Windows: " + str(sublime.windows()))
+	#
 
 	def StartOutput(self, edit):
 		self.outputPanel = self.view.window().create_output_panel("CustomConstants")
 		self.view.window().run_command("show_panel", {"panel": "output.CustomConstants"})
 		self.editToken = edit
 		self.outputPanel.settings().set("word_wrap", True)
+	#
 	
 	def ShowError(self, errorString):
 		fullString = "ERROR in Custom-Types Plugin:\n" + errorString + "\n"
@@ -220,20 +258,25 @@ class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
 			errorRegions.append(sublime.Region(insertPos, insertPos + fullStringLength))
 			self.outputPanel.add_regions("errorRegions", errorRegions, "string")
 			#TODO: Add a region to color the error red
+		#
 		# sublime.set_timeout(self.ClosePanelTimeout, 2000)
+	#
 
 	def ShowOutput(self, newString):
 		if (self.outputPanel != None):
 			self.outputPanel.insert(self.editToken, self.outputPanel.size(), newString + "\n")
+	#
 
 	def CompleteOutput(self):
 		# self.view.window().destroy_output_panel("CustomConstants")
 		sublime.set_timeout(self.ClosePanelTimeout, 1000)
+	#
 	
 	def StringIsValidType(self, typeString):
 		if (typeString == None):
 			self.ShowOutput("Not valid type: Empty string")
 			return False
+		#
 		
 		typeStringLength = len(typeString)
 		
@@ -244,13 +287,16 @@ class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
 			searchResult.end() != typeStringLength):
 			self.ShowOutput("Not valid type: Invalid characters")
 			return False
+		#
 			
 		return True
+	#
 	
 	def UpdateSyntaxConstants(self, customConstants):
 		packagePath = sublime.packages_path()
 		while (packagePath == None or packagePath == ""):
 			packagePath = sublime.packages_path()
+		#
 		
 		self.ShowOutput("Packages Path: \"" + str(packagePath) + "\"")
 		SyntaxFileName = packagePath + "\\User\\My C.sublime-syntax"
@@ -263,6 +309,7 @@ class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
 		if (file == None):
 			self.ShowError("Couldn't open syntax file for reading")
 			return False
+		#
 		fileContents = file.read()
 		file.close()
 		
@@ -272,6 +319,7 @@ class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
 			len(searchResult.groups()) < 1):
 			self.ShowError("Couldn't find custom_constants in sublime-syntax file")
 			return False
+		#
 		
 		constListStart = searchResult.start(1)
 		constListEnd = searchResult.end(1)
@@ -282,6 +330,7 @@ class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
 		if (newConstListStr == constListStr):
 			self.ShowError("Constant List in syntax already matches")
 			return False
+		#
 		
 		# Replace the old value in the file with our new list
 		fileContents = fileContents[:constListStart] + newConstListStr + fileContents[constListEnd:]
@@ -291,11 +340,13 @@ class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
 		if (file == None):
 			self.ShowError("Couldn't open syntax file for writing")
 			return False
+		#
 		file.write(fileContents)
 		file.close()
 		
 		self.ShowOutput("Syntax constant list updated successfully!")
 		return True
+	#
 	
 	def run(self, edit, addSelected = False, removeSelected = False, printInformation = False):
 		window = self.view.window()
@@ -306,6 +357,7 @@ class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
 		if (projectSettings == None):
 			self.ShowError("No project opened")
 			return
+		#
 		
 		if (not "settings" in projectSettings):
 			projectSettings["settings"] = {}
@@ -315,6 +367,7 @@ class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
 		if (addSelected and removeSelected):
 			self.ShowError("Cannot add AND remove selected items")
 			return
+		#
 		
 		if (addSelected):
 			numConstantsAdded = 0
@@ -325,9 +378,13 @@ class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
 					self.ShowOutput("Adding constant \"" + newConst + "\"")
 					customConstants.append(newConst)
 					numConstantsAdded += 1
+				#
 				else:
 					self.ShowOutput("Ignoring selection \"" + newConst + "\"")
+				#
+			#
 			self.ShowOutput("Addded " + str(numConstantsAdded) + " new constant(s)")
+		#
 		elif (removeSelected):
 			numConstantsRemoved = 0
 			for region in self.view.sel():
@@ -337,12 +394,17 @@ class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
 					self.ShowOutput("Removing constant \"" + newConst + "\"")
 					customConstants.remove(newConst)
 					numConstantsRemoved += 1
+				#
 				else:
 					self.ShowOutput("Ignoring selection \"" + newConst + "\"")
+				#
+			#
 			self.ShowOutput("Removed " + str(numConstantsRemoved) + " constant(s)")
+		#
 		elif (not printInformation):
 			self.ShowError("No arguments specified")
 			return
+		#
 		
 		customConstants.sort()
 		
@@ -355,7 +417,9 @@ class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
 		
 		if (self.UpdateSyntaxConstants(customConstants) == True):
 			self.CompleteOutput()
-
+		#
+	#
+#
 
 
 
@@ -366,12 +430,14 @@ class UpdateCustomGlobalsCommand(sublime_plugin.TextCommand):
 	def ClosePanelTimeout(self):
 		self.view.window().destroy_output_panel("CustomGlobals")
 		# print("Windows: " + str(sublime.windows()))
+	#
 
 	def StartOutput(self, edit):
 		self.outputPanel = self.view.window().create_output_panel("CustomGlobals")
 		self.view.window().run_command("show_panel", {"panel": "output.CustomGlobals"})
 		self.editToken = edit
 		self.outputPanel.settings().set("word_wrap", True)
+	#
 	
 	def ShowError(self, errorString):
 		fullString = "ERROR in Custom-Types Plugin:\n" + errorString + "\n"
@@ -383,20 +449,26 @@ class UpdateCustomGlobalsCommand(sublime_plugin.TextCommand):
 			errorRegions.append(sublime.Region(insertPos, insertPos + fullStringLength))
 			self.outputPanel.add_regions("errorRegions", errorRegions, "string")
 			#TODO: Add a region to color the error red
+		#
 		# sublime.set_timeout(self.ClosePanelTimeout, 2000)
+	#
 
 	def ShowOutput(self, newString):
 		if (self.outputPanel != None):
 			self.outputPanel.insert(self.editToken, self.outputPanel.size(), newString + "\n")
+		#
+	#
 
 	def CompleteOutput(self):
 		# self.view.window().destroy_output_panel("CustomGlobals")
 		sublime.set_timeout(self.ClosePanelTimeout, 1000)
+	#
 	
 	def StringIsValidType(self, typeString):
 		if (typeString == None):
 			self.ShowOutput("Not valid type: Empty string")
 			return False
+		#
 		
 		typeStringLength = len(typeString)
 		
@@ -407,13 +479,16 @@ class UpdateCustomGlobalsCommand(sublime_plugin.TextCommand):
 			searchResult.end() != typeStringLength):
 			self.ShowOutput("Not valid type: Invalid characters")
 			return False
+		#
 			
 		return True
+	#
 	
 	def UpdateSyntaxGlobals(self, customGlobals):
 		packagePath = sublime.packages_path()
 		while (packagePath == None or packagePath == ""):
 			packagePath = sublime.packages_path()
+		#
 		
 		self.ShowOutput("Packages Path: \"" + str(packagePath) + "\"")
 		SyntaxFileName = packagePath + "\\User\\My C.sublime-syntax"
@@ -426,6 +501,7 @@ class UpdateCustomGlobalsCommand(sublime_plugin.TextCommand):
 		if (file == None):
 			self.ShowError("Couldn't open syntax file for reading")
 			return False
+		#
 		fileContents = file.read()
 		file.close()
 		
@@ -435,6 +511,7 @@ class UpdateCustomGlobalsCommand(sublime_plugin.TextCommand):
 			len(searchResult.groups()) < 1):
 			self.ShowError("Couldn't find custom_globals in sublime-syntax file")
 			return False
+		#
 		
 		globalsListStart = searchResult.start(1)
 		globalsListEnd = searchResult.end(1)
@@ -445,6 +522,7 @@ class UpdateCustomGlobalsCommand(sublime_plugin.TextCommand):
 		if (newGlobalsListStr == globalsListStr):
 			self.ShowError("Globals List in syntax already matches")
 			return False
+		#
 		
 		# Replace the old value in the file with our new list
 		fileContents = fileContents[:globalsListStart] + newGlobalsListStr + fileContents[globalsListEnd:]
@@ -454,11 +532,13 @@ class UpdateCustomGlobalsCommand(sublime_plugin.TextCommand):
 		if (file == None):
 			self.ShowError("Couldn't open syntax file for writing")
 			return False
+		#
 		file.write(fileContents)
 		file.close()
 		
 		self.ShowOutput("Syntax globals list updated successfully!")
 		return True
+	#
 	
 	def run(self, edit, addSelected = False, removeSelected = False, printInformation = False):
 		window = self.view.window()
@@ -469,6 +549,7 @@ class UpdateCustomGlobalsCommand(sublime_plugin.TextCommand):
 		if (projectSettings == None):
 			self.ShowError("No project opened")
 			return
+		#
 		
 		if (not "settings" in projectSettings):
 			projectSettings["settings"] = {}
@@ -478,6 +559,7 @@ class UpdateCustomGlobalsCommand(sublime_plugin.TextCommand):
 		if (addSelected and removeSelected):
 			self.ShowError("Cannot add AND remove selected items")
 			return
+		#
 		
 		if (addSelected):
 			numGlobalsAdded = 0
@@ -488,9 +570,13 @@ class UpdateCustomGlobalsCommand(sublime_plugin.TextCommand):
 					self.ShowOutput("Adding global \"" + newGlobal + "\"")
 					customGlobals.append(newGlobal)
 					numGlobalsAdded += 1
+				#
 				else:
 					self.ShowOutput("Ignoring selection \"" + newGlobal + "\"")
+				#
+			#
 			self.ShowOutput("Addded " + str(numGlobalsAdded) + " new global(s)")
+		#
 		elif (removeSelected):
 			numGlobalsRemoved = 0
 			for region in self.view.sel():
@@ -500,12 +586,17 @@ class UpdateCustomGlobalsCommand(sublime_plugin.TextCommand):
 					self.ShowOutput("Removing global \"" + newGlobal + "\"")
 					customGlobals.remove(newGlobal)
 					numGlobalsRemoved += 1
+				#
 				else:
 					self.ShowOutput("Ignoring selection \"" + newGlobal + "\"")
+				#
+			#
 			self.ShowOutput("Removed " + str(numGlobalsRemoved) + " global(s)")
+		#
 		elif (not printInformation):
 			self.ShowError("No arguments specified")
 			return
+		#
 		
 		customGlobals.sort()
 		
@@ -518,3 +609,6 @@ class UpdateCustomGlobalsCommand(sublime_plugin.TextCommand):
 		
 		if (self.UpdateSyntaxGlobals(customGlobals) == True):
 			self.CompleteOutput()
+		#
+	#
+#

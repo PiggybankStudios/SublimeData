@@ -296,7 +296,7 @@
 	{ "keys": ["ctrl+alt+u"], "command": "upper_case"},
 	// { "keys": ["ctrl+alt+i"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+o"], "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+p"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+p"], "command": "show_overlay", "args": {"overlay": "command_palette"} },
 
 	// { "keys": ["ctrl+alt+a"], "command": "do_nothing" },
 	{ "keys": ["ctrl+alt+s"], "command": "toggle_side_bar"},

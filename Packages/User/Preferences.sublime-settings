@@ -4,7 +4,7 @@
 	"caret_extra_top": 0,
 	"caret_extra_width": 0,
 	"caret_style": "phase",
-	"color_scheme": "Packages/User/MyMonokai.tmTheme",
+	"color_scheme": "Packages/TaylorAddons/MyMonokai.tmTheme",
 	"drag_text": false,
 	"draw_minimap_border": true,
 	"font_face": "Consolas",
