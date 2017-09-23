@@ -34,12 +34,45 @@
 	{
 		"custom_constants":
 		[
+			"SomeEnumValue0",
+			"SomeEnumValue1",
+			"SomeEnumValue2",
+			"SomeEnumValue3",
+			"SomeEnumValue4",
+			"SomeEnumValue5",
+			"SomeEnumValue6",
+			"SomeEnumValue7"
 		],
 		"custom_functions":
 		[
 			"const Structure_t* volatile SomeFunction(const Type_t& input1, r32 input2, const AppData_t *data)",
+			"def ActualLineLength(tabSize, lineStr):",
+			"def FullyMatchesRegex(string, regex):",
+			"def GetCString(view, region):",
+			"def GetLineIndentation(lineStr)",
+			"def GetNameParts(name):",
+			"def IsHexChar(character):",
+			"def IsIdentChar(char):",
+			"def IsLetter(char):",
+			"def IsLower(char):",
+			"def IsNumber(char):",
+			"def IsUpper(char):",
+			"def IsWhitespace(char):",
+			"def LexicalParse(inputStr)",
+			"def LineIsEmpty(line):",
+			"def LineIsInclude(view, region):",
+			"def RowColumnTextPoint(view, row, column):",
+			"def SplitScopesString(scopeString):",
+			"def TextPointColumn(view, textPoint):",
+			"def ToLower(char):",
+			"def ToUpper(char):",
+			"def UpperFirst(string):",
 			"i32 AddFunction(i32 x, i32 y)",
-			"i32 ReallyLongFunctionDefinition(i32 parameter1, i32 parameter2, i32 parameter3, i32 parameter4, i32 parameter5, i32 parameter6)"
+			"i32 ReallyLongFunctionDefinition(i32 parameter1, i32 parameter2, i32 parameter3, i32 parameter4, i32 parameter5, i32 parameter6)",
+			"void DEBUG_Print(formatStr, args)",
+			"void DEBUG_PrintLine(const char* formatStr, args)",
+			"void DEBUG_Write(outputStr)",
+			"void DEBUG_WriteLine(outputStr)"
 		],
 		"custom_globals":
 		[

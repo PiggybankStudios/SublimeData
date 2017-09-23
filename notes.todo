@@ -36,7 +36,7 @@
 	[X] Add new and delete keywords to My C
 	[X] Add common PIC register definitions to My C.sublime-syntax
 	[ ] Add shortcuts to check off a checklist item in TODO list syntax
-	[?] A shortcut for adding function documentation
+	[!] A shortcut for adding function documentation
 	[X] Add #ifndef and #endif prefabs to CreateFileHeaderCommand
 	[-] Fix problem with adding comment additions breaks Function() parentheses
 	[X] Change the kill line command so it places the cursor on the next line at the same column
@@ -64,6 +64,7 @@
 	[X] Rebind alt+s as jump to next match of selection
 	[X] Combine common functions together into a single .py file that can be included
 	[ ] Make GrabNextCommand auto-choose whether or not to make the regex word bounded by whether or not the selection is word bounded (however the auto-highlight functionality works)
+	[ ] Make GrabNextCommand faster in large files?
 
 !@#$%^&*()_+1234567890-={}[]:";'<>?,./|\~`
 !@#$%^&*()_+1234567890-={}[]:";'<>?,./|\~`

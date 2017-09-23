@@ -294,7 +294,7 @@
 	{ "keys": ["ctrl+alt+t"], "command": "remove_trailing_whitespace"},
 	// { "keys": ["ctrl+alt+y"], "command": "do_nothing" },
 	{ "keys": ["ctrl+alt+u"], "command": "upper_case"},
-	// { "keys": ["ctrl+alt+i"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+i"], "command": "fold_by_cursor" },
 	// { "keys": ["ctrl+alt+o"], "command": "do_nothing" },
 	{ "keys": ["ctrl+alt+p"], "command": "show_overlay", "args": {"overlay": "command_palette"} },
 
