@@ -11,8 +11,7 @@ class CustomTypesEventListener(sublime_plugin.EventListener):
 		# print("Listener!")
 		
 		projectSettings = view.window().project_data()
-		if (projectSettings == None):
-			return
+		if (projectSettings == None): return
 		
 		if ("settings" in projectSettings):
 			if ("custom_types" in projectSettings["settings"]):
@@ -109,7 +108,7 @@ class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
 		#
 		
 		self.ShowOutput("Packages Path: \"" + str(packagePath) + "\"")
-		SyntaxFileName = packagePath + "\\User\\My C.sublime-syntax"
+		SyntaxFileName = packagePath + "\\TaylorAddons\\My C.sublime-syntax"
 		
 		absPath = os.path.abspath(SyntaxFileName)
 		self.ShowOutput("absolute path is \"" + absPath + "\"")
@@ -299,7 +298,7 @@ class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
 		#
 		
 		self.ShowOutput("Packages Path: \"" + str(packagePath) + "\"")
-		SyntaxFileName = packagePath + "\\User\\My C.sublime-syntax"
+		SyntaxFileName = packagePath + "\\TaylorAddons\\My C.sublime-syntax"
 		
 		absPath = os.path.abspath(SyntaxFileName)
 		self.ShowOutput("absolute path is \"" + absPath + "\"")
@@ -491,7 +490,7 @@ class UpdateCustomGlobalsCommand(sublime_plugin.TextCommand):
 		#
 		
 		self.ShowOutput("Packages Path: \"" + str(packagePath) + "\"")
-		SyntaxFileName = packagePath + "\\User\\My C.sublime-syntax"
+		SyntaxFileName = packagePath + "\\TaylorAddons\\My C.sublime-syntax"
 		
 		absPath = os.path.abspath(SyntaxFileName)
 		self.ShowOutput("absolute path is \"" + absPath + "\"")
