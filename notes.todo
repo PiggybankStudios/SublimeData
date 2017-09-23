@@ -60,7 +60,7 @@
 	[X] Move each command into it's only file (all of them into a folder?)
 	[X] Add Custom Functions to the Custom Types plugin simply for Auto-Complete purposes
 	[X] Add an option to my google search to remove text that was searched
-	[!] Add a command that folds indented sections that align with the cursors indentation level
+	[X] Add a command that folds indented sections that align with the cursors indentation level
 	[X] Rebind alt+s as jump to next match of selection
 	[X] Combine common functions together into a single .py file that can be included
 	[ ] Make GrabNextCommand auto-choose whether or not to make the regex word bounded by whether or not the selection is word bounded (however the auto-highlight functionality works)
