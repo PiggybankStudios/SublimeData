@@ -45,13 +45,13 @@
 	[X] Add spaces to NamingConventions plugin to allow seperating identifiers to and from regularly spaced words
 	[ ] Make the CreateLocalHeaderCommand work with already created headers to reformat them
 	[-] Create a better show_at_center function that doesn't recenter the view unless the item is too far up or down in the viewport
-	[ ] Make the selection functionality in MoveToEmptyLine work backwards to unselect stuff if I went too far
+	[X] Make the selection functionality in MoveToEmptyLine work backwards to unselect stuff if I went too far
 	[X] Add a hot key to jump to next/last function definition (or header)
 	[X] These characters don't work in view.find_all! https://forum.sublimetext.com/t/view-find-all-doesnt-work-with-certain-characters/30609
 	[ ] Add a PromptInsertNumsHexCommand
-	[ ] Make a command that gets rid of the empty/unindented lines by indenting them to their neighbors indentation level
+	[X] Make a command that gets rid of the empty/unindented lines by indenting them to their neighbors indentation level
 	[X] Make a command that finds the next/last region of characters that match a specific scope and jumps to them
-	[ ] Fix the KillLineCommand so multiple selection on consecutive lines works correctly
+	[X] Fix the KillLineCommand so multiple selection on consecutive lines works correctly
 	[X] Make a command to auto-indent empty lines to the same level as above line
 	[X] Make a command to align the next character to the same character in the next line
 	[X] See if we can unbind ALT key from selecting the menu bar?

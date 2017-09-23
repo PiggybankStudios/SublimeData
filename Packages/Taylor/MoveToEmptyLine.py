@@ -12,8 +12,7 @@ class MoveToEmptyLineCommand(sublime_plugin.TextCommand):
 		newSelections = []
 		for region in self.view.sel():
 		#
-			originPos = region.begin()
-			if (forward): originPos = region.end()
+			originPos = region.b
 			originRow, originColumn = self.view.rowcol(originPos)
 			currentLine = "somethingNotEmpty";
 			currentRow = originRow;
@@ -54,8 +53,7 @@ class MoveToEmptyLineCommand(sublime_plugin.TextCommand):
 			
 			if (expand_selection):
 			#
-				if (forward): newRegion = sublime.Region(region.begin(), newPos);
-				else: newRegion = sublime.Region(region.end(), newPos);
+				newRegion = sublime.Region(region.a, newPos);
 			#
 			else:
 			#
