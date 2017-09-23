@@ -5,609 +5,359 @@ import re
 
 # TODO: Move reading and writing of project settings into their own functions
 
-class CustomTypesEventListener(sublime_plugin.EventListener):
-	def on_query_completions(self, view, prefix, locations):
-		result = []
-		# print("Listener!")
+def StringIsValidType(typeString):
+#
+	if (typeString == None):
+	#
+		return False
+	#
+	
+	typeStringLength = len(typeString)
+	
+	searchResult = re.search("[A-Za-z0-9_]+", typeString)
+	
+	if (searchResult == None or
+		searchResult.start() != 0 or 
+		searchResult.end() != typeStringLength):
+	#
+		return False
+	#
+	
+	return True
+#
+
+def GetProjectSettings(window):
+#
+	projectData = window.project_data()
+	if (projectData == None): return None
+	
+	if ("settings" not in projectData): projectData["settings"] = {}
+	if ("custom_types"     not in projectData["settings"]): projectData["settings"]["custom_types"]     = []
+	if ("custom_constants" not in projectData["settings"]): projectData["settings"]["custom_constants"] = []
+	if ("custom_globals"   not in projectData["settings"]): projectData["settings"]["custom_globals"]   = []
+	if ("custom_functions" not in projectData["settings"]): projectData["settings"]["custom_functions"] = []
+	
+	return projectData["settings"]
+#
+
+def SaveProjectSettings(window, newSettings):
+#
+	projectData = window.project_data()
+	projectData["settings"] = newSettings
+	window.set_project_data(projectData)
+#
+
+def RemoveItemsFromList(target, itemsToRemove):
+#
+	result = target
+	for item in itemsToRemove:
+	#
+		if (item in result): result.remove(item)
+	#
+	return result
+
+def RemoveFunctionsFromList(target, functionsToRemove):
+#
+	result = target
+	for removeFunction in functionsToRemove:
+	#
+		removeParsedFunction = CppFunction(removeFunction)
+		if (removeParsedFunction.valid):
+		#
+			foundMatch = False
+			matchFunctionStr = ""
+			for functionStr in result:
+			#
+				parsedFunction = CppFunction(functionStr)
+				if (parsedFunction.valid and parsedFunction.name == removeParsedFunction.name):
+				#
+					foundMatch = True
+					matchFunctionStr = functionStr
+					break
+				#
+			#
+			
+			if (foundMatch):
+			#
+				result.remove(matchFunctionStr)
+			#
+		#
+	#
+	return result
+#
+
+def ModifySyntaxFileRegexList(filename, searchRegex, newList):
+#
+	# Read the current fileContents
+	file = open(filename, "r")
+	if (file == None):
+	#
+		print("Couldn't open syntax file for reading")
+		return False
+	#
+	fileContents = file.read()
+	file.close()
+	
+	searchResult = re.search(searchRegex, fileContents)
+	
+	if (searchResult == None or len(searchResult.groups()) < 1):
+	#
+		print("Couldn't find custom_types in sublime-syntax file")
+		return False
+	#
+	
+	newTypeListStr = "|".join(newList)
+	
+	if (newTypeListStr == searchResult.group(1)):
+	#
+		print("Syntax regex list is already up to date")
+		return True
+	#
+	
+	# Replace the old value in the file with our new list
+	fileContents = fileContents[:searchResult.start(1)] + newTypeListStr + fileContents[searchResult.end(1):]
+	
+	# Write the new fileContents
+	file = open(filename, 'w')
+	if (file == None):
+	#
+		print("Couldn't open syntax file for writing")
+		return False
+	#
+	file.write(fileContents)
+	file.close()
+	
+	return True
+#
+	
+
+class CustomIdentifierCommand(sublime_plugin.TextCommand):
+#
+	def run(self, edit, action="add", mode="Type", update_syntax_file=True):
+	#
+		if (action != "add" and action != "remove" and action != "list"):
+		#
+			print("\"%s\" is not a valid action for AddCustomIdentifierCommand" % (action))
+		#
+		if (mode != "Type" and mode != "Constant" and mode != "Global" and mode != "Function"):
+		#
+			print("\"%s\" is not a valid mode for AddCustomIdentifierCommand" % (mode))
+			return
+		#
 		
-		projectSettings = view.window().project_data()
+		targetListName  = "custom_" + mode.lower() + "s"
+		projectSettings = GetProjectSettings(self.view.window())
+		if (projectSettings == None):
+		#
+			print("No project data found!")
+			return
+		#
+		
+		newIdentifiers = []
+		for region in self.view.sel():
+		#
+			regionStr = self.view.substr(region)
+			if (len(regionStr) > 0):
+			#
+				if (mode == "Function"):
+				#
+					parsedFunction = CppFunction(regionStr)
+					if (parsedFunction.valid):
+					#
+						foundFunctionStr = ""
+						foundMatch = False
+						foundIndex = 0
+						for functionStr in projectSettings["custom_functions"]:
+						#
+							function = CppFunction(functionStr)
+							if (function.valid and function.name == parsedFunction.name):
+							#
+								foundFunctionStr = functionStr
+								foundMatch = True
+								break
+							#
+							foundIndex += 1
+						#
+						
+						if (foundMatch):
+						#
+							if (action == "add"):
+							#
+								if (regionStr == foundFunctionStr): print("\"%s\" already in the function list as \"%s\"" % (parsedFunction.name, foundFunctionStr))
+								else:
+								#
+									print("Replacing existing Custom Function \"%s\" with new definition \"%s\"" % (foundFunctionStr, regionStr))
+									projectSettings["custom_functions"].pop(foundIndex)
+									newIdentifiers.append(regionStr)
+								#
+							#
+							elif (action == "remove"):
+							#
+								newIdentifiers.append(regionStr)
+							#
+						#
+						else:
+						#
+							if (action == "add"):
+							#
+								newIdentifiers.append(regionStr)
+							#
+							elif (action == "remove"): print("\"%s\" is not a Custom Function" % (parsedFunction.name))
+						#
+					#
+					else:
+					#
+						print("\"%s\" is not a parseable function" % (regionStr))
+					#
+				#
+				else:
+				#
+					if (StringIsValidType(regionStr)):
+					#
+						if (regionStr in projectSettings[targetListName]):
+						#
+							if (action == "add"): print("\"%s\" is already a Custom %s" % (regionStr, mode))
+							elif (action == "remove"):
+							#
+								newIdentifiers.append(regionStr)
+							#
+						#
+						else:
+						#
+							if (action == "add"):
+							#
+								newIdentifiers.append(regionStr)
+							#
+							elif (action == "remove"): print("\"%s\" is not a Custom %s" % (regionStr, mode))
+						#
+					#
+					else:
+					#
+						print("\"%s\" is not a valid identifier!" % (regionStr))
+					#
+				#
+			#
+			else:
+			#
+				print("Ignoring blank selection")
+			#
+		#
+		
+		if (len(newIdentifiers) == 0):
+			print("No new %ss found" % (mode))
+			return
+		
+		print("Going to %s %u Custom %s(s):" % (action, len(newIdentifiers), mode))
+		for identifier in newIdentifiers: print("\t", identifier)
+		
+		if (action == "add"):
+		#
+			projectSettings[targetListName].extend(newIdentifiers)
+			
+		#
+		elif (action == "remove"):
+		#
+			if (mode == "Function"):
+			#
+				projectSettings[targetListName] = RemoveFunctionsFromList(projectSettings[targetListName], newIdentifiers)
+			#
+			else:
+			#
+				projectSettings[targetListName] = RemoveItemsFromList(projectSettings[targetListName], newIdentifiers)
+			#
+		#
+		projectSettings[targetListName].sort()
+		
+		if (action == "list"):
+		#
+			print("%u Custom %ss in this project:" % (len(projectSettings[targetListName]), mode))
+			for identifier in projectSettings[targetListName]: print("\t", identifier)
+			# return
+		#
+		
+		if (update_syntax_file):
+		#
+			if (mode != "Function"):
+			#
+				syntaxFilePath = self.view.settings().get("syntax")
+				# syntaxFileDirectory, syntaxFileName = os.path.split(syntaxFilePath)
+				# syntaxFileNameNoExt, syntaxFileExt = os.path.splitext(syntaxFileName)
+				print("Current syntax: \"%s\"" % (syntaxFilePath))
+				
+				print("Getting packages path...")
+				packagePath = sublime.packages_path()
+				while (packagePath == None or packagePath == ""): packagePath = sublime.packages_path()
+				packagePath = os.path.abspath(os.path.join(packagePath, os.pardir))
+				print("Package Path: \"%s\"" % (packagePath))
+				syntaxFileAbsPath = os.path.abspath(packagePath + "\\" + syntaxFilePath)
+				
+				searchRegex = "[\\s]+custom_%ss:[\\s]+'([A-Za-z0-9_\\|]*)'" % (mode.lower())
+				
+				modifyResult = ModifySyntaxFileRegexList(syntaxFileAbsPath, searchRegex, projectSettings[targetListName])
+				if (modifyResult == True): print("Updated syntax file successfully")
+				else: print("Couldn't update syntax file")
+			#
+			else:
+			#
+				print("Custom Functions cannot be added to the syntax file")
+			#
+		#
+		
+		print("Saving Project Settings...")
+		SaveProjectSettings(self.view.window(), projectSettings)
+		print("Done!")
+	#
+#
+
+class CustomIdentifierEventListener(sublime_plugin.EventListener):
+#
+	def on_query_completions(self, view, prefix, locations):
+	#
+		result = []
+		# print("Listener!", prefix, locations)
+		
+		projectSettings = GetProjectSettings(view.window())
 		if (projectSettings == None): return
 		
-		if ("settings" in projectSettings):
-			if ("custom_types" in projectSettings["settings"]):
-				for customType in projectSettings["settings"]["custom_types"]:
-					# print("Type: \"" + customType + "\"")
-					result.append([customType + "\t" + "Custom Type", customType])
-				#
+		for customType in projectSettings["custom_types"]:
+		#
+			result.append([customType + "\t" + "Custom Type", customType])
+		#
+		for customConstant in projectSettings["custom_constants"]:
+		#
+			result.append([customConstant + "\t" + "Custom Constant", customConstant])
+		#
+		for customGlobal in projectSettings["custom_globals"]:
+		#
+			result.append([customGlobal + "\t" + "Custom Global", customGlobal])
+		#
+		
+		for functionStr in projectSettings["custom_functions"]:
+		#
+			parsedFunction = CppFunction(functionStr)
+			if (parsedFunction.valid):
 			#
-			if ("custom_constants" in projectSettings["settings"]):
-				for customConstant in projectSettings["settings"]["custom_constants"]:
-					# print("Type: \"" + customConstant + "\"")
-					result.append([customConstant + "\t" + "Custom Constant", customConstant])
+				pIndex = 1
+				paramNameStr = ""
+				paramReplaceStr = ""
+				for parameter in parsedFunction.parameters:
 				#
-			#
-			if ("custom_globals" in projectSettings["settings"]):
-				for customGlobal in projectSettings["settings"]["custom_globals"]:
-					# print("Type: \"" + customGlobal + "\"")
-					result.append([customGlobal + "\t" + "Custom Global", customGlobal])
+					if (paramNameStr != ""):
+					#
+						paramReplaceStr += ", "
+						paramNameStr += ", "
+					#
+					paramNameStr += parameter
+					paramReplaceStr += "${%u:%s}" % (pIndex, parameter)
+					pIndex += 1
 				#
+				displayStr = parsedFunction.name + "(" + paramNameStr + ")"
+				insertStr = parsedFunction.name + "(" + paramReplaceStr + ")"
+				# print("Suggesting function \"%s\"" % (parsedFunction.name))
+				result.append([displayStr+"\t"+"Custom Function", insertStr])
 			#
 		#
 		
 		return result
-	#
-#
-
-
-
-
-class UpdateCustomTypesCommand(sublime_plugin.TextCommand):
-	outputPanel = None
-	editToken = None
-	
-	def ClosePanelTimeout(self):
-		self.view.window().destroy_output_panel("CustomTypes")
-		# print("Windows: " + str(sublime.windows()))
-	#
-	
-	def StartOutput(self, edit):
-		self.outputPanel = self.view.window().create_output_panel("CustomTypes")
-		self.view.window().run_command("show_panel", {"panel": "output.CustomTypes"})
-		self.editToken = edit
-		self.outputPanel.settings().set("word_wrap", True)
-	#
-	
-	def ShowError(self, errorString):
-		fullString = "ERROR in Custom-Types Plugin:\n" + errorString + "\n"
-		fullStringLength = len(fullString)
-		if (self.outputPanel != None):
-			insertPos = self.outputPanel.size()
-			self.outputPanel.insert(self.editToken, insertPos, fullString)
-			errorRegions = self.outputPanel.get_regions("errorRegions")
-			errorRegions.append(sublime.Region(insertPos, insertPos + fullStringLength))
-			self.outputPanel.add_regions("errorRegions", errorRegions, "string")
-			#TODO: Add a region to color the error red
-		#
-		# sublime.set_timeout(self.ClosePanelTimeout, 2000)
-	#
-	
-	def ShowOutput(self, newString):
-		if (self.outputPanel != None):
-			self.outputPanel.insert(self.editToken, self.outputPanel.size(), newString + "\n")
-		#
-	#
-	
-	def CompleteOutput(self):
-		# self.view.window().destroy_output_panel("CustomTypes")
-		sublime.set_timeout(self.ClosePanelTimeout, 1000)
-	
-	def StringIsValidType(self, typeString):
-		if (typeString == None):
-			self.ShowOutput("Not valid type: Empty string")
-			return False
-		#
-		
-		typeStringLength = len(typeString)
-		
-		searchResult = re.search("[A-Za-z0-9_]+", typeString)
-		
-		if (searchResult == None or
-			searchResult.start() != 0 or 
-			searchResult.end() != typeStringLength):
-			self.ShowOutput("Not valid type: Invalid characters")
-			return False
-		#
-		
-		return True
-	#
-	
-	def UpdateSyntaxTypes(self, customTypes):
-		packagePath = sublime.packages_path()
-		while (packagePath == None or packagePath == ""):
-			packagePath = sublime.packages_path()
-		#
-		
-		self.ShowOutput("Packages Path: \"" + str(packagePath) + "\"")
-		SyntaxFileName = packagePath + "\\TaylorAddons\\My C.sublime-syntax"
-		
-		absPath = os.path.abspath(SyntaxFileName)
-		self.ShowOutput("absolute path is \"" + absPath + "\"")
-		
-		# Read the current fileContents
-		file = open(SyntaxFileName, "r")
-		if (file == None):
-			self.ShowError("Couldn't open syntax file for reading")
-			return False
-		#
-		fileContents = file.read()
-		file.close()
-		
-		searchResult = re.search("[\\s]+custom_types:[\\s]+'([A-Za-z0-9_\\|]*)'", fileContents)
-		
-		if (searchResult == None or
-			len(searchResult.groups()) < 1):
-			self.ShowError("Couldn't find custom_types in sublime-syntax file")
-			return False
-		#
-		
-		typeListStart = searchResult.start(1)
-		typeListEnd = searchResult.end(1)
-		typeListStr = searchResult.group(1)
-		
-		newTypeListStr = "|".join(customTypes)
-		
-		if (newTypeListStr == typeListStr):
-			self.ShowError("Type List in syntax already matches")
-			return False
-		#
-		
-		# Replace the old value in the file with our new list
-		fileContents = fileContents[:typeListStart] + newTypeListStr + fileContents[typeListEnd:]
-		
-		# Write the new fileContents
-		file = open(SyntaxFileName, 'w')
-		if (file == None):
-			self.ShowError("Couldn't open syntax file for writing")
-			return False
-		#
-		file.write(fileContents)
-		file.close()
-		
-		self.ShowOutput("Syntax type list updated successfully!")
-		return True
-	#
-	
-	def run(self, edit, addSelected = False, removeSelected = False, printInformation = False):
-		window = self.view.window()
-		self.StartOutput(edit)
-		
-		customTypes = []
-		projectSettings = window.project_data()
-		if (projectSettings == None):
-			self.ShowError("No project opened")
-			return
-		#
-		
-		if (not "settings" in projectSettings):
-			projectSettings["settings"] = {}
-		if ("custom_types" in projectSettings["settings"]):
-			customTypes = projectSettings["settings"]["custom_types"]
-		
-		if (addSelected and removeSelected):
-			self.ShowError("Cannot add AND remove selected items")
-			return
-		#
-		
-		if (addSelected):
-			numTypesAdded = 0
-			for region in self.view.sel():
-				newType = self.view.substr(region)
-				if (self.StringIsValidType(newType) and
-					not newType in customTypes):
-					self.ShowOutput("Adding type \"" + newType + "\"")
-					customTypes.append(newType)
-					numTypesAdded += 1
-				#
-				else:
-					self.ShowOutput("Ignoring selection \"" + newType + "\"")
-				#
-			#
-			self.ShowOutput("Addded " + str(numTypesAdded) + " new type(s)")
-		#
-		elif (removeSelected):
-			numTypesRemoved = 0
-			for region in self.view.sel():
-				newType = self.view.substr(region)
-				if (self.StringIsValidType(newType) and
-					newType in customTypes):
-					self.ShowOutput("Removing type \"" + newType + "\"")
-					customTypes.remove(newType)
-					numTypesRemoved += 1
-				#
-				else:
-					self.ShowOutput("Ignoring selection \"" + newType + "\"")
-				#
-			self.ShowOutput("Removed " + str(numTypesRemoved) + " type(s)")
-		#
-		elif (not printInformation):
-			self.ShowError("No arguments specified")
-			return
-		#
-		
-		customTypes.sort()
-		
-		projectSettings["settings"]["custom_types"] = customTypes
-		
-		if (printInformation):
-			self.ShowOutput("Project Types: " + (", ".join(customTypes)))
-		
-		window.set_project_data(projectSettings)
-		
-		if (self.UpdateSyntaxTypes(customTypes) == True):
-			self.CompleteOutput()
-		#
-	#
-#
-
-
-
-class UpdateCustomConstantsCommand(sublime_plugin.TextCommand):
-	outputPanel = None
-	editToken = None
-	
-	def ClosePanelTimeout(self):
-		self.view.window().destroy_output_panel("CustomConstants")
-		# print("Windows: " + str(sublime.windows()))
-	#
-
-	def StartOutput(self, edit):
-		self.outputPanel = self.view.window().create_output_panel("CustomConstants")
-		self.view.window().run_command("show_panel", {"panel": "output.CustomConstants"})
-		self.editToken = edit
-		self.outputPanel.settings().set("word_wrap", True)
-	#
-	
-	def ShowError(self, errorString):
-		fullString = "ERROR in Custom-Types Plugin:\n" + errorString + "\n"
-		fullStringLength = len(fullString)
-		if (self.outputPanel != None):
-			insertPos = self.outputPanel.size()
-			self.outputPanel.insert(self.editToken, insertPos, fullString)
-			errorRegions = self.outputPanel.get_regions("errorRegions")
-			errorRegions.append(sublime.Region(insertPos, insertPos + fullStringLength))
-			self.outputPanel.add_regions("errorRegions", errorRegions, "string")
-			#TODO: Add a region to color the error red
-		#
-		# sublime.set_timeout(self.ClosePanelTimeout, 2000)
-	#
-
-	def ShowOutput(self, newString):
-		if (self.outputPanel != None):
-			self.outputPanel.insert(self.editToken, self.outputPanel.size(), newString + "\n")
-	#
-
-	def CompleteOutput(self):
-		# self.view.window().destroy_output_panel("CustomConstants")
-		sublime.set_timeout(self.ClosePanelTimeout, 1000)
-	#
-	
-	def StringIsValidType(self, typeString):
-		if (typeString == None):
-			self.ShowOutput("Not valid type: Empty string")
-			return False
-		#
-		
-		typeStringLength = len(typeString)
-		
-		searchResult = re.search("[A-Za-z0-9_]+", typeString)
-		
-		if (searchResult == None or
-			searchResult.start() != 0 or 
-			searchResult.end() != typeStringLength):
-			self.ShowOutput("Not valid type: Invalid characters")
-			return False
-		#
-			
-		return True
-	#
-	
-	def UpdateSyntaxConstants(self, customConstants):
-		packagePath = sublime.packages_path()
-		while (packagePath == None or packagePath == ""):
-			packagePath = sublime.packages_path()
-		#
-		
-		self.ShowOutput("Packages Path: \"" + str(packagePath) + "\"")
-		SyntaxFileName = packagePath + "\\TaylorAddons\\My C.sublime-syntax"
-		
-		absPath = os.path.abspath(SyntaxFileName)
-		self.ShowOutput("absolute path is \"" + absPath + "\"")
-		
-		# Read the current fileContents
-		file = open(SyntaxFileName, "r")
-		if (file == None):
-			self.ShowError("Couldn't open syntax file for reading")
-			return False
-		#
-		fileContents = file.read()
-		file.close()
-		
-		searchResult = re.search("[\\s]+custom_constants:[\\s]+'([A-Za-z0-9_\\|]*)'", fileContents)
-		
-		if (searchResult == None or
-			len(searchResult.groups()) < 1):
-			self.ShowError("Couldn't find custom_constants in sublime-syntax file")
-			return False
-		#
-		
-		constListStart = searchResult.start(1)
-		constListEnd = searchResult.end(1)
-		constListStr = searchResult.group(1)
-		
-		newConstListStr = "|".join(customConstants)
-		
-		if (newConstListStr == constListStr):
-			self.ShowError("Constant List in syntax already matches")
-			return False
-		#
-		
-		# Replace the old value in the file with our new list
-		fileContents = fileContents[:constListStart] + newConstListStr + fileContents[constListEnd:]
-		
-		# Write the new fileContents
-		file = open(SyntaxFileName, 'w')
-		if (file == None):
-			self.ShowError("Couldn't open syntax file for writing")
-			return False
-		#
-		file.write(fileContents)
-		file.close()
-		
-		self.ShowOutput("Syntax constant list updated successfully!")
-		return True
-	#
-	
-	def run(self, edit, addSelected = False, removeSelected = False, printInformation = False):
-		window = self.view.window()
-		self.StartOutput(edit)
-		
-		customConstants = []
-		projectSettings = window.project_data()
-		if (projectSettings == None):
-			self.ShowError("No project opened")
-			return
-		#
-		
-		if (not "settings" in projectSettings):
-			projectSettings["settings"] = {}
-		if ("custom_constants" in projectSettings["settings"]):
-			customConstants = projectSettings["settings"]["custom_constants"]
-		
-		if (addSelected and removeSelected):
-			self.ShowError("Cannot add AND remove selected items")
-			return
-		#
-		
-		if (addSelected):
-			numConstantsAdded = 0
-			for region in self.view.sel():
-				newConst = self.view.substr(region)
-				if (self.StringIsValidType(newConst) and
-					not newConst in customConstants):
-					self.ShowOutput("Adding constant \"" + newConst + "\"")
-					customConstants.append(newConst)
-					numConstantsAdded += 1
-				#
-				else:
-					self.ShowOutput("Ignoring selection \"" + newConst + "\"")
-				#
-			#
-			self.ShowOutput("Addded " + str(numConstantsAdded) + " new constant(s)")
-		#
-		elif (removeSelected):
-			numConstantsRemoved = 0
-			for region in self.view.sel():
-				newConst = self.view.substr(region)
-				if (self.StringIsValidType(newConst) and
-					newConst in customConstants):
-					self.ShowOutput("Removing constant \"" + newConst + "\"")
-					customConstants.remove(newConst)
-					numConstantsRemoved += 1
-				#
-				else:
-					self.ShowOutput("Ignoring selection \"" + newConst + "\"")
-				#
-			#
-			self.ShowOutput("Removed " + str(numConstantsRemoved) + " constant(s)")
-		#
-		elif (not printInformation):
-			self.ShowError("No arguments specified")
-			return
-		#
-		
-		customConstants.sort()
-		
-		projectSettings["settings"]["custom_constants"] = customConstants
-		
-		if (printInformation):
-			self.ShowOutput("Project Constants: " + (", ".join(customConstants)))
-		
-		window.set_project_data(projectSettings)
-		
-		if (self.UpdateSyntaxConstants(customConstants) == True):
-			self.CompleteOutput()
-		#
-	#
-#
-
-
-
-class UpdateCustomGlobalsCommand(sublime_plugin.TextCommand):
-	outputPanel = None
-	editToken = None
-	
-	def ClosePanelTimeout(self):
-		self.view.window().destroy_output_panel("CustomGlobals")
-		# print("Windows: " + str(sublime.windows()))
-	#
-
-	def StartOutput(self, edit):
-		self.outputPanel = self.view.window().create_output_panel("CustomGlobals")
-		self.view.window().run_command("show_panel", {"panel": "output.CustomGlobals"})
-		self.editToken = edit
-		self.outputPanel.settings().set("word_wrap", True)
-	#
-	
-	def ShowError(self, errorString):
-		fullString = "ERROR in Custom-Types Plugin:\n" + errorString + "\n"
-		fullStringLength = len(fullString)
-		if (self.outputPanel != None):
-			insertPos = self.outputPanel.size()
-			self.outputPanel.insert(self.editToken, insertPos, fullString)
-			errorRegions = self.outputPanel.get_regions("errorRegions")
-			errorRegions.append(sublime.Region(insertPos, insertPos + fullStringLength))
-			self.outputPanel.add_regions("errorRegions", errorRegions, "string")
-			#TODO: Add a region to color the error red
-		#
-		# sublime.set_timeout(self.ClosePanelTimeout, 2000)
-	#
-
-	def ShowOutput(self, newString):
-		if (self.outputPanel != None):
-			self.outputPanel.insert(self.editToken, self.outputPanel.size(), newString + "\n")
-		#
-	#
-
-	def CompleteOutput(self):
-		# self.view.window().destroy_output_panel("CustomGlobals")
-		sublime.set_timeout(self.ClosePanelTimeout, 1000)
-	#
-	
-	def StringIsValidType(self, typeString):
-		if (typeString == None):
-			self.ShowOutput("Not valid type: Empty string")
-			return False
-		#
-		
-		typeStringLength = len(typeString)
-		
-		searchResult = re.search("[A-Za-z0-9_]+", typeString)
-		
-		if (searchResult == None or
-			searchResult.start() != 0 or 
-			searchResult.end() != typeStringLength):
-			self.ShowOutput("Not valid type: Invalid characters")
-			return False
-		#
-			
-		return True
-	#
-	
-	def UpdateSyntaxGlobals(self, customGlobals):
-		packagePath = sublime.packages_path()
-		while (packagePath == None or packagePath == ""):
-			packagePath = sublime.packages_path()
-		#
-		
-		self.ShowOutput("Packages Path: \"" + str(packagePath) + "\"")
-		SyntaxFileName = packagePath + "\\TaylorAddons\\My C.sublime-syntax"
-		
-		absPath = os.path.abspath(SyntaxFileName)
-		self.ShowOutput("absolute path is \"" + absPath + "\"")
-		
-		# Read the current fileContents
-		file = open(SyntaxFileName, "r")
-		if (file == None):
-			self.ShowError("Couldn't open syntax file for reading")
-			return False
-		#
-		fileContents = file.read()
-		file.close()
-		
-		searchResult = re.search("[\\s]+custom_globals:[\\s]+'([A-Za-z0-9_\\|]*)'", fileContents)
-		
-		if (searchResult == None or
-			len(searchResult.groups()) < 1):
-			self.ShowError("Couldn't find custom_globals in sublime-syntax file")
-			return False
-		#
-		
-		globalsListStart = searchResult.start(1)
-		globalsListEnd = searchResult.end(1)
-		globalsListStr = searchResult.group(1)
-		
-		newGlobalsListStr = "|".join(customGlobals)
-		
-		if (newGlobalsListStr == globalsListStr):
-			self.ShowError("Globals List in syntax already matches")
-			return False
-		#
-		
-		# Replace the old value in the file with our new list
-		fileContents = fileContents[:globalsListStart] + newGlobalsListStr + fileContents[globalsListEnd:]
-		
-		# Write the new fileContents
-		file = open(SyntaxFileName, 'w')
-		if (file == None):
-			self.ShowError("Couldn't open syntax file for writing")
-			return False
-		#
-		file.write(fileContents)
-		file.close()
-		
-		self.ShowOutput("Syntax globals list updated successfully!")
-		return True
-	#
-	
-	def run(self, edit, addSelected = False, removeSelected = False, printInformation = False):
-		window = self.view.window()
-		self.StartOutput(edit)
-		
-		customGlobals = []
-		projectSettings = window.project_data()
-		if (projectSettings == None):
-			self.ShowError("No project opened")
-			return
-		#
-		
-		if (not "settings" in projectSettings):
-			projectSettings["settings"] = {}
-		if ("custom_globals" in projectSettings["settings"]):
-			customGlobals = projectSettings["settings"]["custom_globals"]
-		
-		if (addSelected and removeSelected):
-			self.ShowError("Cannot add AND remove selected items")
-			return
-		#
-		
-		if (addSelected):
-			numGlobalsAdded = 0
-			for region in self.view.sel():
-				newGlobal = self.view.substr(region)
-				if (self.StringIsValidType(newGlobal) and
-					not newGlobal in customGlobals):
-					self.ShowOutput("Adding global \"" + newGlobal + "\"")
-					customGlobals.append(newGlobal)
-					numGlobalsAdded += 1
-				#
-				else:
-					self.ShowOutput("Ignoring selection \"" + newGlobal + "\"")
-				#
-			#
-			self.ShowOutput("Addded " + str(numGlobalsAdded) + " new global(s)")
-		#
-		elif (removeSelected):
-			numGlobalsRemoved = 0
-			for region in self.view.sel():
-				newGlobal = self.view.substr(region)
-				if (self.StringIsValidType(newGlobal) and
-					newGlobal in customGlobals):
-					self.ShowOutput("Removing global \"" + newGlobal + "\"")
-					customGlobals.remove(newGlobal)
-					numGlobalsRemoved += 1
-				#
-				else:
-					self.ShowOutput("Ignoring selection \"" + newGlobal + "\"")
-				#
-			#
-			self.ShowOutput("Removed " + str(numGlobalsRemoved) + " global(s)")
-		#
-		elif (not printInformation):
-			self.ShowError("No arguments specified")
-			return
-		#
-		
-		customGlobals.sort()
-		
-		projectSettings["settings"]["custom_globals"] = customGlobals
-		
-		if (printInformation):
-			self.ShowOutput("Project Globals: " + (", ".join(customGlobals)))
-		
-		window.set_project_data(projectSettings)
-		
-		if (self.UpdateSyntaxGlobals(customGlobals) == True):
-			self.CompleteOutput()
-		#
 	#
 #

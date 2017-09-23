@@ -18,6 +18,10 @@
 			"path": "Packages/Taylor"
 		},
 		{
+			"name": "My Addons",
+			"path": "Packages/TaylorAddons"
+		},
+		{
 			"name": "Work Folder",
 			"path": "C:\\MyStuff\\Personal\\projects\\Sublime Plugin"
 		},
@@ -30,7 +34,12 @@
 	{
 		"custom_constants":
 		[
-			"SOME_DEFINITION"
+		],
+		"custom_functions":
+		[
+			"const Structure_t* volatile SomeFunction(const Type_t& input1, r32 input2, const AppData_t *data)",
+			"i32 AddFunction(i32 x, i32 y)",
+			"i32 ReallyLongFunctionDefinition(i32 parameter1, i32 parameter2, i32 parameter3, i32 parameter4, i32 parameter5, i32 parameter6)"
 		],
 		"custom_globals":
 		[
@@ -39,7 +48,6 @@
 		[
 			"AppData_t",
 			"SomeStruct_t",
-			"Structure_t",
 			"Type_t"
 		]
 	}
