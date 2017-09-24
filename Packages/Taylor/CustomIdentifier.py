@@ -24,6 +24,15 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 		else: print("Couldn't update syntax file")
 	#
 	
+	def ShowPopup(self, message, region, style=""):
+	#
+		if (style == "Success"):
+			self.view.show_popup("<p style=\"color:green;padding:0px;margin:0px;\">" + message + "</p>", 0, region.end())
+		elif (style == "Error" or style == "Failure"):
+			self.view.show_popup("<p style=\"color:red;padding:0px;margin:0px;\">" + message + "</p>", 0, region.end())
+		else: self.view.show_popup(message, 0, region.end())
+	#
+	
 	def run(self, edit, action="add", mode="Type", update_syntax_file=True):
 	#
 		#NOTE: The lookup action is essentially a seperate command entirely.
@@ -150,18 +159,23 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 							#
 								if (action == "add"):
 								#
-									if (regionStr == foundFunctionStr): print("\"%s\" already in the custom_function list as \"%s\"" % (functionName, foundFunctionStr))
+									if (regionStr == foundFunctionStr):
+									#
+										self.ShowPopup("\"%s\" already in the custom_function list" % (functionName), region)
+									#
 									else:
 									#
-										print("Replacing existing Custom Function \"%s\" with new definition \"%s\"" % (foundFunctionStr, regionStr))
+										# print("Replacing existing Custom Function \"%s\" with new definition \"%s\"" % (foundFunctionStr, regionStr))
 										projectSettings["custom_functions"].pop(foundIndex)
 										newIdentifiers.append(regionStr)
+										self.ShowPopup("Replaced old version", region)
 									#
 								#
 								elif (action == "remove"):
 								#
 									if (selectedJustName): newIdentifiers.append("void " + regionStr + "()")
 									else: newIdentifiers.append(regionStr)
+									self.ShowPopup("Removed \"%s\"" % (functionName), region, "Success")
 								#
 							#
 							else:
@@ -169,13 +183,17 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 								if (action == "add"):
 								#
 									newIdentifiers.append(regionStr)
+									self.ShowPopup("Added \"%s\"" % (functionName), region, "Success")
 								#
-								elif (action == "remove"): print("\"%s\" is not in the custom_function list" % (functionName))
+								elif (action == "remove"):
+								#
+									self.ShowPopup("\"%s\" not in custom_function list" % (functionName), region)
+								#
 							#
 						#
 						else:
 						#
-							print("\"%s\" is not a parseable function" % (regionStr))
+							self.ShowPopup("\"%s\" is not a parseable function" % (regionStr), region, "Error")
 						#
 					#
 					else:
@@ -184,10 +202,14 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 						#
 							if (regionStr in projectSettings[targetListName]):
 							#
-								if (action == "add"): print("\"%s\" is already in the %s list" % (regionStr, targetListName))
+								if (action == "add"):
+								#
+									self.ShowPopup("\"%s\" is already in the %s list" % (regionStr, targetListName), region, "Error")
+								#
 								elif (action == "remove"):
 								#
 									newIdentifiers.append(regionStr)
+									self.ShowPopup("Removed \"%s\"" % (regionStr), region, "Success")
 								#
 							#
 							else:
@@ -195,27 +217,33 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 								if (action == "add"):
 								#
 									newIdentifiers.append(regionStr)
+									self.ShowPopup("Added \"%s\"" % (regionStr), region, "Success")
 								#
-								elif (action == "remove"): print("\"%s\" is not in the %s list" % (regionStr, targetListName))
+								elif (action == "remove"):
+								#
+									self.ShowPopup("\"%s\" is not in the %s list" % (regionStr, targetListName), region, "Error")
+								#
 							#
 						#
 						else:
 						#
-							print("\"%s\" is not a valid identifier!" % (regionStr))
+							self.ShowPopup("\"%s\" is not a valid identifier!" % (regionStr), region, "Error")
 						#
 					#
 				#
 				else:
 				#
-					print("Ignoring blank selection")
+					self.ShowPopup("Ignoring blank selection", region)
 				#
 			#
 			
 			if (len(newIdentifiers) == 0):
-				print("No new %ss found" % (mode))
+				self.view.window().status_message("No new %ss found" % (mode))
 				return
 			
-			print("Going to %s %u Custom %s(s):" % (action, len(newIdentifiers), mode))
+			pastTenseAction = UpperFirst(action) + "ed"
+			if (action == "remove"): pastTenseAction = "Removed"
+			self.view.window().status_message("%s %u Custom %s(s):" % (pastTenseAction, len(newIdentifiers), mode))
 			for identifier in newIdentifiers: print("\t", identifier)
 			
 			if (action == "add"):
@@ -256,7 +284,7 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 			#
 			elif (mode == "Function"):
 			#
-				print("Custom Functions cannot be added to the syntax file")
+				self.view.window().status_message("Custom Functions cannot be added to the syntax file")
 			#
 			else:
 			#
