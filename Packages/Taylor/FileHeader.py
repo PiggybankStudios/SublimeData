@@ -113,13 +113,7 @@ class CreateLocalHeaderCommand(sublime_plugin.TextCommand):
 					headerTopStr += "-"
 			headerTopStr = "+" + headerTopStr + "+"
 			
-			commentStr = "// "
-			metaInfo = self.view.meta_info("shellVariables", region.begin())
-			if (metaInfo != None):
-				for item in metaInfo:
-					if ('name' in item and 'value' in item and item['name'] == "TM_COMMENT_START"):
-						commentStr = item['value']
-						break
+			commentStr = GetSyntaxCommentStr(self.view, region.begin())
 			
 			headerString  = commentStr + headerTopStr + "\n" + indentationStr
 			headerString += commentStr + "|" + selectionStr + "|" + "\n" + indentationStr

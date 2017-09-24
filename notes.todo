@@ -65,6 +65,9 @@
 	[X] Combine common functions together into a single .py file that can be included
 	[ ] Make GrabNextCommand auto-choose whether or not to make the regex word bounded by whether or not the selection is word bounded (however the auto-highlight functionality works)
 	[ ] Make GrabNextCommand faster in large files?
+	[!] Fix spacing between type parts for parameters when parsing C++ Functions
+	[ ] Add support for parameter default value assignments SomeFunction(i32 value = 10) { ... }
+	[!] Add some nice message outputs to CustomTypes plugin. Maybe little windows pop-up next to the selected identifiers for success AND failure?
 
 !@#$%^&*()_+1234567890-={}[]:";'<>?,./|\~`
 !@#$%^&*()_+1234567890-={}[]:";'<>?,./|\~`

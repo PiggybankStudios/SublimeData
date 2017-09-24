@@ -53,6 +53,7 @@
 			"def GetLineIndentation(lineStr)",
 			"def GetNameParts(name):",
 			"def GetProjectSettings(window)",
+			"def GetSyntaxCommentStr(view)",
 			"def IsHexChar(character):",
 			"def IsIdentChar(char):",
 			"def IsLetter(char):",
@@ -75,10 +76,12 @@
 			"def UpperFirst(string):",
 			"i32 AddFunction(i32 x, i32 y)",
 			"i32 ReallyLongFunctionDefinition(int32 parameter1, int32_t parameter2,\n\treal32 parameter3IsAReallyLongName, i8 parameter4, Structure_t parameter5,\n\ti32 parameter6)",
+			"int32_t TypeFunction(i32 value1, const char* value2)",
 			"void DEBUG_Print(formatStr, args)",
 			"void DEBUG_PrintLine(const char* formatStr, args)",
 			"void DEBUG_Write(outputStr)",
-			"void DEBUG_WriteLine(outputStr)"
+			"void DEBUG_WriteLine(outputStr)",
+			"void SimpleFunction()"
 		],
 		"custom_globals":
 		[

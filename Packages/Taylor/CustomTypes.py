@@ -26,6 +26,66 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 	
 	def run(self, edit, action="add", mode="Type", update_syntax_file=True):
 	#
+		#NOTE: The lookup action is essentially a seperate command entirely.
+		#      We lookup the function name in the project custom_functions list
+		#      and then paste the definition in a comment on a new line above the cursor 
+		if (action == "lookup" and mode == "Function"):
+		#
+			projectSettings = GetProjectSettings(self.view.window())
+			if (projectSettings == None):
+			#
+				print("No project data found!")
+				return
+			#
+			
+			for region in self.view.sel():
+			#
+				regionStr = self.view.substr(region)
+				if (StringIsValidType(regionStr)):
+				#
+					print("Looking up function \"%s\"" % (regionStr))
+					matchStr = ""
+					for functionStr in projectSettings["custom_functions"]:
+					#
+						parsedFunction = CppFunction(functionStr)
+						if (parsedFunction.valid):
+						#
+							if (parsedFunction.name == regionStr):
+							#
+								matchStr = functionStr
+								break
+							#
+						#
+					#
+					
+					if (matchStr != ""):
+					#
+						print("Found match! Inserting: \"%s\"" % (matchStr))
+						lineRegion = self.view.line(region)
+						lineStr = self.view.substr(lineRegion)
+						indentationStr = GetLineIndentation(lineStr)
+						commentStr = GetSyntaxCommentStr(self.view, lineRegion.begin())
+						
+						matchStr = matchStr.replace("\n", "\n" + indentationStr + commentStr)
+						insertStr = indentationStr + commentStr + matchStr + "\n"
+						
+						self.view.insert(edit, lineRegion.begin(), insertStr)
+					#
+					else:
+					#
+						print("No match found")
+					#
+				#
+				else:
+				#
+					print("Selection \"%s\" is not a valid function name. Skipping..." % (regionStr))
+				#
+			#
+			
+			return
+		#
+		
+		#Check to make sure the inputs are valid
 		if (action != "add" and action != "remove" and action != "list" and action != "update"):
 		#
 			print("\"%s\" is not a valid action for AddCustomIdentifierCommand" % (action))
@@ -40,6 +100,7 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 			#
 		#
 		
+		#Load the project settings
 		targetListName  = "custom_" + mode.lower() + "s"
 		projectSettings = GetProjectSettings(self.view.window())
 		if (projectSettings == None):
@@ -48,7 +109,8 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 			return
 		#
 		
-		if (action != "update"):
+		# If we are adding or removing elements, do that now
+		if (action == "add" or action == "remove"):
 		#
 			newIdentifiers = []
 			for region in self.view.sel():
@@ -59,15 +121,23 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 					if (mode == "Function"):
 					#
 						parsedFunction = CppFunction(regionStr)
-						if (parsedFunction.valid):
+						if (parsedFunction.valid or (StringIsValidType(regionStr) and action == "remove")):
 						#
+							selectedJustName = False
+							functionName = parsedFunction.name
+							if (StringIsValidType(regionStr) and action == "remove"):
+							#
+								selectedJustName = True
+								functionName = regionStr
+							#
+							
 							foundFunctionStr = ""
 							foundMatch = False
 							foundIndex = 0
 							for functionStr in projectSettings["custom_functions"]:
 							#
 								function = CppFunction(functionStr)
-								if (function.valid and function.name == parsedFunction.name):
+								if (function.valid and function.name == functionName):
 								#
 									foundFunctionStr = functionStr
 									foundMatch = True
@@ -80,7 +150,7 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 							#
 								if (action == "add"):
 								#
-									if (regionStr == foundFunctionStr): print("\"%s\" already in the function list as \"%s\"" % (parsedFunction.name, foundFunctionStr))
+									if (regionStr == foundFunctionStr): print("\"%s\" already in the custom_function list as \"%s\"" % (functionName, foundFunctionStr))
 									else:
 									#
 										print("Replacing existing Custom Function \"%s\" with new definition \"%s\"" % (foundFunctionStr, regionStr))
@@ -90,7 +160,8 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 								#
 								elif (action == "remove"):
 								#
-									newIdentifiers.append(regionStr)
+									if (selectedJustName): newIdentifiers.append("void " + regionStr + "()")
+									else: newIdentifiers.append(regionStr)
 								#
 							#
 							else:
@@ -99,7 +170,7 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 								#
 									newIdentifiers.append(regionStr)
 								#
-								elif (action == "remove"): print("\"%s\" is not a Custom Function" % (parsedFunction.name))
+								elif (action == "remove"): print("\"%s\" is not in the custom_function list" % (functionName))
 							#
 						#
 						else:
@@ -113,7 +184,7 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 						#
 							if (regionStr in projectSettings[targetListName]):
 							#
-								if (action == "add"): print("\"%s\" is already a Custom %s" % (regionStr, mode))
+								if (action == "add"): print("\"%s\" is already in the %s list" % (regionStr, targetListName))
 								elif (action == "remove"):
 								#
 									newIdentifiers.append(regionStr)
@@ -125,7 +196,7 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 								#
 									newIdentifiers.append(regionStr)
 								#
-								elif (action == "remove"): print("\"%s\" is not a Custom %s" % (regionStr, mode))
+								elif (action == "remove"): print("\"%s\" is not in the %s list" % (regionStr, targetListName))
 							#
 						#
 						else:
@@ -166,6 +237,7 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 			projectSettings[targetListName].sort()
 		#
 		
+		# List the elements in the debug output
 		if (action == "list"):
 		#
 			print("%u Custom %ss in this project:" % (len(projectSettings[targetListName]), mode))
@@ -173,6 +245,7 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 			# return
 		#
 		
+		#Update the syntax file if asked to do so
 		if (update_syntax_file):
 		#
 			if (action == "update"):
@@ -191,6 +264,7 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 			#
 		#
 		
+		#Save the new lists to the project settings
 		# print("Saving Project Settings...")
 		SaveProjectSettings(self.view.window(), projectSettings)
 		# print("Done!")

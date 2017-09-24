@@ -8,7 +8,7 @@
 	"drag_text": false,
 	"draw_minimap_border": true,
 	"font_face": "Consolas",
-	"font_size": 10,
+	"font_size": 12,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
@@ -18,16 +18,7 @@
 	"match_selection": true,
 	"rulers":
 	[
-		// 10,
-		// 20,
-		// 30,
-		// 40,
-		// 50,
-		// 60,
-		// 70,
-		// 80,
-		// 90,
-		100,
+		100
 	],
 	"show_encoding": false,
 	"show_line_endings": true,

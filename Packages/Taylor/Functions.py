@@ -324,11 +324,39 @@ def LexicalParse(inputStr):
 	return results
 #End
 
+def StringifyLexicalPieces(pieces):
+#
+	result = ""
+	
+	wasSyntax = True
+	for piece in pieces:
+	#
+		if (piece.type == "Syntax"):
+		#
+			result += piece.value
+			wasSyntax = True
+		#
+		elif (piece.type == "Identifier"):
+		#
+			if (wasSyntax == False): result += " "
+			result += piece.value
+			wasSyntax = False
+		#
+		else:
+		#
+			print("Unknown piece type: %s" % (piece.type))
+		#
+	#
+	
+	return result
+#
+
 class CppFunction():
 #
 	def __init__(self):
 	#
 		self.valid = False
+		self.fullStr = ""
 		self.name = ""
 		self.returnType = ""
 		self.parameterTypes = []
@@ -339,13 +367,14 @@ class CppFunction():
 	def __init__(self, functionStr):
 	#
 		self.valid = False
+		self.fullStr = functionStr
 		self.name = ""
 		self.returnType = ""
 		self.parameterTypes = []
 		self.parameters = []
 		self.lexicalPieces = []
 		
-		self.TryParse(functionStr)
+		self.NewTryParse(functionStr)
 	#
 	
 	def __repr__(self):
@@ -368,7 +397,7 @@ class CppFunction():
 		else: return "Invalid CppFunction"
 	#
 	
-	def TryParse(self, functionStr):
+	def OldTryParse(self, functionStr):
 	#
 		self.valid = True
 		self.name = ""
@@ -531,7 +560,275 @@ class CppFunction():
 		
 		return self.valid
 	#
+	
+	def NewTryParse(self, functionStr):
+	#
+		self.valid = True
+		self.name = ""
+		self.returnType = ""
+		self.parameterTypes = []
+		self.parameters = []
+		self.lexicalPieces = LexicalParse(functionStr)
+		# print("Lexical Pieces:", self.lexicalPieces)
+		
+		if (len(self.lexicalPieces) == 0):
+		#
+			print("No lexical pieces found")
+			self.valid = False
+			return False
+		#
+		
+		beforeParenPieces = []
+		parameterPieceLists = []
+		
+		foundOpenParens = False
+		foundCloseParens = False
+		newParamPieces = []
+		for piece in self.lexicalPieces:
+		#
+			if (piece.type == "Syntax" and piece.value == "("):
+			#
+				if (foundOpenParens):
+				#
+					print("Found more than one open parenthesis!")
+					self.valid = False
+					return False
+				#
+				elif (foundCloseParens):
+				#
+					print("Found open parenthesis after close parenthesis!")
+					self.valid = False
+					return False
+				#
+				else:
+				#
+					foundOpenParens = True
+				#
+			#
+			elif (piece.type == "Syntax" and piece.value == ")"):
+			#
+				if (foundCloseParens):
+				#
+					print("Found more than one close parenthesis!")
+					self.valid = False
+					return False
+				#
+				elif (foundOpenParens == False):
+				#
+					print("Found close parenthesis before open parenthesis!")
+					self.valid = False
+					return False
+				#
+				else:
+				#
+					foundCloseParens = True
+					if (len(newParamPieces) > 0):
+					#
+						parameterPieceLists.append(newParamPieces)
+						newParamPieces = []
+					#
+				#
+			#
+			elif (piece.type == "Syntax" and piece.value == ","):
+			#
+				if (foundOpenParens == False):
+				#
+					print("Found comma before open parenthesis")
+					self.valid = False
+					return False
+				#
+				elif (foundCloseParens):
+				#
+					print("Found comma after close parenthesis")
+					self.valid = False
+					return False
+				#
+				else:
+				#
+					if (len(newParamPieces) > 0):
+					#
+						parameterPieceLists.append(newParamPieces)
+						newParamPieces = []
+					#
+				#
+			#
+			else:
+			#
+				if (foundOpenParens == False):
+				#
+					beforeParenPieces.append(piece)
+				#
+				elif (foundCloseParens == False):
+				#
+					newParamPieces.append(piece)
+				#
+				else:
+				#
+					pass # print("Ignoring part after close parnthesis: %s" % (piece))
+				#
+			#
+		#
+		
+		if (foundOpenParens == False):
+		#
+			print("No open parenthesis found")
+			self.valid = False
+			return False
+		#
+		elif (foundCloseParens == False):
+		#
+			print("Found open parenthesis with no close parenthesis")
+			self.valid = False
+			return False
+		#
+		
+		# print("Found %u pieces before parenthesis:" % (len(beforeParenPieces)))
+		# for piece in beforeParenPieces: print("\t", piece)
+		# print("Found %u parameters:" % (len(parameterPieceLists)))
+		# for parameterPieces in parameterPieceLists:
+		# #
+		# 	print("\t%u Parts:" % (len(parameterPieces)))
+		# 	for piece in parameterPieces: print("\t\t", piece)
+		# #
+		
+		# We need to parse the function name and return type
+		if (len(beforeParenPieces) == 0):
+		#
+			print("No lexical pieces before open parenthesis")
+			self.valid = False
+			return False
+		#
+		elif (beforeParenPieces[-1].type == "Syntax"):
+		#
+			print("Found syntax, not function name, before parenthesis: %s" % (beforeParenPieces[-1]))
+			self.valid = False
+			return False
+		#
+		elif (len(beforeParenPieces) == 1):
+		#
+			print("Warning: No function return type found")
+			self.name = beforeParenPieces[0].value
+			self.returnType = ""
+		#
+		else:
+		#
+			self.returnType = StringifyLexicalPieces(beforeParenPieces[0:-1])
+			self.name = beforeParenPieces[-1].value
+		#
+		
+		# Now we need to parse each parameter piece list
+		
+		for pIndex in range(0, len(parameterPieceLists)):
+		#
+			pieceList = parameterPieceLists[pIndex]
+			if (len(pieceList) == 0):
+			#
+				print("Parameter[%u] has no pieces" % (pIndex))
+				self.valid = False
+				return False
+			#
+			elif (pieceList[-1].type == "Syntax"):
+			#
+				print("Parameter[%u] ended in Syntax piece, not Identifier" % (pIndex))
+				self.valid = False
+				return False
+			#
+			elif (len(pieceList) == 1):
+			#
+				# print("Warning: No type for parameter[%u]" % (pIndex))
+				self.parameterTypes.append("")
+				self.parameters.append(pieceList[0].value)
+			#
+			else:
+			#
+				beforeEquals = []
+				afterEquals = []
+				containsEquals = False
+				for piece in pieceList:
+				#
+					if (piece.type == "Syntax" and piece.value == "="):
+					#
+						if (containsEquals == False):
+						#
+							containsEquals = True
+						#
+						else:
+						#
+							print("Found more than one equals in parameter[%u]" % (pIndex))
+							self.valid = False
+							return False
+						#
+					#
+					else:
+					#
+						if (containsEquals): afterEquals.append(piece)
+						else:               beforeEquals.append(piece)
+					#
+				#
+				
+				if (len(beforeEquals) == 0):
+				#
+					print("No items found before = in parameter[%u]" % (pIndex))
+					self.valid = False
+					return False
+				#
+				elif (beforeEquals[-1].type == "Syntax"):
+				#
+					print("Expected parameter name, not Syntax, before = in parameter[%u]" % (pIndex))
+					self.valid = False
+					return False
+				#
+				elif (containsEquals and len(afterEquals) == 0):
+				#
+					print("Expected assignment after = in parameter[%u]" % (pIndex))
+					self.valid = False
+					return False
+				#
+				elif (len(beforeEquals) == 1):
+				#
+					print("Warning: No type for parameter[%u]" % (pIndex))
+					self.parameterTypes.append("")
+					self.parameters.append(beforeEquals[0].value)
+				#
+				else:
+				#
+					self.parameterTypes.append(StringifyLexicalPieces(beforeEquals[0:-1]))
+					self.parameters.append(beforeEquals[-1].value)
+				#
+			#
+		#
+	#
 #end of CppFunction class
+
+class TestCppParseCommand(sublime_plugin.TextCommand):
+#
+	def run(self, edit):
+	#
+		for region in self.view.sel():
+		#
+			regionStr =  self.view.substr(region)
+			print("Attempting to parse \"%s\"" % (regionStr))
+			
+			parsedFunction = CppFunction(regionStr)
+			
+			if (parsedFunction.valid):
+			#
+				print("Function:")
+				print("\tName: %s" % (parsedFunction.name))
+				print("\tReturn Type: %s" % (parsedFunction.returnType))
+				print("\tParameters: %u" % (len(parsedFunction.parameters)))
+				for pIndex in range(0, len(parsedFunction.parameters)):
+				#
+					print("\t\t[%u] %s - %s" % (pIndex, parsedFunction.parameterTypes[pIndex], parsedFunction.parameters[pIndex]))
+				#
+			#
+			else:
+			#
+				print("Could not parse as function")
+			#
+		#
+	#
+#
 
 def StringIsValidType(typeString):
 #
@@ -656,4 +953,23 @@ def ModifySyntaxFileRegexList(filename, searchRegex, newList):
 	file.close()
 	
 	return True
+#
+
+def GetSyntaxCommentStr(view, viewPos):
+#
+	result = "// "
+	metaInfo = view.meta_info("shellVariables", viewPos)
+	if (metaInfo != None):
+	#
+		for item in metaInfo:
+		#
+			if ('name' in item and 'value' in item and item['name'] == "TM_COMMENT_START"):
+			#
+				result = item['value']
+				break
+			#
+		#
+	#
+	
+	return result
 #

@@ -88,7 +88,7 @@
 
 	// { "keys": ["ctrl+shift+["], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+]"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+;"], "command": "do_nothing" },
+	{ "keys": ["ctrl+shift+;"], "command": "test_cpp_parse" }, //TODO: This can be replaced by any work in progress
 	// { "keys": ["ctrl+shift+'"], "command": "do_nothing" },
 	{ "keys": ["ctrl+shift+,"], "command": "ascii_to_hex", "args": { "undo": true } },
 	// { "keys": ["ctrl+shift+."], "command": "do_nothing" },
@@ -341,7 +341,7 @@
 	// { "keys": ["ctrl+alt+f5"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+f6"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+f7"], "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+f8"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+f8"], "command": "custom_identifier", "args": { "action": "lookup", "mode": "Function" } },
 	// { "keys": ["ctrl+alt+f9"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+f10"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+f11"], "command": "do_nothing" },
