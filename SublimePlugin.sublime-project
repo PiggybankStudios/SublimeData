@@ -34,6 +34,7 @@
 	{
 		"custom_constants":
 		[
+			"SOME_DEFINITION",
 			"SomeEnumValue0",
 			"SomeEnumValue1",
 			"SomeEnumValue2",
@@ -45,12 +46,13 @@
 		],
 		"custom_functions":
 		[
-			"const Structure_t* volatile SomeFunction(const Type_t& input1, r32 input2, const AppData_t *data)",
+			"const Structure_t* volatile SomeFunction(const Type_t& inputaasaaasssdasd1, r32 input2, const AppData_t *data)",
 			"def ActualLineLength(tabSize, lineStr):",
 			"def FullyMatchesRegex(string, regex):",
 			"def GetCString(view, region):",
 			"def GetLineIndentation(lineStr)",
 			"def GetNameParts(name):",
+			"def GetProjectSettings(window)",
 			"def IsHexChar(character):",
 			"def IsIdentChar(char):",
 			"def IsLetter(char):",
@@ -61,14 +63,18 @@
 			"def LexicalParse(inputStr)",
 			"def LineIsEmpty(line):",
 			"def LineIsInclude(view, region):",
+			"def RemoveFunctionsFromList(target, functionsToRemove)",
+			"def RemoveItemsFromList(target, itemsToRemove)",
 			"def RowColumnTextPoint(view, row, column):",
+			"def SaveProjectSettings(window, newSettings)",
 			"def SplitScopesString(scopeString):",
+			"def StringIsValidType(typeString)",
 			"def TextPointColumn(view, textPoint):",
 			"def ToLower(char):",
 			"def ToUpper(char):",
 			"def UpperFirst(string):",
 			"i32 AddFunction(i32 x, i32 y)",
-			"i32 ReallyLongFunctionDefinition(i32 parameter1, i32 parameter2, i32 parameter3, i32 parameter4, i32 parameter5, i32 parameter6)",
+			"i32 ReallyLongFunctionDefinition(int32 parameter1, int32_t parameter2,\n\treal32 parameter3IsAReallyLongName, i8 parameter4, Structure_t parameter5,\n\ti32 parameter6)",
 			"void DEBUG_Print(formatStr, args)",
 			"void DEBUG_PrintLine(const char* formatStr, args)",
 			"void DEBUG_Write(outputStr)",
@@ -81,6 +87,7 @@
 		[
 			"AppData_t",
 			"SomeStruct_t",
+			"Structure_t",
 			"Type_t"
 		]
 	}

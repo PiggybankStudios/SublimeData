@@ -325,119 +325,335 @@ def LexicalParse(inputStr):
 #End
 
 class CppFunction():
+#
 	def __init__(self):
+	#
 		self.valid = False
 		self.name = ""
 		self.returnType = ""
+		self.parameterTypes = []
 		self.parameters = []
 		self.lexicalPieces = []
+	#
 	
 	def __init__(self, functionStr):
+	#
 		self.valid = False
 		self.name = ""
 		self.returnType = ""
+		self.parameterTypes = []
 		self.parameters = []
 		self.lexicalPieces = []
 		
 		self.TryParse(functionStr)
+	#
 	
 	def __repr__(self):
+	#
 		if (self.valid):
+		#
 			result = "%s %s(" % (self.returnType, self.name)
 			paramStr = ""
-			for param in self.parameters:
-				if (paramStr != ""):
-					paramStr += ", "
-				paramStr += param
+			for pIndex in range(0, len(self.parameters)):
+			#
+				paramName = self.parameters[pIndex]
+				paramType = self.parameters[pIndex]
+				if (paramStr != ""): paramStr += ", "
+				if (paramType != ""): paramStr += paramType
+				paramStr += paramName
+			#
 			result += paramStr + ")"
 			return result
-		else:
-			return "Invalid CppFunction"
+		#
+		else: return "Invalid CppFunction"
+	#
 	
 	def TryParse(self, functionStr):
+	#
 		self.valid = True
 		self.name = ""
 		self.returnType = ""
+		self.parameterTypes = []
 		self.parameters = []
 		self.lexicalPieces = LexicalParse(functionStr)
 		# print("Lexical Pieces:", self.lexicalPieces)
 		
 		if (len(self.lexicalPieces) == 0):
+		#
 			print("No lexical pieces found")
 			self.valid = False
+		#
+		elif ("=" in functionStr):
+		#
+			print("Parameter assignments are not currently supported")
+			self.valid = False
+		#
 		else:
+		#
 			foundOpenParens = False
 			foundCloseParens = False
+			parameterType = ""
 			
 			for pIndex in range(0, len(self.lexicalPieces)-1):
+			#
 				# print("pIndex", pIndex)
 				part = self.lexicalPieces[pIndex]
 				nextPart = self.lexicalPieces[pIndex+1]
 				
 				if (foundOpenParens == False and nextPart.value != "("):
+				#
 					if (self.returnType != "" and part.type == "Identifier"):
+					#
 						self.returnType += " "
+					#
 					self.returnType += part.value
+				#
 				
 				if (nextPart.type == "Syntax"):
+				#
 					if (nextPart.value == "("):
+					#
 						if (foundOpenParens):
+						#
 							print("Found too many open parenthesis!")
 							self.valid = False
 							break
+						#
 						elif (part.type != "Identifier"):
+						#
 							print("Part preceding open parenthesis was not an identifier!")
 							self.valid = False
 							break
+						#
 						else:
+						#
 							foundOpenParens = True
 							self.name = part.value
 							# print("FunctionName = \"%s\"" % (part.value))
+						#
+					#
 					elif (nextPart.value == ")"):
+					#
 						if (foundOpenParens == False):
+						#
 							print("Found close parenthesis before open parenthesis!")
 							self.valid = False
 							break
+						#
 						elif (foundCloseParens):
+						#
 							print("Found too many close parenthesis!")
 							self.valid = False
 							break
+						#
 						else:
+						#
 							foundCloseParens = True
 							if (part.type == "Identifier"):
+							#
+								self.parameterTypes.append(parameterType)
 								self.parameters.append(part.value)
+								parameterType = ""
 								# print("Parameter[%u] = \"%s\"" % (len(self.parameters)-1, part.value))
+							#
+						#
+					#
 					elif (nextPart.value == ","):
+					#
 						if (foundOpenParens == False):
+						#
 							print("Found comma before open parenthesis!")
 							self.valid = False
 							break
+						#
 						elif (foundCloseParens == True):
+						#
 							print("Found comma after close parenthesis!")
 							self.valid = False
 							break
+						#
 						elif (part.type != "Identifier"):
+						#
 							print("Part preceding open comma was not an identifier!")
 							self.valid = False
 							break
+						#
 						else:
+						#
+							self.parameterTypes.append(parameterType)
 							self.parameters.append(part.value)
+							parameterType = ""
 							# print("Parameter[%u] = \"%s\"" % (len(self.parameters)-1, part.value))
+						#
+					#
 					else:
-						pass # print("Unknown syntax piece: \"%s\"" % (nextPart.value))
+					#
+						if (foundOpenParens and foundCloseParens == False):
+						#
+							parameterType += part.value
+						#
+					#
+				#
+				else:
+				#
+					if (part.value != "," and part.value != "(" and part.value != ")"):
+					#
+						if (foundOpenParens and foundCloseParens == False):
+						#
+							parameterType += part.value
+						#
+					#
+				#
 			#End For Loop
 			
 			if (self.valid and foundCloseParens == False):
+			#
 				print("No close parenthesis found!")
 				self.valid = False
+			#
+		#
 		
 		if (self.valid):
+		#
 			if (self.name == ""):
+			#
 				print("Found no function name")
 				self.valid = False
+			#
 			elif (self.returnType == ""):
+			#
 				print("No return type on function")
 				self.valid = False
+			#
+		#
+		
+		# print("Parsed function:", self)
 		
 		return self.valid
+	#
 #end of CppFunction class
+
+def StringIsValidType(typeString):
+#
+	if (typeString == None):
+	#
+		return False
+	#
+	
+	typeStringLength = len(typeString)
+	
+	searchResult = re.search("[A-Za-z0-9_]+", typeString)
+	
+	if (searchResult == None or
+		searchResult.start() != 0 or 
+		searchResult.end() != typeStringLength):
+	#
+		return False
+	#
+	
+	return True
+#
+
+def GetProjectSettings(window):
+#
+	projectData = window.project_data()
+	if (projectData == None): return None
+	
+	if ("settings" not in projectData): projectData["settings"] = {}
+	if ("custom_types"     not in projectData["settings"]): projectData["settings"]["custom_types"]     = []
+	if ("custom_constants" not in projectData["settings"]): projectData["settings"]["custom_constants"] = []
+	if ("custom_globals"   not in projectData["settings"]): projectData["settings"]["custom_globals"]   = []
+	if ("custom_functions" not in projectData["settings"]): projectData["settings"]["custom_functions"] = []
+	
+	return projectData["settings"]
+#
+
+def SaveProjectSettings(window, newSettings):
+#
+	projectData = window.project_data()
+	projectData["settings"] = newSettings
+	window.set_project_data(projectData)
+#
+
+def RemoveItemsFromList(target, itemsToRemove):
+#
+	result = target
+	for item in itemsToRemove:
+	#
+		if (item in result): result.remove(item)
+	#
+	return result
+
+def RemoveFunctionsFromList(target, functionsToRemove):
+#
+	result = target
+	for removeFunction in functionsToRemove:
+	#
+		removeParsedFunction = CppFunction(removeFunction)
+		if (removeParsedFunction.valid):
+		#
+			foundMatch = False
+			matchFunctionStr = ""
+			for functionStr in result:
+			#
+				parsedFunction = CppFunction(functionStr)
+				if (parsedFunction.valid and parsedFunction.name == removeParsedFunction.name):
+				#
+					foundMatch = True
+					matchFunctionStr = functionStr
+					break
+				#
+			#
+			
+			if (foundMatch):
+			#
+				result.remove(matchFunctionStr)
+			#
+		#
+	#
+	return result
+#
+
+def ModifySyntaxFileRegexList(filename, searchRegex, newList):
+#
+	# Read the current fileContents
+	file = open(filename, "r")
+	if (file == None):
+	#
+		print("Couldn't open syntax file for reading")
+		return False
+	#
+	fileContents = file.read()
+	file.close()
+	
+	searchResult = re.search(searchRegex, fileContents)
+	
+	if (searchResult == None or len(searchResult.groups()) < 1):
+	#
+		print("Couldn't find custom_types in sublime-syntax file")
+		return False
+	#
+	
+	newTypeListStr = "|".join(newList)
+	
+	if (newTypeListStr == searchResult.group(1)):
+	#
+		print("Syntax regex list is already up to date")
+		return True
+	#
+	
+	# Replace the old value in the file with our new list
+	fileContents = fileContents[:searchResult.start(1)] + newTypeListStr + fileContents[searchResult.end(1):]
+	
+	# Write the new fileContents
+	file = open(filename, 'w')
+	if (file == None):
+	#
+		print("Couldn't open syntax file for writing")
+		return False
+	#
+	file.write(fileContents)
+	file.close()
+	
+	return True
+#

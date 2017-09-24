@@ -47,7 +47,7 @@
 	{ "keys": ["ctrl+f6"],  "command": "custom_identifier", "args": { "action": "add", "mode": "Constant" } },
 	{ "keys": ["ctrl+f7"],  "command": "custom_identifier", "args": { "action": "add", "mode": "Global"   } },
 	{ "keys": ["ctrl+f8"],  "command": "custom_identifier", "args": { "action": "add", "mode": "Function", "update_syntax_file": false } },
-	// { "keys": ["ctrl+f9"],  "command": "do_nothing" },
+	{ "keys": ["ctrl+f9"],  "command": "custom_identifier", "args": { "action": "update" } },
 	// { "keys": ["ctrl+f10"], "command": "do_nothing" },
 	// { "keys": ["ctrl+f11"], "command": "do_nothing" },
 	{ "keys": ["ctrl+f12"], "command": "open_string_file"},
