@@ -955,7 +955,7 @@ def ModifySyntaxFileRegexList(filename, searchRegex, newList):
 	return True
 #
 
-def GetSyntaxCommentStr(view, viewPos):
+def GetSingleCommentStr(view, viewPos):
 #
 	result = "// "
 	metaInfo = view.meta_info("shellVariables", viewPos)
@@ -972,4 +972,27 @@ def GetSyntaxCommentStr(view, viewPos):
 	#
 	
 	return result
+#
+
+def GetBlockCommentStrs(view, viewPos):
+#
+	startStr = ""
+	endStr = ""
+	metaInfo = view.meta_info("shellVariables", viewPos)
+	if (metaInfo != None):
+	#
+		for item in metaInfo:
+		#
+			if ('name' in item and 'value' in item and item['name'] == "TM_COMMENT_START_2"):
+			#
+				startStr = item['value']
+			#
+			if ('name' in item and 'value' in item and item['name'] == "TM_COMMENT_END_2"):
+			#
+				endStr = item['value']
+			#
+		#
+	#
+	
+	return startStr, endStr
 #

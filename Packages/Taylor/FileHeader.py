@@ -27,9 +27,8 @@ class CreateFileHeaderCommand(sublime_plugin.TextCommand):
 				lineNum += 1
 				cIndex = self.view.text_point(lineNum, 0)
 		
-		singleCommentStr = "//"
-		blockCommentStart = "/*"
-		blockCommentEnd = "*/"
+		singleCommentStr = GetSingleCommentStr(self.view, 0)
+		blockCommentStart, blockCommentEnd = GetBlockCommentStrs(self.view, 0)
 		
 		headerString = ""
 		selectRegion = False
@@ -113,7 +112,7 @@ class CreateLocalHeaderCommand(sublime_plugin.TextCommand):
 					headerTopStr += "-"
 			headerTopStr = "+" + headerTopStr + "+"
 			
-			commentStr = GetSyntaxCommentStr(self.view, region.begin())
+			commentStr = GetSingleCommentStr(self.view, region.begin())
 			
 			headerString  = commentStr + headerTopStr + "\n" + indentationStr
 			headerString += commentStr + "|" + selectionStr + "|" + "\n" + indentationStr

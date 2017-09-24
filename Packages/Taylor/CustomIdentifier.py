@@ -64,7 +64,7 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 						lineRegion = self.view.line(region)
 						lineStr = self.view.substr(lineRegion)
 						indentationStr = GetLineIndentation(lineStr)
-						commentStr = GetSyntaxCommentStr(self.view, lineRegion.begin())
+						commentStr = GetSingleCommentStr(self.view, lineRegion.begin())
 						
 						matchStr = matchStr.replace("\n", "\n" + indentationStr + commentStr)
 						insertStr = indentationStr + commentStr + matchStr + "\n"

@@ -399,7 +399,7 @@
 	// { "keys": ["ctrl+alt+shift+f5"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+f6"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+f7"], "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+shift+f8"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+shift+f8"], "command": "document_function" },
 	// { "keys": ["ctrl+alt+shift+f9"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+f10"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+f11"], "command": "do_nothing" },
