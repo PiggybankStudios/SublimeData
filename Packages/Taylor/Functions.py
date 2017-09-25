@@ -727,7 +727,7 @@ class CppFunction():
 				self.valid = False
 				return False
 			#
-			elif (pieceList[-1].type == "Syntax"):
+			elif (len(pieceList) == 1 and pieceList[0].type == "Syntax"):
 			#
 				print("Parameter[%u] ended in Syntax piece, not Identifier" % (pIndex))
 				self.valid = False

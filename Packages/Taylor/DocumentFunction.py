@@ -18,14 +18,15 @@ class DocumentFunctionCommand(sublime_plugin.TextCommand):
 		for region in self.view.sel():
 		#
 			regionStr = self.view.substr(region)
+			indentation = GetLineIndentation(self.view.substr(self.view.line(region)))
 			
 			function = CppFunction(regionStr)
 			if (function.valid):
 			#
 				selectionBegin = 0
 				selectionEnd = 0
-				documentStr = ""
-				if (single_line_comments == False): documentStr += blockCommentStartStr + "\n"
+				documentStr = indentation
+				if (single_line_comments == False): documentStr += blockCommentStartStr + "\n" + indentation
 				
 				if (single_line_comments): documentStr += singleCommentStr
 				paramStr = ""
@@ -34,22 +35,22 @@ class DocumentFunctionCommand(sublime_plugin.TextCommand):
 					if (paramStr != ""): paramStr += ", "
 					paramStr += paramName
 				#
-				documentStr += "Function: " + function.name + "(" + paramStr + ")\n"
+				documentStr += "Function: " + function.name + "(" + paramStr + ")\n" + indentation
 				
 				if (single_line_comments): documentStr += singleCommentStr
-				documentStr += "Description:\n"
+				documentStr += "Description:\n" + indentation
 				
 				if (single_line_comments): documentStr += singleCommentStr
 				documentStr += "\t** "
 				selectionBegin = len(documentStr)
 				documentStr += "No description"
 				selectionEnd = len(documentStr)
-				documentStr += "\n"
+				documentStr += "\n" + indentation
 				
 				if (len(function.parameters) > 0):
 				#
 					if (single_line_comments): documentStr += singleCommentStr
-					documentStr += "Parameters:\n"
+					documentStr += "Parameters:\n" + indentation
 					
 					longestName = 0
 					for paramName in function.parameters:
@@ -74,20 +75,20 @@ class DocumentFunctionCommand(sublime_plugin.TextCommand):
 						if (len(paramType) < longestType): documentStr += " " * (longestType - len(paramType))
 						documentStr += " " + paramName
 						if (len(paramName) < longestName): documentStr += " " * (longestName - len(paramName))
-						documentStr += " ** Description\n"
+						documentStr += " ** Description\n" + indentation
 					#
 				#
 				
 				if (function.returnType != "" and function.returnType != "void"):
 				#
 					if (single_line_comments): documentStr += singleCommentStr
-					documentStr += "Returns:\n"
+					documentStr += "Returns:\n" + indentation
 					
 					if (single_line_comments): documentStr += singleCommentStr
 					documentStr += "\t-" + function.returnType + ": ** Description\n"
 				#
 				
-				if (single_line_comments == False): documentStr += blockCommentEndStr + "\n"
+				if (single_line_comments == False): documentStr += indentation + blockCommentEndStr + "\n"
 				
 				# print("Documentation:\n", documentStr)
 				
