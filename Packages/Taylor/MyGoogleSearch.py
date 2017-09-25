@@ -1,6 +1,8 @@
 import os, sys, sublime, sublime_plugin
 from Taylor.Functions import *
 
+import webbrowser
+
 # Opens	up a web browser and searches the selected text on google
 # Multiple selections will be concatenated together with spaces into a single search
 # If remove_text is true then the selected text will be deleted at the same time
