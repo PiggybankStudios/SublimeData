@@ -7,7 +7,7 @@ scope: msvc.build
 
 contexts: 
   main:
-    - match: '^((?:\w\:)?[^\:\n]+)\((\d+)\)\ ?: error \w\d+: ([^\n]+)$'
+    - match: '^((?:\w\:)?[^\:\n]+)\((\d+)\)\ ?: (?:fatal )?error \w\d+: ([^\n]+)$'
       scope: keyword.title.error.msvc
     - match: '^((?:\w\:)?[^\:\n]+)\((\d+)\)\ ?: warning \w\d+: ([^\n]+)$'
       scope: string.warning.msvc

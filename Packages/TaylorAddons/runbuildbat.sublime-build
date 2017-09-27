@@ -1,6 +1,6 @@
 {
 	"cmd": "build\\build.bat",
-	"file_regex": "^(\\w\\:[^\\:\\n]+\\.[A-Za-z]+)\\((\\d+)\\)\\ ?: (?:error|warning) \\w\\d+: ()([^\\n]+)$",
+	"file_regex": "^(\\w\\:[^\\:\\n]+\\.[A-Za-z]+)\\((\\d+)\\)\\ ?: (?:fatal )?(?:error|warning) \\w\\d+: ()([^\\n]+)$",
 	// "line_regex": "",//Used to match alongside file_regex
 	// "selector": "",  //Used when Tools|Build System|Automatic is set to true
 	"working_dir": "$project_path",
