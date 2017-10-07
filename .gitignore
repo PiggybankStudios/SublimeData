@@ -1,5 +1,8 @@
 Local/*
 Backup/*
+Cache/*
+Index/*
+*-ca-bundle*
 Packages/markupsafe/*
 Packages/mdpopups/*
 Packages/pygments/*

@@ -1,0 +1,4 @@
+{
+	"shell_cmd": "bash build.sh",
+	"working_dir": "$project_path/build",
+}

@@ -15,7 +15,7 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 		while (packagePath == None or packagePath == ""): packagePath = sublime.packages_path()
 		packagePath = os.path.abspath(os.path.join(packagePath, os.pardir))
 		# print("Package Path: \"%s\"" % (packagePath))
-		syntaxFileAbsPath = os.path.abspath(packagePath + "\\" + syntaxFilePath)
+		syntaxFileAbsPath = os.path.abspath(packagePath + "/" + syntaxFilePath)
 		
 		searchRegex = "[\\s]+custom_%ss:[\\s]+'([A-Za-z0-9_\\|]*)'" % (mode.lower())
 		

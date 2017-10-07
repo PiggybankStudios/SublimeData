@@ -30,7 +30,7 @@ class TaylorCommand(sublime_plugin.TextCommand):
 # This command is simply a placeholder that's useful for holding the place for an unbound hotkey
 class DoNothingCommand(sublime_plugin.TextCommand):
 #
-	def run(self):
+	def run(self, edit):
 	#
 		print("Doing nothing!")
 	#

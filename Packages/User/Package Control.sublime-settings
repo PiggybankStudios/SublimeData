@@ -6,23 +6,10 @@
 	"installed_packages":
 	[
 		"Alignment",
-		"Aurora Color Scheme",
-		"GitGutter",
-		"Google Search",
-		"HighlightWords",
-		"Indent XML",
+		"Gitignore",
 		"Insert Nums",
-		"InsertDate",
-		"Intel HEX",
-		"LinkerScript",
-		"MarkdownLight",
-		"MIPS Syntax",
-		"Monokai Extended",
-		"Neon Color Scheme",
+		"OpenGL Shading Language (GLSL)",
 		"Package Control",
-		"Pretty JSON",
-		"SFTP",
-		"Shader Syntax (GLSL HLSL Cg)",
-		"Whitespace"
+		"Swift"
 	]
 }
