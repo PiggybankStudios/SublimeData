@@ -339,7 +339,7 @@
 	// { "keys": ["ctrl+alt+shift+u"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+i"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+o"], "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+shift+p"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+shift+p"], "command": "show_scope_name" },
 
 	// { "keys": ["ctrl+alt+shift+a"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+s"], "command": "do_nothing" },

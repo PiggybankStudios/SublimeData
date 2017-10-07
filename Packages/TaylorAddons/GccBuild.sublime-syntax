@@ -1,0 +1,36 @@
+%YAML 1.2
+---
+name: Bash Build Output
+file-extensions: 
+  - gcc
+  - g++
+scope: bash.build
+
+contexts: 
+  main:
+    - match: '^(.*)\:([0-9]+)\:([0-9]+)\:(?:\s?(?:fatal|error))+\s?\:(.*)$\n'
+      scope: keyword.title.error.bashbuild
+      push:
+        - meta_scope: custom.global.source-code.bashbuild
+        - match: '\n'
+          pop: true
+    - match: '^(.*)\:([0-9]+)\:([0-9]+)\:(?:\s?(?:warning|note))+\s?\:(.*)$\n'
+      scope: string.warning.bashbuild
+      push:
+        - meta_scope: custom.global.source-code.bashbuild
+        - match: '\n'
+          pop: true
+    - match: '^Could Not Find [^\n]+$'
+      scope: keyword.title.missing-file.bashbuild
+    - match: '^\[[^\]]+\]+$'
+      scope: storage.type.finish-message.bashbuild
+    - match: '^(?:[0-9]+ warning[s]? and )?[0-9]+ error[s]? generated.$'
+      scope: custom.prefix.error-report.bashbuild
+    - match: '^[0-9]+ warning[s]? generated.$'
+      scope: string.warning-report.bashbuild
+    - match: '^[\^\~\s]+$'
+      scope: custom.prefix.pointer.bashbuild
+    - match: '^(?:Application|Platform) Build Failed\!$'
+      scope: keyword.title.failure.bashbuild
+    - match: '^(?:Application|Platform) Build Succeeded\!$'
+      scope: entity.name.success.bashbuild
