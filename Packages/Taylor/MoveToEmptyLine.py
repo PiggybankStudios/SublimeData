@@ -41,7 +41,7 @@ class MoveToEmptyLineCommand(sublime_plugin.TextCommand):
 					break;
 				#
 			#			
-			print("Found line " + str(currentRow+1));
+			# print("Found line " + str(currentRow+1));
 			
 			if (foundBeginning): newPos = 0;
 			elif (foundEnd): newPos = self.view.size();

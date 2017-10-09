@@ -26,9 +26,9 @@ class KillLineCommand(sublime_plugin.TextCommand):
 				endPosition = self.view.text_point(endRow, newLineRegion.size());
 			#
 			
-			print("Row " + str(row) + ", Col " + str(col));
-			print("End: Row " + str(endRow) + ", Col " + str(endCol));
-			print("End Pos: " + str(endPosition));
+			# print("Row " + str(row) + ", Col " + str(col));
+			# print("End: Row " + str(endRow) + ", Col " + str(endCol));
+			# print("End Pos: " + str(endPosition));
 			
 			newRegion = sublime.Region(endPosition, endPosition);
 			# newRegions.append(newRegion);
