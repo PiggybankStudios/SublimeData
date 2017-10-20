@@ -70,6 +70,13 @@
 	[X] Add some nice message outputs to CustomTypes plugin. Maybe little windows pop-up next to the selected identifiers for success AND failure?
 	[ ] Fix create local header with this number of characters: aaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
+# List of installed packages:
+	+ Alignment
+	+ Gitignore
+	+ Insert Nums
+	+ Intel HEX
+	+ OpenGL Shading Language (GLSL)
+
 !@#$%^&*()_+1234567890-={}[]:";'<>?,./|\~`
 !@#$%^&*()_+1234567890-={}[]:";'<>?,./|\~`
 
