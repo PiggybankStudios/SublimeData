@@ -68,6 +68,7 @@
 	[X] Fix spacing between type parts for parameters when parsing C++ Functions
 	[X] Add support for parameter default value assignments SomeFunction(i32 value = 10) { ... }
 	[X] Add some nice message outputs to CustomTypes plugin. Maybe little windows pop-up next to the selected identifiers for success AND failure?
+	[ ] Fix create local header with this number of characters: aaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
 !@#$%^&*()_+1234567890-={}[]:";'<>?,./|\~`
 !@#$%^&*()_+1234567890-={}[]:";'<>?,./|\~`
