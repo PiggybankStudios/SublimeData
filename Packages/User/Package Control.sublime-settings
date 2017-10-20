@@ -6,8 +6,13 @@
 	"installed_packages":
 	[
 		"Alignment",
+		"HighlightWords",
+		"Indent XML",
 		"Insert Nums",
+		"Intel HEX",
+		"LinkerScript",
 		"OpenGL Shading Language (GLSL)",
-		"Package Control"
+		"Package Control",
+		"Whitespace"
 	]
 }

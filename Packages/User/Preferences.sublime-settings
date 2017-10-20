@@ -95,7 +95,7 @@
 	"font_options":
 	[
 	],
-	"font_size": 13,
+	"font_size": 9,
 	"gpu_window_buffer": "auto",
 	"gutter": true,
 	"highlight_line": true,
@@ -103,6 +103,8 @@
 	"hot_exit": true,
 	"ignored_packages":
 	[
+		"Aurora Color Scheme",
+		"Shader Syntax (GLSL HLSL Cg)",
 		"Vintage"
 	],
 	"indent_guide_options":
