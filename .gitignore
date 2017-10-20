@@ -14,5 +14,6 @@ Packages/SFTP/*
 Packages/Pretty JSON/*
 *Package Control*
 Installed Packages/*
+Packages/User/Preferences.sublime-settings
 *.sublime-workspace
 *.DS_Store
