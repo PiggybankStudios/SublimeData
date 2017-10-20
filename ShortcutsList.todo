@@ -1,0 +1,127 @@
+
++------+------+------+------+------+------+------+------+------+------+------+------+
+| q( ) | w( ) | e( ) | r( ) | t( ) | y( ) | u( ) | i( ) | o( ) | p( ) | [( ) | ]( ) |
++------+------+------+------+------+------+------+------+------+------+------+------+
+ +------+------+------+------+------+------+------+------+------+------+------+
+ | a( ) | s( ) | d( ) | f( ) | g( ) | h( ) | j( ) | k( ) | l( ) | ;( ) | '( ) |
+ +------+------+------+------+------+------+------+------+------+------+------+
+   +------+------+------+------+------+------+------+------+------+------+
+   | z( ) | x( ) | c( ) | v( ) | b( ) | n( ) | m( ) | ,( ) | .( ) | /( ) |
+   +------+------+------+------+------+------+------+------+------+------+
+
+: Table of Contents:
+# Used heavily
+= Used commonly
+@ Used rarely
+! Common knowledge
+//Almost never used (Rebind Me?)
+
+: ===================== Mobility Shortcuts ===================== 
+# ctrl+up        = Jump backward to empty line                  (+shift Select jumped area)
+# ctrl+down      = Jump forward to empty line                   (+shift Select jumped area)
+# ctrl+left      = Jump backward across words                   (+shift Select jumped area)
+# ctrl+right     = Jump forward across words                    (+shift Select jumped area)
+# alt+shift+up   = Add cursor on line above                     
+# alt+shift+down = Add cursor on line below                     
+
+: ============= Control(+Shift)+Something Commands =============
+//ctrl+q   = Switch to neighboring pane                         
+# ctrl+w   = Close file                                         (+shift Close window)
+= ctrl+e   = Re-open last closed file                           
+@ ctrl+r   = Return to last position                            
+//ctrl+t   = Undo return the last position                      
+@ ctrl+y   = Select word under cursor                           
+//ctrl+u   = Goto word in file (overlay)                        
+= ctrl+i   = Fold all in file                                   
+= ctrl+o   = Unfold all in file                                 
+# ctrl+p   = Open file (overlay)                                
+! ctrl+a   = Select all                                         
+! ctrl+s   = Save file                                          (+shift Save File As)
+# ctrl+d   = Grab next instance of selection                    (+shift Reverse search)
+! ctrl+f   = Find in file (overlay)                             (+shift Search whole project)
+# ctrl+g   = Search selection on google                         (+shift Deletes the selection at the same time)
+# ctrl+h   = Open corrisponding header file                     
+@ ctrl+j   = Toggle distraction free mode                       
+# ctrl+k   = Kill line                                          (+shift Replace selection with spaces)
+@ ctrl+l   = Show selection at center of screen                 
+! ctrl+z   = Undo                                               (+shift Redo)
+! ctrl+x   = Cut                                                
+! ctrl+c   = Copy                                               
+! ctrl+v   = Paste                                              
+# ctrl+b   = Build                                              
+! ctrl+n   = New file                                           (+shift New window)
+# ctrl+m   = Duplicate line                                     
+# ctrl+[   = Decrease indentation                               
+# ctrl+]   = Increase indentation                               
+//ctrl+;   = Run a test command                                 
+@ ctrl+'   = Show Console                                       
+//ctrl+,   = Convert ascii characters to HEX                    (+shift Reverse operation)
+# ctrl+/   = Toggle comment                                     
+# ctrl+f5  = Add custom Type to My C syntax                     (+shift Remove instead of add)
+# ctrl+f6  = Add custom Constant to My C syntax                 (+shift Remove instead of add)
+# ctrl+f7  = Add custom Global to My C syntax                   (+shift Remove instead of add)
+# ctrl+f8  = Add custom Function to My C syntax                 (+shift Remove instead of add)
+@ ctrl+f9  = Update My C Syntax with project's custom stuff     
+@ ctrl+f12 = Open header file (use on #include lines)           
+
+: These ones don't relate to their non-shift counterparts
+# ctrl+shift+i = Indent blank lines in file
+# ctrl+shift+o = Create local header out of selected text       
+# ctrl+shift+p = Create large local header out of selected text 
+= ctrl+shift+h = Create nicely formatted header at top of file
+
+: =============== Alt(+Shift)+Something Commands ===============
+@ alt+1 = Toggle Regular Expression (In find window)            (+shift )
+@ alt+2 = Toggle Case Sensitivity (In find window)              (+shift )
+@ alt+3 = Toggle Word Bounded (In find window)                  (+shift )
+= alt+q = Change naming convention -> camelCase                 (+shift UpperFirstCharacters)
+= alt+w = Change naming convention -> space seperated words     (+shift Upper First Words) (+shift+ctrl Upper first word)
+= alt+e = Change naming convention -> underscores_lower_case    (+shift UNDERSCORES_UPPER_CASE)
+# alt+a = Align selections using spaces                         (+shift Align next character to similar instance on next line, this is a bit wierd and not too useful yet)
+# alt+s = Goto next instance of selection (deselect current)    (+shift Reverse direction)
+# alt+d = Goto function/header in file (overlay)                (+shift In whole file)
+//alt+b = Goto enclosing brackes
+
+{ "keys": ["alt+shift+up"],   "command": "select_lines", "args": {"forward": false} },
+{ "keys": ["alt+shift+down"], "command": "select_lines", "args": {"forward": true } },
+
+{ "keys": ["ctrl+alt+q"], "command": "close_workspace"},
+{ "keys": ["ctrl+alt+w"], "command": "prompt_select_workspace"},
+{ "keys": ["ctrl+alt+t"], "command": "remove_trailing_whitespace"},
+{ "keys": ["ctrl+alt+u"], "command": "upper_case"},
+{ "keys": ["ctrl+alt+i"], "command": "fold_by_cursor" },
+{ "keys": ["ctrl+alt+p"], "command": "show_overlay", "args": {"overlay": "command_palette"} },
+{ "keys": ["ctrl+alt+s"], "command": "toggle_side_bar"},
+{ "keys": ["ctrl+alt+d"], "command": "toggle_define_endings"},
+{ "keys": ["ctrl+alt+f"], "command": "show_panel", "args": {"panel": "replace", "reverse": false} },
+{ "keys": ["ctrl+alt+g"], "command": "start_git_bash" },
+{ "keys": ["ctrl+alt+h"], "command": "convert_to_hex"},
+{ "keys": ["ctrl+alt+l"], "command": "lower_case"},
+{ "keys": ["ctrl+alt+b"], "command": "insert_nums_hex", "args": { "start_num": 1, "padding": 2 } },
+{ "keys": ["ctrl+alt+n"], "command": "insert_nums", "args": {"format": "0:1"} },
+{ "keys": ["ctrl+alt+,"], "command": "focus_neighboring_group", "args": {"forward": false} },
+{ "keys": ["ctrl+alt+."], "command": "focus_neighboring_group", "args": {"forward": true} },
+{ "keys": ["ctrl+alt+1"], "command": "fold_by_level", "args": {"level": 1} },
+{ "keys": ["ctrl+alt+2"], "command": "fold_by_level", "args": {"level": 2} },
+{ "keys": ["ctrl+alt+3"], "command": "fold_by_level", "args": {"level": 3} },
+{ "keys": ["ctrl+alt+4"], "command": "fold_by_level", "args": {"level": 4} },
+{ "keys": ["ctrl+alt+5"], "command": "fold_by_level", "args": {"level": 5} },
+{ "keys": ["ctrl+alt+6"], "command": "fold_by_level", "args": {"level": 6} },
+{ "keys": ["ctrl+alt+7"], "command": "fold_by_level", "args": {"level": 7} },
+{ "keys": ["ctrl+alt+8"], "command": "fold_by_level", "args": {"level": 8} },
+{ "keys": ["ctrl+alt+9"], "command": "fold_by_level", "args": {"level": 9} },
+{ "keys": ["ctrl+alt+enter"], "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} },
+{ "keys": ["ctrl+alt+right"], "command": "next_view"},
+{ "keys": ["ctrl+alt+left"],  "command": "prev_view"},
+{ "keys": ["ctrl+alt+up"],    "command": "goto_next_scope", "args": {"forward": false, "loop_around": false, "scope_match": "entity.name"} },
+{ "keys": ["ctrl+alt+down"],  "command": "goto_next_scope", "args": {"forward": true,  "loop_around": false, "scope_match": "entity.name"} },
+
+{ "keys": ["ctrl+alt+shift+w"], "command": "change_naming_convention", "args": {"convention": "sentence"} },
+{ "keys": ["ctrl+alt+shift+e"], "command": "ascii_to_hex", "args": { "undo": true } },
+{ "keys": ["ctrl+alt+shift+p"], "command": "show_scope_name" },
+{ "keys": ["ctrl+alt+shift+h"], "command": "convert_to_hex", "args": { "undo": true } },
+{ "keys": ["ctrl+alt+shift+b"], "command": "insert_nums_hex", "args": { "start_num": 0, "padding": 2 } }, //TODO: Turn this into prompt_insert_nums_hex
+{ "keys": ["ctrl+alt+shift+n"], "command": "prompt_insert_nums"},
+{ "keys": ["ctrl+alt+shift+f8"], "command": "document_function" },
+{ "keys": ["ctrl+alt+shift+up"],    "command": "focus_neighboring_group", "args": {"forward": true } },
+{ "keys": ["ctrl+alt+shift+down"],  "command": "focus_neighboring_group", "args": {"forward": false} },
