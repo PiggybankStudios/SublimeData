@@ -1,5 +1,5 @@
-# This file should be used alongside the 
-# TODO.sublime-syntax to test the 
+# This file should be used alongside the
+# TODO.sublime-syntax to test the
 # syntax capabilities
 
     272822 Background
@@ -26,7 +26,7 @@
 	[ ] Make GrabNextCommand auto-choose whether or not to make the regex word bounded by whether or not the selection is word bounded (however the auto-highlight functionality works)
 	[ ] Make GrabNextCommand faster in large files?
 	[ ] Upgrade TODO list syntax so comments can come at end of line
-	
+
 	[X] Bind some hotkey to rename file and delete file
 	[X] Make a fold and unfold commands
 	[X] Make FoldByCursorCommand work with empty lines
@@ -82,6 +82,7 @@
 	+ Insert Nums
 	+ Intel HEX
 	+ OpenGL Shading Language (GLSL)
+	+ TrailingSpaces
 
 !@#$%^&*()_+1234567890-={}[]:";'<>?,./|\~`
 !@#$%^&*()_+1234567890-={}[]:";'<>?,./|\~`
@@ -103,7 +104,7 @@ Name With Spaces
 
 
 
-ALT Hotkey can be disabled using AutoHotKey: 
+ALT Hotkey can be disabled using AutoHotKey:
 1. Install
 2. Make a file named noAlt.ahk with contents "~LAlt Up:: return"
 3. Right click and compile hotkey script

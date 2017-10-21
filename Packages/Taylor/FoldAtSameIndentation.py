@@ -53,9 +53,10 @@ class FoldAtSameIndentationCommand(sublime_plugin.TextCommand):
 					
 					if (single_fold == False or foldStartPos >= firstSelRegion.b):
 					#
-						self.view.fold(foldRegion)
-						
-						if (single_fold): break
+						if (self.view.fold(foldRegion)):
+						#
+							if (single_fold): break
+						#
 					#
 				#
 			#

@@ -265,7 +265,7 @@
 	{ "keys": ["ctrl+alt+w"], "command": "prompt_select_workspace"},
 	// { "keys": ["ctrl+alt+e"], "command": "do_nothing" },
 	{ "keys": ["ctrl+alt+r"], "command": "rename_file" },
-	{ "keys": ["ctrl+alt+t"], "command": "remove_trailing_whitespace"},
+	{ "keys": ["ctrl+alt+t"], "command": "delete_trailing_spaces"},
 	// { "keys": ["ctrl+alt+y"], "command": "do_nothing" },
 	{ "keys": ["ctrl+alt+u"], "command": "upper_case"},
 	{ "keys": ["ctrl+alt+i"], "command": "fold_at_same_indentation", "args": {"single_fold": true} },
