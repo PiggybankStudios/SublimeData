@@ -1,9 +1,7 @@
+import os, sys, sublime, sublime_plugin
+from Taylor.Functions import *
 
-import sublime
-import sublime_plugin
-import os
 import functools
-
 
 class RenameFileCommand(sublime_plugin.TextCommand):
 #
@@ -12,7 +10,7 @@ class RenameFileCommand(sublime_plugin.TextCommand):
 		filename = self.view.file_name()
 		branch, leaf = os.path.split(filename)
 		
-		if not os.access(filename, os.W_OK):
+		if (not os.access(filename, os.W_OK)):
 		#
 			sublime.error_message(leaf + " is read-only")
 		#

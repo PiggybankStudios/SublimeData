@@ -19,7 +19,6 @@
 =   FD971F custom.thing.todo
 
 #TODO List
-	[ ] Bind some hotkey to rename file and delete file
 	[ ] Add shortcuts to check off a checklist item in TODO list syntax
 	[ ] Fix My C so that definition lookups still work. Maybe look at command for f12 binding?
 	[ ] Make the CreateLocalHeaderCommand work with already created headers to reformat them
@@ -28,6 +27,7 @@
 	[ ] Make GrabNextCommand faster in large files?
 	[ ] Upgrade TODO list syntax so comments can come at end of line
 	
+	[X] Bind some hotkey to rename file and delete file
 	[X] Make a fold and unfold commands
 	[X] Make FoldByCursorCommand work with empty lines
 	[X] Fix create local header with this number of characters: aaaaaaaaaaaaaaaaaaaaaaaaaaaaa

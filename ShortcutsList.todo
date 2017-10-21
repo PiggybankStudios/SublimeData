@@ -6,7 +6,7 @@
   | a    | s    | d    | f    | g    | h    | j    | k    | l    | ;    | '    |
   +------+------+------+------+------+------+------+------+------+------+------+
       +------+------+------+------+------+------+------+------+------+------+
-      | z    | x    | c    | v    | b    | n    | m    | ,    | .    | /    |
+      | z    | x    | c    | v    | b    | n    | m    | <    | >    | /    |
       +------+------+------+------+------+------+------+------+------+------+
 
 : Table of Contents:
@@ -40,7 +40,7 @@
 //ctrl+q   = Switch to neighboring pane                         
 # ctrl+w   = Close file                                         (+shift Close window)
 = ctrl+e   = Re-open last closed file                           
-# ctrl+r   = Kill line                                          (+shift Replace selection with spaces)
+# ctrl+r   = Kill line                                          (+shift Replace selection with spaces) (+alt+shift Delete file)
 //ctrl+t   = Unbound                                            
 @ ctrl+y   = Select word under cursor                           
 //ctrl+u   = Goto word in file (overlay)                        

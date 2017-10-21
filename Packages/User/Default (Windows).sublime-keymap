@@ -333,7 +333,7 @@
 	// { "keys": ["ctrl+alt+shift+q"], "command": "do_nothing" },
 	{ "keys": ["ctrl+alt+shift+w"], "command": "change_naming_convention", "args": {"convention": "sentence"} },
 	// { "keys": ["ctrl+alt+shift+e"], "command": "ascii_to_hex", "args": { "undo": true } },
-	// { "keys": ["ctrl+alt+shift+r"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+shift+r"], "command": "delete_file" },
 	// { "keys": ["ctrl+alt+shift+t"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+y"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+u"], "command": "do_nothing" },
