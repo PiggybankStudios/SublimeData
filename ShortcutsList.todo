@@ -17,45 +17,45 @@
 //Almost never used (Rebind Me?)
 
 : ===================== Mobility Shortcuts =====================
-# ctrl+up             = Jump backward to empty line             (+shift Select jumped area)
-# ctrl+down           = Jump forward to empty line              (+shift Select jumped area)
-# ctrl+left           = Jump backward across words              (+shift Select jumped area)
-# ctrl+right          = Jump forward across words               (+shift Select jumped area)
-//alt+up              = unbound
-//alt+down            = unbound
-# alt+shift+up        = Add cursor on line above
-# alt+shift+down      = Add cursor on line below
-# ctrl+alt+up         = Jump backward to function definition
-# ctrl+alt+down       = Jump forward to function definition
-# ctrl+alt+right      = Switch focus to previous tab
-# ctrl+alt+left       = Switch focus to next tab
-@ ctrl+alt+<          = Switch focus to last pane
-@ ctrl+alt+>          = Switch focus to next pane
-# ctrl+p              = Open file (overlay)
-//ctrl+u              = Goto word in file (overlay)
-# ctrl+alt+enter      = Goto line number (overlay)
-# alt+d               = Goto function/header in file (overlay)  (+shift In whole file)
+# ctrl+up        = Jump backward to empty line             (+shift Select jumped area)
+# ctrl+down      = Jump forward to empty line              (+shift Select jumped area)
+# ctrl+left      = Jump backward across words              (+shift Select jumped area)
+# ctrl+right     = Jump forward across words               (+shift Select jumped area)
+//alt+up         = unbound
+//alt+down       = unbound
+# alt+shift+up   = Add cursor on line above
+# alt+shift+down = Add cursor on line below
+# ctrl+alt+up    = Jump backward to function definition
+# ctrl+alt+down  = Jump forward to function definition
+# ctrl+alt+right = Switch focus to previous tab
+# ctrl+alt+left  = Switch focus to next tab
+@ ctrl+alt+<     = Switch focus to last pane
+@ ctrl+alt+>     = Switch focus to next pane
+# ctrl+p         = Open file (overlay)
+# ctrl+alt+enter = Goto line number (overlay)
+# alt+d          = Goto function/header in file (overlay)  (+shift In whole file)
+@ ctrl+space     = Show selection at center of screen
 
 : ============= Control(+Shift)+Something Commands =============
-//ctrl+q   = Switch to neighboring pane
+@ ctrl+q   = Toggle distraction free mode
 # ctrl+w   = Close file                                         (+shift Close window)
 = ctrl+e   = Re-open last closed file
 # ctrl+r   = Kill line                                          (+shift Replace selection with spaces) (+alt+shift Delete file)
-//ctrl+t   = Unbound
-@ ctrl+y   = Select word under cursor
-//ctrl+u   = Goto word in file (overlay)
-= ctrl+i   = Fold all in file
-= ctrl+o   = Unfold all in file
+# ctrl+t   = Create banner out of selected text                 (+shift Make larger banner)
+//ctrl+y   = Unbound
+# ctrl+u   = Make characters uppercase                          (+shift Make lowercase)
+= ctrl+i   = Fold next indented region                          (+shift Do for whole file)
+= ctrl+o   = Unfold next folded section                         (+shift Search backwards)
 # ctrl+p   = Open file (overlay)
 ! ctrl+a   = Select all
 ! ctrl+s   = Save file                                          (+shift Save File As)
 # ctrl+d   = Grab next instance of selection                    (+shift Reverse search)
 ! ctrl+f   = Find in file (overlay)                             (+shift Search whole project)
 # ctrl+g   = Search selection on google                         (+shift Deletes the selection at the same time)
-# ctrl+h   = Open corrisponding header file
-@ ctrl+j   = Toggle distraction free mode
+# ctrl+h   = Open corrisponding header file                     (+shift Create nice header at top of file)
+//ctrl+j   = Unbound
 //ctrl+k   = Unbound
-@ ctrl+l   = Show selection at center of screen
+//ctrl+l   = Unbound
 ! ctrl+z   = Undo                                               (+shift Redo)
 ! ctrl+x   = Cut
 ! ctrl+c   = Copy
@@ -70,19 +70,14 @@
 = ctrl+<   = Jump forward
 = ctrl+>   = Jump backwards
 # ctrl+/   = Toggle comment
-//ctrl+f5  = Convert ascii characters to HEX                    (+shift Reverse operation)
-# ctrl+f5  = Add custom Type to My C syntax                     (+shift Remove instead of add)
-# ctrl+f6  = Add custom Constant to My C syntax                 (+shift Remove instead of add)
-# ctrl+f7  = Add custom Global to My C syntax                   (+shift Remove instead of add)
-# ctrl+f8  = Add custom Function to My C syntax                 (+shift Remove instead of add) (+alt insert full function definition) (+shift+alt Generate function documentation)
-@ ctrl+f9  = Update My C Syntax with project's custom stuff
-@ ctrl+f12 = Open header file (use on #include lines)
-
-: These ones don't relate to their non-shift counterparts
-# ctrl+shift+i = Indent blank lines in file
-# ctrl+shift+o = Create local header out of selected text
-# ctrl+shift+p = Create large local header out of selected text
-= ctrl+shift+h = Create nicely formatted header at top of file
+@ctrl+F3  = Convert DEC to HEX                                  (+shift Convert HEX to DEX)
+//ctrl+F4  = Convert ascii characters to HEX                    (+shift Reverse operation)
+# ctrl+F5  = Add custom Type to My C syntax                     (+shift Remove instead of add)
+# ctrl+F6  = Add custom Constant to My C syntax                 (+shift Remove instead of add)
+# ctrl+F7  = Add custom Global to My C syntax                   (+shift Remove instead of add)
+# ctrl+F8  = Add custom Function to My C syntax                 (+shift Remove instead of add) (+alt insert full function definition) (+shift+alt Generate function documentation)
+@ ctrl+F9  = Update My C Syntax with project's custom stuff
+@ ctrl+F12 = Open header file (use on #include lines)
 
 : =============== Alt(+Shift)+Something Commands ===============
 @ alt+1 = Toggle Regular Expression (In find window)
@@ -94,23 +89,21 @@
 # alt+a = Align selections using spaces                         (+shift Align next character to similar instance on next line, this is a bit wierd and not too useful yet)
 # alt+s = Goto next instance of selection (deselect current)    (+shift Reverse direction)
 # alt+d = Goto function/header in file (overlay)                (+shift In whole file)
-//alt+b = Goto enclosing brackes
+//alt+b = Goto enclosing brackets
 
 : =========== Control+Alt(+Shift)+Something Commands ===========
 # ctrl+alt+q       = Close project
 # ctrl+alt+w       = Open project (overlay)
-@ ctrl+alt+t       = Remove trailing whitespace in file
-= ctrl+alt+u       = Make characters uppercase
-# ctrl+alt+i       = Fold next indented region                  (+shift Do for whole file)
-# ctrl+alt+o       = Unfold next folded section                 (+shift Search backwards)
+@ ctrl+alt+e       = Indent empty lines in file
+# ctrl+alt+r       = Rename file
+= ctrl+alt+t       = Remove trailing whitespace in file
+= ctrl+alt+i       = Fold all in file
+= ctrl+alt+o       = Unfold all in file
 # ctrl+alt+p       = Open the command palette (overlay)
-# ctrl+alt+shift+p = Show syntax scopes
 # ctrl+alt+s       = Toggle sidebar
 = ctrl+alt+d       = Toggle \ eol character for #defines
 @ ctrl+alt+f       = Find and replace (overlay)
 = ctrl+alt+g       = Run git bash in project directory
-# ctrl+alt+h       = Convert DEC to HEX                         (+shift Convert HEX to DEX)
-= ctrl+alt+l       = Make characters lowercase
 # ctrl+alt+n       = Insert numbers (starting at 0)             (+shift Show format overlay to allow specialized generation of numbers)
 = ctrl+alt+1       = Fold by level 1
 = ctrl+alt+2       = Fold by level 2
@@ -121,3 +114,5 @@
 //ctrl+alt+7       = Fold by level 7
 //ctrl+alt+8       = Fold by level 8
 //ctrl+alt+9       = Fold by level 9
+
+# ctrl+alt+shift+p = Show syntax scopes

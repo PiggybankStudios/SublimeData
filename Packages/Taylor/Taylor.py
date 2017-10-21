@@ -33,6 +33,7 @@ class DoNothingCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 	#
 		print("Doing nothing!")
+		sublime.status_message("Key is unbound");
 	#
 #
 
