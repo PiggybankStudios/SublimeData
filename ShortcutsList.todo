@@ -1,13 +1,13 @@
 
 +------+------+------+------+------+------+------+------+------+------+------+------+
-| q( ) | w( ) | e( ) | r( ) | t( ) | y( ) | u( ) | i( ) | o( ) | p( ) | [( ) | ]( ) |
+| q    | w    | e    | r    | t    | y    | u    | i    | o    | p    | [    | ]    |
 +------+------+------+------+------+------+------+------+------+------+------+------+
- +------+------+------+------+------+------+------+------+------+------+------+
- | a( ) | s( ) | d( ) | f( ) | g( ) | h( ) | j( ) | k( ) | l( ) | ;( ) | '( ) |
- +------+------+------+------+------+------+------+------+------+------+------+
-   +------+------+------+------+------+------+------+------+------+------+
-   | z( ) | x( ) | c( ) | v( ) | b( ) | n( ) | m( ) | ,( ) | .( ) | /( ) |
-   +------+------+------+------+------+------+------+------+------+------+
+  +------+------+------+------+------+------+------+------+------+------+------+
+  | a    | s    | d    | f    | g    | h    | j    | k    | l    | ;    | '    |
+  +------+------+------+------+------+------+------+------+------+------+------+
+      +------+------+------+------+------+------+------+------+------+------+
+      | z    | x    | c    | v    | b    | n    | m    | ,    | .    | /    |
+      +------+------+------+------+------+------+------+------+------+------+
 
 : Table of Contents:
 # Used heavily
@@ -17,12 +17,24 @@
 //Almost never used (Rebind Me?)
 
 : ===================== Mobility Shortcuts ===================== 
-# ctrl+up        = Jump backward to empty line                  (+shift Select jumped area)
-# ctrl+down      = Jump forward to empty line                   (+shift Select jumped area)
-# ctrl+left      = Jump backward across words                   (+shift Select jumped area)
-# ctrl+right     = Jump forward across words                    (+shift Select jumped area)
-# alt+shift+up   = Add cursor on line above                     
-# alt+shift+down = Add cursor on line below                     
+# ctrl+up             = Jump backward to empty line             (+shift Select jumped area)
+# ctrl+down           = Jump forward to empty line              (+shift Select jumped area)
+# ctrl+left           = Jump backward across words              (+shift Select jumped area)
+# ctrl+right          = Jump forward across words               (+shift Select jumped area)
+//alt+up              = unbound                                 
+//alt+down            = unbound                                 
+# alt+shift+up        = Add cursor on line above                
+# alt+shift+down      = Add cursor on line below                
+# ctrl+alt+up         = Jump backward to function definition    
+# ctrl+alt+down       = Jump forward to function definition     
+# ctrl+alt+right      = Switch focus to previous tab            
+# ctrl+alt+left       = Switch focus to next tab                
+= ctrl+alt+shift+up   = Switch focus to last pane               
+= ctrl+alt+shift+down = Switch focus to next pane               
+# ctrl+p              = Open file (overlay)                     
+//ctrl+u              = Goto word in file (overlay)             
+# ctrl+alt+enter      = Goto line number (overlay)              
+# alt+d               = Goto function/header in file (overlay)  (+shift In whole file)
 
 : ============= Control(+Shift)+Something Commands =============
 //ctrl+q   = Switch to neighboring pane                         
@@ -60,7 +72,7 @@
 # ctrl+f5  = Add custom Type to My C syntax                     (+shift Remove instead of add)
 # ctrl+f6  = Add custom Constant to My C syntax                 (+shift Remove instead of add)
 # ctrl+f7  = Add custom Global to My C syntax                   (+shift Remove instead of add)
-# ctrl+f8  = Add custom Function to My C syntax                 (+shift Remove instead of add)
+# ctrl+f8  = Add custom Function to My C syntax                 (+shift Remove instead of add) (+alt insert full function definition) (+shift+alt Generate function documentation)
 @ ctrl+f9  = Update My C Syntax with project's custom stuff     
 @ ctrl+f12 = Open header file (use on #include lines)           
 
@@ -82,46 +94,30 @@
 # alt+d = Goto function/header in file (overlay)                (+shift In whole file)
 //alt+b = Goto enclosing brackes
 
-{ "keys": ["alt+shift+up"],   "command": "select_lines", "args": {"forward": false} },
-{ "keys": ["alt+shift+down"], "command": "select_lines", "args": {"forward": true } },
-
-{ "keys": ["ctrl+alt+q"], "command": "close_workspace"},
-{ "keys": ["ctrl+alt+w"], "command": "prompt_select_workspace"},
-{ "keys": ["ctrl+alt+t"], "command": "remove_trailing_whitespace"},
-{ "keys": ["ctrl+alt+u"], "command": "upper_case"},
-{ "keys": ["ctrl+alt+i"], "command": "fold_by_cursor" },
-{ "keys": ["ctrl+alt+p"], "command": "show_overlay", "args": {"overlay": "command_palette"} },
-{ "keys": ["ctrl+alt+s"], "command": "toggle_side_bar"},
-{ "keys": ["ctrl+alt+d"], "command": "toggle_define_endings"},
-{ "keys": ["ctrl+alt+f"], "command": "show_panel", "args": {"panel": "replace", "reverse": false} },
-{ "keys": ["ctrl+alt+g"], "command": "start_git_bash" },
-{ "keys": ["ctrl+alt+h"], "command": "convert_to_hex"},
-{ "keys": ["ctrl+alt+l"], "command": "lower_case"},
-{ "keys": ["ctrl+alt+b"], "command": "insert_nums_hex", "args": { "start_num": 1, "padding": 2 } },
-{ "keys": ["ctrl+alt+n"], "command": "insert_nums", "args": {"format": "0:1"} },
-{ "keys": ["ctrl+alt+,"], "command": "focus_neighboring_group", "args": {"forward": false} },
-{ "keys": ["ctrl+alt+."], "command": "focus_neighboring_group", "args": {"forward": true} },
-{ "keys": ["ctrl+alt+1"], "command": "fold_by_level", "args": {"level": 1} },
-{ "keys": ["ctrl+alt+2"], "command": "fold_by_level", "args": {"level": 2} },
-{ "keys": ["ctrl+alt+3"], "command": "fold_by_level", "args": {"level": 3} },
-{ "keys": ["ctrl+alt+4"], "command": "fold_by_level", "args": {"level": 4} },
-{ "keys": ["ctrl+alt+5"], "command": "fold_by_level", "args": {"level": 5} },
-{ "keys": ["ctrl+alt+6"], "command": "fold_by_level", "args": {"level": 6} },
-{ "keys": ["ctrl+alt+7"], "command": "fold_by_level", "args": {"level": 7} },
-{ "keys": ["ctrl+alt+8"], "command": "fold_by_level", "args": {"level": 8} },
-{ "keys": ["ctrl+alt+9"], "command": "fold_by_level", "args": {"level": 9} },
-{ "keys": ["ctrl+alt+enter"], "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} },
-{ "keys": ["ctrl+alt+right"], "command": "next_view"},
-{ "keys": ["ctrl+alt+left"],  "command": "prev_view"},
-{ "keys": ["ctrl+alt+up"],    "command": "goto_next_scope", "args": {"forward": false, "loop_around": false, "scope_match": "entity.name"} },
-{ "keys": ["ctrl+alt+down"],  "command": "goto_next_scope", "args": {"forward": true,  "loop_around": false, "scope_match": "entity.name"} },
-
-{ "keys": ["ctrl+alt+shift+w"], "command": "change_naming_convention", "args": {"convention": "sentence"} },
-{ "keys": ["ctrl+alt+shift+e"], "command": "ascii_to_hex", "args": { "undo": true } },
-{ "keys": ["ctrl+alt+shift+p"], "command": "show_scope_name" },
-{ "keys": ["ctrl+alt+shift+h"], "command": "convert_to_hex", "args": { "undo": true } },
-{ "keys": ["ctrl+alt+shift+b"], "command": "insert_nums_hex", "args": { "start_num": 0, "padding": 2 } }, //TODO: Turn this into prompt_insert_nums_hex
-{ "keys": ["ctrl+alt+shift+n"], "command": "prompt_insert_nums"},
-{ "keys": ["ctrl+alt+shift+f8"], "command": "document_function" },
-{ "keys": ["ctrl+alt+shift+up"],    "command": "focus_neighboring_group", "args": {"forward": true } },
-{ "keys": ["ctrl+alt+shift+down"],  "command": "focus_neighboring_group", "args": {"forward": false} },
+: =========== Control+Alt(+Shift)+Something Commands ===========
+# ctrl+alt+q       = Close project                              
+# ctrl+alt+w       = Open project (overlay)                     
+@ ctrl+alt+t       = Remove trailing whitespace in file         
+= ctrl+alt+u       = Make characters uppercase                  
+# ctrl+alt+i       = Fold next indented region                  (+shift Do for whole file)
+# ctrl+alt+o       = Unfold next folded section                 (+shift Search backwards)
+# ctrl+alt+p       = Open the command palette (overlay)         
+# ctrl+alt+shift+p = Show syntax scopes                         
+# ctrl+alt+s       = Toggle sidebar                             
+= ctrl+alt+d       = Toggle \ eol character for #defines        
+@ ctrl+alt+f       = Find and replace (overlay)                 
+= ctrl+alt+g       = Run git bash in project directory          
+# ctrl+alt+h       = Convert DEC to HEX                         (+shift Convert HEX to DEX)
+= ctrl+alt+l       = Make characters lowercase                  
+# ctrl+alt+n       = Insert numbers (starting at 0)             (+shift Show format overlay to allow specialized generation of numbers)
+@ ctrl+alt+,       = Switch focus to last pane                  
+@ ctrl+alt+.       = Switch focus to next pane                  
+= ctrl+alt+1       = Fold by level 1                            
+= ctrl+alt+2       = Fold by level 2                            
+@ ctrl+alt+3       = Fold by level 3                            
+@ ctrl+alt+4       = Fold by level 4                            
+@ ctrl+alt+5       = Fold by level 5                            
+//ctrl+alt+6       = Fold by level 6                            
+//ctrl+alt+7       = Fold by level 7                            
+//ctrl+alt+8       = Fold by level 8                            
+//ctrl+alt+9       = Fold by level 9                            

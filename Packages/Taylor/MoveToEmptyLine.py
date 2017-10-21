@@ -14,11 +14,12 @@ class MoveToEmptyLineCommand(sublime_plugin.TextCommand):
 		#
 			originPos = region.b
 			originRow, originColumn = self.view.rowcol(originPos)
-			currentLine = "somethingNotEmpty";
+			currentLine = "";
 			currentRow = originRow;
 			foundBeginning = False;
 			foundEnd = False;
-			while (not LineIsEmpty(currentLine)):
+			
+			while (True):
 			#
 				if (forward): currentRow += 1;
 				else: currentRow -= 1;
@@ -27,6 +28,7 @@ class MoveToEmptyLineCommand(sublime_plugin.TextCommand):
 				#
 					currentRow = 0;
 					foundBeginning = True;
+					
 					print("Found beginning of file");
 					break;
 				#
@@ -39,6 +41,18 @@ class MoveToEmptyLineCommand(sublime_plugin.TextCommand):
 					print("Found end of file");
 					foundEnd = True;
 					break;
+				#
+				
+				if (LineIsEmpty(currentLine)):
+				#
+					if (PositionIsFolded(self.view, pos)):
+					#
+						print("Skipped folded empty line");
+					#
+					else:
+					#
+						break;
+					#
 				#
 			#			
 			# print("Found line " + str(currentRow+1));

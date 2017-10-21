@@ -19,6 +19,18 @@
 =   FD971F custom.thing.todo
 
 #TODO List
+	[ ] Bind some hotkey to rename file and delete file
+	[ ] Add shortcuts to check off a checklist item in TODO list syntax
+	[ ] Fix My C so that definition lookups still work. Maybe look at command for f12 binding?
+	[ ] Make the CreateLocalHeaderCommand work with already created headers to reformat them
+	[ ] Add a PromptInsertNumsHexCommand
+	[ ] Make GrabNextCommand auto-choose whether or not to make the regex word bounded by whether or not the selection is word bounded (however the auto-highlight functionality works)
+	[ ] Make GrabNextCommand faster in large files?
+	[ ] Upgrade TODO list syntax so comments can come at end of line
+	
+	[X] Make a fold and unfold commands
+	[X] Make FoldByCursorCommand work with empty lines
+	[X] Fix create local header with this number of characters: aaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 	[X] Figure out why goto header/source file isn't working when they are in seperate folders
 	[X] Add word wrapping by default to the output panel of Custom-Types plugin
 	[X] Open Header file in other column
@@ -35,20 +47,15 @@
 	[X] Add some more comment block syntax things to My C.sublime-syntax
 	[X] Add new and delete keywords to My C
 	[X] Add common PIC register definitions to My C.sublime-syntax
-	[ ] Add shortcuts to check off a checklist item in TODO list syntax
-	[!] A shortcut for adding function documentation
 	[X] Add #ifndef and #endif prefabs to CreateFileHeaderCommand
 	[-] Fix problem with adding comment additions breaks Function() parentheses
 	[X] Change the kill line command so it places the cursor on the next line at the same column
-	[ ] Fix My C so that definition lookups still work. Maybe look at command for f12 binding?
 	[X] Change ctrl+D to be case sensitive
 	[X] Add spaces to NamingConventions plugin to allow seperating identifiers to and from regularly spaced words
-	[ ] Make the CreateLocalHeaderCommand work with already created headers to reformat them
 	[-] Create a better show_at_center function that doesn't recenter the view unless the item is too far up or down in the viewport
 	[X] Make the selection functionality in MoveToEmptyLine work backwards to unselect stuff if I went too far
 	[X] Add a hot key to jump to next/last function definition (or header)
 	[X] These characters don't work in view.find_all! https://forum.sublimetext.com/t/view-find-all-doesnt-work-with-certain-characters/30609
-	[ ] Add a PromptInsertNumsHexCommand
 	[X] Make a command that gets rid of the empty/unindented lines by indenting them to their neighbors indentation level
 	[X] Make a command that finds the next/last region of characters that match a specific scope and jumps to them
 	[X] Fix the KillLineCommand so multiple selection on consecutive lines works correctly
@@ -63,12 +70,11 @@
 	[X] Add a command that folds indented sections that align with the cursors indentation level
 	[X] Rebind alt+s as jump to next match of selection
 	[X] Combine common functions together into a single .py file that can be included
-	[ ] Make GrabNextCommand auto-choose whether or not to make the regex word bounded by whether or not the selection is word bounded (however the auto-highlight functionality works)
-	[ ] Make GrabNextCommand faster in large files?
 	[X] Fix spacing between type parts for parameters when parsing C++ Functions
 	[X] Add support for parameter default value assignments SomeFunction(i32 value = 10) { ... }
 	[X] Add some nice message outputs to CustomTypes plugin. Maybe little windows pop-up next to the selected identifiers for success AND failure?
-	[ ] Fix create local header with this number of characters: aaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+	[X] Make MoveToEmptyLineCommand work with folded regions
+	[X] A shortcut for adding function documentation
 
 # List of installed packages:
 	+ Alignment

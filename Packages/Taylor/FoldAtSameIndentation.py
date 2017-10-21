@@ -1,9 +1,9 @@
 import os, sys, sublime, sublime_plugin
 from Taylor.Functions import *
 
-class FoldByCursorCommand(sublime_plugin.TextCommand):
+class FoldAtSameIndentationCommand(sublime_plugin.TextCommand):
 #
-	def run(self, edit):
+	def run(self, edit, single_fold=False):
 	#
 		if (len(self.view.sel()) != 1):
 		#
@@ -35,9 +35,9 @@ class FoldByCursorCommand(sublime_plugin.TextCommand):
 			
 			# print("Line[%u] %u indent: \"%s\"" % (lIndex+1, lineIndentAmount, lineStr))
 			
-			if (lineIndentAmount > firstIndentAmount):
+			if (lineIndentAmount > firstIndentAmount or len(lineStr) == 0):
 			#
-				if (foldStarted == False and lastLineRegion != None):
+				if (foldStarted == False and lastLineRegion != None and len(lineStr) > 0):
 				#
 					foldStarted = True
 					foldStartPos = lastLineRegion.end()
@@ -48,10 +48,15 @@ class FoldByCursorCommand(sublime_plugin.TextCommand):
 				if (foldStarted):
 				#
 					foldRegion = sublime.Region(foldStartPos, lastLineRegion.end())
-					print("Folding region [%u, %u]", foldRegion.a, foldRegion.b)
-					self.view.fold(foldRegion)
-					
+					print("Folding region [%u, %u]" % (foldRegion.a, foldRegion.b))
 					foldStarted = False
+					
+					if (single_fold == False or foldStartPos >= firstSelRegion.b):
+					#
+						self.view.fold(foldRegion)
+						
+						if (single_fold): break
+					#
 				#
 			#
 			

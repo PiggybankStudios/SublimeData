@@ -268,8 +268,8 @@
 	{ "keys": ["ctrl+alt+t"], "command": "remove_trailing_whitespace"},
 	// { "keys": ["ctrl+alt+y"], "command": "do_nothing" },
 	{ "keys": ["ctrl+alt+u"], "command": "upper_case"},
-	{ "keys": ["ctrl+alt+i"], "command": "fold_by_cursor" },
-	// { "keys": ["ctrl+alt+o"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+i"], "command": "fold_at_same_indentation", "args": {"single_fold": true} },
+	{ "keys": ["ctrl+alt+o"], "command": "open_next_fold" },
 	{ "keys": ["ctrl+alt+p"], "command": "show_overlay", "args": {"overlay": "command_palette"} },
 	
 	// { "keys": ["ctrl+alt+a"], "command": "do_nothing" },
@@ -332,13 +332,13 @@
 //-------------------------------------------------------------------
 	// { "keys": ["ctrl+alt+shift+q"], "command": "do_nothing" },
 	{ "keys": ["ctrl+alt+shift+w"], "command": "change_naming_convention", "args": {"convention": "sentence"} },
-	{ "keys": ["ctrl+alt+shift+e"], "command": "ascii_to_hex", "args": { "undo": true } },
+	// { "keys": ["ctrl+alt+shift+e"], "command": "ascii_to_hex", "args": { "undo": true } },
 	// { "keys": ["ctrl+alt+shift+r"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+t"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+y"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+u"], "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+shift+i"], "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+shift+o"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+shift+i"], "command": "fold_at_same_indentation" },
+	{ "keys": ["ctrl+alt+shift+o"], "command": "open_next_fold", "args": {"reverse": true} },
 	{ "keys": ["ctrl+alt+shift+p"], "command": "show_scope_name" },
 	
 	// { "keys": ["ctrl+alt+shift+a"], "command": "do_nothing" },
