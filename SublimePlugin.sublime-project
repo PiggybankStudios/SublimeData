@@ -32,6 +32,9 @@
 	],
 	"settings":
 	{
+		"build_options":
+		{
+		},
 		"custom_constants":
 		[
 			"SOME_DEFINITION",

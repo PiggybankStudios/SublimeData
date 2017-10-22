@@ -962,6 +962,7 @@ def GetProjectSettings(window):
 	if (projectData == None): return None
 	
 	if ("settings" not in projectData): projectData["settings"] = {}
+	if ("build_options"    not in projectData["settings"]): projectData["settings"]["build_options"]    = []
 	if ("custom_types"     not in projectData["settings"]): projectData["settings"]["custom_types"]     = []
 	if ("custom_constants" not in projectData["settings"]): projectData["settings"]["custom_constants"] = []
 	if ("custom_globals"   not in projectData["settings"]): projectData["settings"]["custom_globals"]   = []
@@ -1110,3 +1111,86 @@ def PositionIsFolded(view, viewPos):
 	if (foldResult): view.unfold(region)
 	return (foldResult == False); 
 #
+
+def FillDollarVariables(varString, valueDictionary):
+#
+	result = ""
+	
+	cIndex = 0
+	while (cIndex < len(varString)):
+	#
+		if (varString[cIndex] == "$"):
+		#
+			foundMatch = False
+			matchName = ""
+			matchValue = ""
+			for vName, value in valueDictionary.items():
+			#
+				if (cIndex + len(vName) <= len(varString) and
+					varString[cIndex+1:cIndex+1+len(vName)] == vName):
+				#
+					if (len(vName) > len(matchName)):
+					#
+						foundMatch = True
+						matchName = vName
+						matchValue = value
+					#
+				#
+			#
+			
+			if (foundMatch):
+			#
+				# print("Replaced $%s with \"%s\"" % (matchName, matchValue))
+				result += matchValue
+				cIndex += 1 + len(matchName)
+			#
+			else:
+			#
+				result += varString[cIndex]
+				cIndex += 1
+			#
+		#
+		else:
+		#
+			result += varString[cIndex]
+			cIndex += 1
+		#
+	#
+	
+	return result
+#
+
+#Returns fullPath, directory, fileName, baseName, and extension
+def SafeSplitPath(pathStr):
+#
+	if (pathStr == None or len(pathStr) == 0):
+	#
+		return "", "", "", "", ""
+	#
+	
+	directory, fileName = os.path.split(pathStr)
+	baseName, extension = os.path.splitext(fileName)
+	
+	if (extension != None and len(extension) > 0 and extension[0] == "."):
+	#
+		extension = extension[1:]
+	#
+	
+	return pathStr, directory, fileName, baseName, extension
+#
+
+def FormattedDictionaryStr(dictionary):
+#
+	orderedKeys = []
+	for key, value in dictionary.items(): orderedKeys.append(key)
+	orderedKeys.sort()
+	
+	result = "{\n"
+	for key in orderedKeys:
+	#
+		result += "\t" + str(key) + ": " + str(dictionary[key]) + "\n"
+	#
+	result += "}"
+	return result
+#
+

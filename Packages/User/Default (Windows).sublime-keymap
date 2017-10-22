@@ -107,7 +107,7 @@
 	// { "keys": ["ctrl+shift+x"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+c"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+v"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+b"], "command": "do_nothing" },
+	{ "keys": ["ctrl+shift+b"], "command": "taylor_build" },
 	// { "keys": ["ctrl+shift+n"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+m"], "command": "do_nothing" },
 	
