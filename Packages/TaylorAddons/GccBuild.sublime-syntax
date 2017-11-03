@@ -32,5 +32,5 @@ contexts:
       scope: custom.prefix.pointer.bashbuild
     - match: '^(?:Application|Platform) Build Failed\!$'
       scope: keyword.title.failure.bashbuild
-    - match: '^(?:Application|Platform) Build Succeeded\!$'
+    - match: '^(?:Application|Platform) (?:Build|Bundle) Succeeded\!$'
       scope: entity.name.success.bashbuild
