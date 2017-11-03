@@ -27,6 +27,7 @@
 	[ ] Make GrabNextCommand faster in large files?
 	[ ] Upgrade TODO list syntax so comments can come at end of line
 
+	[X] Reorganize Default (Windows).sublime-keymap to be in the same order as Default (OSX).sublime-keymap
 	[X] Bind some hotkey to rename file and delete file
 	[X] Make a fold and unfold commands
 	[X] Make FoldByCursorCommand work with empty lines
