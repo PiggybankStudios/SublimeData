@@ -297,8 +297,10 @@ class CreateLocalHeaderCommand(sublime_plugin.TextCommand):
 		
 		replaceRegion = sublime.Region(lastLineRegion.begin(), nextLineRegion.end())
 		
-		self.view.replace(edit, replaceRegion, currLineContent)
-		self.view.sel().add(sublime.Region(replaceRegion.begin(), replaceRegion.begin() + len(currLineContent)))
+		self.view.replace(edit, replaceRegion, indentationStr + currLineContent)
+		
+		selectionStart = replaceRegion.begin() + len(indentationStr)
+		self.view.sel().add(sublime.Region(selectionStart, selectionStart + len(currLineContent)))
 		
 		return True
 	#
