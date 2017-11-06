@@ -26,6 +26,7 @@
 	[ ] Make GrabNextCommand auto-choose whether or not to make the regex word bounded by whether or not the selection is word bounded (however the auto-highlight functionality works)
 	[ ] Make GrabNextCommand faster in large files?
 	[ ] Upgrade TODO list syntax so comments can come at end of line
+	[ ] Make FileHeaderCommand re-date the current header if it exists
 
 	[X] Reorganize Default (Windows).sublime-keymap to be in the same order as Default (OSX).sublime-keymap
 	[X] Bind some hotkey to rename file and delete file
