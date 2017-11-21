@@ -208,6 +208,12 @@ contexts:
       scope: custom.global.c
     - match: \b(SPI[0-9]BUF(?:bits)?(?:\s*\.\s*[A-Z0-9]*){0,1})\b
       scope: custom.global.c
+    - match: \b(_[A-Za-z_]*_POSITION)\b
+      scope: custom.global.c
+    - match: \b(_[A-Za-z_]*_MASK)\b
+      scope: custom.global.c
+    - match: \b(_[A-Za-z_]*_LENGTH)\b
+      scope: custom.global.c
     # common C constant naming idiom -- kConstantVariable
     - match: '\bk[A-Z]\w*\b'
       scope: constant.other.variable.mac-classic.c
