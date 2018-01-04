@@ -9,39 +9,203 @@ file-extensions:
 scope: text.todo
 
 contexts: 
+  
+  # +==============================+
+  # |           Comments           |
+  # +==============================+
+  comments:
+    - match: '\/\*'
+      push:
+        - meta_scope: comment.block.todo
+        - match: '\*\/'
+          pop: true
+    - match: '\/\/'
+      set:
+        - meta_scope: comment.escaped.todo
+        - match: '\n'
+          pop: true
+  
+  # +==============================+
+  # |          References          |
+  # +==============================+
+  references:
+    - match: '(\@)(\w+)'
+      captures:
+        1: entity.name.reference.todo
+        2: entity.name.function.reference.todo
+    - match: '(\@\{)([^\n\}]+)(\})'
+      captures:
+        1: entity.name.reference.todo
+        2: entity.name.function.reference.todo
+        3: entity.name.reference.todo
+  
+  # +==============================+
+  # |        Inline Syntax         |
+  # +==============================+
+  inline-syntax:
+    - match: '(\#)(\w+)'
+      captures:
+        1: keyword.title.punctuation.todo
+        2: keyword.title.todo
+    - match: '(\:)([^\n\:]+)(\:)'
+      captures:
+        1: custom.constant.punctuation.todo
+        2: custom.constant.todo
+        3: custom.constant.punctuation.todo
+    - match: '(\[)([^\n\]]+)(\])'
+      captures:
+        1: custom.identifier.punctuation.todo
+        2: custom.identifier.todo
+        3: custom.identifier.punctuation.todo
+    - match: '(\")([^\n\"]+)(\")'
+      captures:
+        1: string.punctuation.todo
+        2: string.todo
+        3: string.punctuation.todo
+  
+  # +==============================+
+  # |            Common            |
+  # +==============================+
+  common:
+    - include: comments
+    - include: references
+    - include: inline-syntax
+    - match: '\n'
+      pop: true
+  
+  # +==============================+
+  # |             Main             |
+  # +==============================+
   main:
-    - match: '^\s*\[ \][^\n]+$'
-      scope: storage.type.checkbox.todo
-    - match: '^\s*\[\?\][^\n]+$'
-      scope: custom.type.todo
-    - match: '^\s*\[\!\][^\n]+$'
-      scope: custom.constant.todo
-    - match: '^\s*\[(X|x)\][^\n]+$'
-      scope: custom.global.todo
-    - match: '^\s*\[-\][^\n]+$'
-      scope: comment.check-list.todo
-    - match: '^\s*\[#\][^\n]+$'
-      scope: custom.thing.todo
-    - match: '^\s*(\\\\|//)[^\n]+$'
-      scope: comment.escaped.todo
-    - match: '^\s*\#[^\n]+$'
-      scope: keyword.title.todo
-    - match: '^\s*\*[^\n]+$'
-      scope: string.list-item.todo
-    - match: '^\s*\+[^\n]+$'
-      scope: entity.name.list-item.todo
-    - match: '^\s*-[^\n]+$'
-      scope: custom.prefix.todo
-    - match: '^\s*\>[^\n]+$'
-      scope: custom.type.todo
-    - match: '^\s*\![^\n]+$'
-      scope: constant.language.todo
-    - match: '^\s*:[^\n]+$'
-      scope: custom.constant.todo
-    - match: '^\s*\@[^\n]+$'
-      scope: custom.string.todo
-    - match: '^\s*\|[^\n]+$'
-      scope: custom.identifier.todo
-    - match: '^\s*\=[^\n]+$'
-      scope: custom.thing.todo
+    - include: comments
+    
+    - match: '^\s*[A-Za-z0-9]'
+      push:
+        - meta_scope: plain.text.todo
+        - include: comments
+        - match: '\n'
+          pop: true
+    
+    - match: '[\[\{\<\(](X|x)[\]\}\>\)]\s*'
+      scope: comment.checkbox.punctuation.todo
+      push:
+        - meta_content_scope: comment.checkbox.todo
+        - match: '\n'
+          pop: true
+    
+    - match: '[\[\{\<\(]\-[\]\}\>\)]\s*'
+      scope: custom.global.checkbox.punctuation.todo
+      push:
+        - meta_content_scope: custom.global.checkbox.todo
+        - include: comments
+        - match: '\n'
+          pop: true
+    
+    - match: '\[ \]\s*'
+      scope: storage.type.checkbox.punctuation.todo
+      push:
+        - meta_content_scope: storage.type.checkbox.todo
+        - include: common
+    
+    - match: '\{ \}\s*'
+      scope: constant.language.checkbox.punctuation.todo
+      push:
+        - meta_content_scope: constant.language.checkbox.todo
+        - include: common
+    
+    - match: '[\[\{]\?[\]\}]\s*'
+      scope: custom.type.checkbox.punctuation.todo
+      push:
+        - meta_content_scope: custom.type.checkbox.todo
+        - include: common
+    
+    - match: '[\[\{]\![\]\}]\s*'
+      scope: custom.constant.checkbox.punctuation.todo
+      push:
+        - meta_content_scope: custom.constant.checkbox.todo
+        - include: common
+    
+    - match: '\( \)\s*'
+      scope: custom.thing.checkbox.punctuation.todo
+      push:
+        - meta_content_scope: custom.thing.checkbox.todo
+        - include: common
+    
+    - match: '\< \>\s*'
+      scope: keyword.title.checkbox.punctuation.todo
+      push:
+        - meta_content_scope: keyword.title.checkbox.todo
+        - include: common
+    
+    - match: '[\(\<]\?[\)\>]\s*'
+      scope: string.checkbox.punctuation.todo
+      push:
+        - meta_content_scope: string.checkbox.todo
+        - include: common
+    
+    - match: '[\(\<]\![\)\>]\s*'
+      scope: custom.prefix.checkbox.punctuation.todo
+      push:
+        - meta_content_scope: custom.prefix.checkbox.todo
+        - include: common
+  
+    - match: '\#\s*'
+      scope: keyword.title.punctuation.todo
+      push:
+        - meta_content_scope: keyword.title.todo
+        - include: common
+    
+    - match: '\*\s*'
+      scope: string.list-item.punctuation.todo
+      push:
+        - meta_content_scope: string.list-item.todo
+        - include: common
+    
+    - match: '\+\s*'
+      scope: entity.name.list-item.punctuation.todo
+      push:
+        - meta_content_scope: entity.name.function.list-item.todo
+        - include: common
+    
+    - match: '\-\s*'
+      scope: custom.prefix.punctuation.todo
+      push:
+        - meta_content_scope: custom.prefix.todo
+        - include: common
+    
+    - match: '\>\s*'
+      scope: custom.type.punctuation.todo
+      push:
+        - meta_content_scope: custom.type.todo
+        - include: common
+    
+    - match: '\!\s*'
+      scope: constant.language.punctuation.todo
+      push:
+        - meta_content_scope: constant.language.todo
+        - include: common
+    
+    - match: '\:\s*'
+      scope: custom.constant.punctuation.todo
+      push:
+        - meta_content_scope: custom.constant.todo
+        - include: common
+    
+    - match: '\@\s*'
+      scope: custom.string.punctuation.todo
+      push:
+        - meta_content_scope: custom.string.todo
+        - include: common
+    
+    - match: '\|\s*'
+      scope: custom.identifier.punctuation.todo
+      push:
+        - meta_content_scope: custom.identifier.todo
+        - include: common
+    
+    - match: '\=\s*'
+      scope: custom.thing.punctuation.todo
+      push:
+        - meta_content_scope: custom.thing.todo
+        - include: common
   

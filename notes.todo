@@ -1,6 +1,5 @@
-# This file should be used alongside the
-# TODO.sublime-syntax to test the
-# syntax capabilities
+# This file can be used alongside TODO.sublime-syntax
+# to test the syntax capabilities
 
     272822 Background
     F8F8F0 Foreground
@@ -17,6 +16,61 @@
 @   FFEFB7 custom.string.todo
 |   829520 custom.identifier.todo
 =   FD971F custom.thing.todo
+
+[ ] TODO Item /* block comment */ some more stuff //end of line comment
+Some plain text where [ ] doesn't make a checkbox but /* makes a comment. */ Yeah! :)
+
++ Reference
+
+[ ] TODO item @Reference is easy to make
+
+[ ] The reference goes to here: @Reference!
+
++ A_Reference_With_Dashes
+
+[ ] Hey! Go to @{A Reference With Dashes}
+
+[ ] You can make a [BIG] #Impact in your :Community:
+
+[ ] Don't go around saying "I'm the best thing in the world"
+
+/*
+This is a
+block comment
+*/ [ ] TODO
+/$%^&()_{}[]\";'<?,.`~ 	[ ] TODO asdasd
+
+[ ] Something
+[ ] Something
+[ ] Something
+[!] Important
+[?] I don't know
+[x] Checked off
+[-] Negated
+
+{ } Something
+{ } Something
+{ } Something
+{!} Important
+{?} I don't know
+{x} Checked off
+{-} Negated
+
+( ) Something
+( ) Something
+( ) Something
+(!) Important
+(?) I don't know
+(x) Checked off
+(-) Negated
+
+< > Something
+< > Something
+< > Something
+<!> Important
+<?> I don't know
+<x> Checked off
+<-> Negated
 
 #TODO List
 	[ ] Add shortcuts to check off a checklist item in TODO list syntax
