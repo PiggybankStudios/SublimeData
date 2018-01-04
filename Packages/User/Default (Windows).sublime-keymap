@@ -587,4 +587,16 @@
 			{ "key": "preceding_text", "operator": "regex_contains", "operand": "[\\[\\(\\<\\{][ \\?\\!xX\\-][\\]\\)\\>\\}]"}
 		]
 	},
+	{ "keys": ["alt+-"], "command": "check_off_todo_item", "args": {"move_line": false, "check_str": "-"},
+		"context":
+		[
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "[\\[\\(\\<\\{][ \\?\\!xX\\-][\\]\\)\\>\\}]"}
+		]
+	},
+	{ "keys": ["alt+shift+-"], "command": "check_off_todo_item", "args": {"move_line": true, "check_str": "-"},
+		"context":
+		[
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "[\\[\\(\\<\\{][ \\?\\!xX\\-][\\]\\)\\>\\}]"}
+		]
+	},
 ]
