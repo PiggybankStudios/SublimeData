@@ -169,3 +169,5 @@ ALT Hotkey can be disabled using AutoHotKey:
 2. Make a file named noAlt.ahk with contents "~LAlt Up:: return"
 3. Right click and compile hotkey script
 4. Run the executable
+
+asd

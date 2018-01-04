@@ -45,12 +45,17 @@ class CheckOffTodoItemCommand(sublime_plugin.TextCommand):
 			while (not foundCheckedItem):
 			#
 				newLineRegion = self.view.line(self.view.text_point(newLineIndex, 0))
+				if (newLineRegion.begin() >= self.view.size()):
+				#
+					print("Found end of file")
+					break
+				#
 				newLineStr = self.view.substr(newLineRegion)
-				if (newLineRegion.a >= self.view.size()): break
 				while (newLineRegion.a < newLineRegion.b and (self.view.substr(newLineRegion.a) == ' ' or self.view.substr(newLineRegion.a) == '\t')):
 				#
 					newLineRegion.a += 1
 				#
+				
 				if (self.view.match_selector(newLineRegion.a, "comment.checkbox")):
 				#
 					foundCheckedItem = True
@@ -61,11 +66,11 @@ class CheckOffTodoItemCommand(sublime_plugin.TextCommand):
 					nextLineNum = self.view.rowcol(selectionRegion.b)[0] + 1
 					nextLineRegion = self.view.line(self.view.text_point(nextLineNum, 0))
 					nextLineStr = self.view.substr(nextLineRegion)
-					print("Next line is \"%s\"" % nextLineStr)
+					# print("Next line is \"%s\"" % nextLineStr)
 					selectionRegion = self.view.line(deleteRegion.begin()).begin() + len(nextLineRegion)
 					
 					# Expand the deletion region to the whole line if it's by itself on the line
-					while (self.view.substr(deleteRegion.a-1) == " " or self.view.substr(deleteRegion.a-1) == "\t"):
+					while (self.view.substr(deleteRegion.a-1) == ' ' or self.view.substr(deleteRegion.a-1) == '\t'):
 					#
 						deleteRegion.a -= 1
 					#
@@ -88,7 +93,7 @@ class CheckOffTodoItemCommand(sublime_plugin.TextCommand):
 		
 		self.view.insert(edit, insertPos, insertString)
 		tempStr = self.view.substr(deleteRegion)
-		print("Replacing \"%s\"" % (tempStr))
+		# print("Replacing \"%s\"" % (tempStr))
 		self.view.replace(edit, deleteRegion, "")
 		self.view.sel().clear()
 		self.view.sel().add(selectionRegion)
