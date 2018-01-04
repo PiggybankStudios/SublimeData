@@ -72,15 +72,17 @@ block comment
 <x> Checked off
 <-> Negated
 
+something todo something
+
 #TODO List
-	[ ] Add shortcuts to check off a checklist item in TODO list syntax
 	[ ] Fix My C so that definition lookups still work. Maybe look at command for f12 binding?
 	[ ] Make the CreateLocalHeaderCommand work with already created headers to reformat them
 	[ ] Add a PromptInsertNumsHexCommand
 	[ ] Make GrabNextCommand auto-choose whether or not to make the regex word bounded by whether or not the selection is word bounded (however the auto-highlight functionality works)
 	[ ] Make GrabNextCommand faster in large files?
 	[ ] Make FileHeaderCommand re-date the current header if it exists
-
+	
+	[X] Add shortcuts to check off a checklist item in TODO list syntax
 	[X] Upgrade TODO list syntax so comments can come at end of line
 	[X] Reorganize Default (Windows).sublime-keymap to be in the same order as Default (OSX).sublime-keymap
 	[X] Bind some hotkey to rename file and delete file

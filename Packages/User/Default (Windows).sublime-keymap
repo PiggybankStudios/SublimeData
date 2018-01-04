@@ -571,4 +571,20 @@
 	// { "keys": ["ctrl+alt+shift+keypad_minus"],    "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+keypad_plus"],     "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+keypad_enter"],    "command": "do_nothing" },
+	
+	// +--------------------------------------------------------------+
+	// |                     Contextual Bindings                      |
+	// +--------------------------------------------------------------+
+	{ "keys": ["alt+x"], "command": "check_off_todo_item", "args": {"move_line": false},
+		"context":
+		[
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "[\\[\\(\\<\\{][ \\?\\!xX\\-][\\]\\)\\>\\}]"}
+		]
+	},
+	{ "keys": ["alt+shift+x"], "command": "check_off_todo_item", "args": {"move_line": true},
+		"context":
+		[
+			{ "key": "preceding_text", "operator": "regex_contains", "operand": "[\\[\\(\\<\\{][ \\?\\!xX\\-][\\]\\)\\>\\}]"}
+		]
+	},
 ]

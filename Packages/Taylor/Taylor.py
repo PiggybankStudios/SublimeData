@@ -8,6 +8,9 @@ class TaylorCommand(sublime_plugin.TextCommand):
 	#
 		print("Running the Taylor Command!")
 		
+		settings = self.view.settings()
+		print("\"syntax\" = \"%s\"" % settings.get("syntax"))
+		
 		for region in self.view.sel():
 		#
 			selectionStr = self.view.substr(region)
