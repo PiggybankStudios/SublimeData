@@ -1,0 +1,8 @@
+{
+	"shell_cmd": "bash ../build_linux.sh",
+	"working_dir": "$project_path/build",
+	
+	"syntax": "GccBuild.sublime-syntax",
+	
+	"file_regex": "(.*)\\:([0-9]+)\\:([0-9]+)\\:(?:\\s?(?:fatal|error|warning))+\\s?\\:(.*)",
+}

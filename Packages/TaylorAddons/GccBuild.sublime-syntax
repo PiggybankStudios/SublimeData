@@ -34,3 +34,5 @@ contexts:
       scope: keyword.title.failure.bashbuild
     - match: '^(?:Application|Platform) (?:Build|Bundle) Succeeded\!$'
       scope: entity.name.success.bashbuild
+    - match: '^Copy Succeeded\!$'
+      scope: entity.name.success.bashbuild
