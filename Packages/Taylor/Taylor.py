@@ -29,6 +29,69 @@ class TaylorCommand(sublime_plugin.TextCommand):
 	#
 #
 
+class GotoSubstringCommand(sublime_plugin.TextCommand):
+#
+	def run(self, edit, substring=","):
+	#
+		print("Going to substring \"%s\"" % (substring))
+		
+		substrLength = len(substring)
+		
+		for region in self.view.sel():
+		#
+			currentPos = region.b
+			currentLineRegion = self.view.line(currentPos)
+			currentLineStr = self.view.substr(currentLineRegion)
+			
+			while (currentPos < currentLineRegion.end()):
+			#
+				cPos = currentPos - currentLineRegion.begin()
+				if (currentLineStr[cPos:cPos+substrLength] == substring):
+				#
+					print("Found substr at index %u/%u" % (cPos, currentLineRegion.end()))
+					break;
+				#
+				else:
+				#
+					currentPos += 1
+				#
+			#
+			
+			self.view.sel().subtract(region)
+			self.view.sel().add(sublime.Region(currentPos, currentPos))
+		#
+		
+	#
+#
+
+class SelectAllLinesCommand(sublime_plugin.TextCommand):
+#
+	def run(self, edit):
+	#
+		# print("Selecting all lines")
+		
+		selections = []
+		lIndex = 0
+		while (True):
+		#
+			lineRegion = self.view.line(self.view.text_point(lIndex, 0))
+			lineStr = self.view.substr(lineRegion)
+			# print("Line[%u]: \"%s\"" % (lIndex, lineStr))
+			
+			selections.append(sublime.Region(lineRegion.begin(), lineRegion.begin()))
+			
+			if (lineRegion.end() >= self.view.size()): break
+			else: lIndex += 1
+			# if (lIndex >= 1000): break
+		#
+		
+		print("Selecting %u lines" % (len(selections)))
+		
+		self.view.sel().clear()
+		self.view.sel().add_all(selections)
+	#
+#
+
 
 # This command is simply a placeholder that's useful for holding the place for an unbound hotkey
 class DoNothingCommand(sublime_plugin.TextCommand):

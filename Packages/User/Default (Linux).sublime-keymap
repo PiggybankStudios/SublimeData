@@ -522,7 +522,7 @@
 	// { "keys": ["ctrl+alt+shift+]"],  "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+\\"], "command": "do_nothing" },
 	
-	// { "keys": ["ctrl+alt+shift+a"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+shift+a"], "command": "select_all_lines" },
 	// { "keys": ["ctrl+alt+shift+s"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+d"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+f"], "command": "do_nothing" },
@@ -541,7 +541,7 @@
 	{ "keys": ["ctrl+alt+shift+b"], "command": "insert_nums_hex", "args": { "start_num": 0, "padding": 2 } }, //TODO: Turn this into prompt_insert_nums_hex
 	{ "keys": ["ctrl+alt+shift+n"], "command": "prompt_insert_nums"},
 	// { "keys": ["ctrl+alt+shift+m"], "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+shift+,"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+shift+,"], "command": "goto_substring", "args": { "substring": "," } },
 	// { "keys": ["ctrl+alt+shift+."], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+/"], "command": "do_nothing" },
 	
@@ -562,7 +562,7 @@
 	// { "keys": ["ctrl+alt+shift+enter"],     "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+pause"],     "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+tab"],       "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+shift+space"],     "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+shift+space"],     "command": "goto_substring", "args": { "substring": " " } },
 	// { "keys": ["ctrl+alt+shift+clear"],     "command": "do_nothing" },
 	
 	// { "keys": ["ctrl+alt+shift+keypad_period"],   "command": "do_nothing" },

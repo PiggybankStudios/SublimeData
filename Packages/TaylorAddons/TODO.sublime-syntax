@@ -43,7 +43,7 @@ contexts:
   # |        Inline Syntax         |
   # +==============================+
   inline-syntax:
-    - match: '(\#)(\w+)'
+    - match: '(\#)([\w\-\_]+)'
       captures:
         1: keyword.title.punctuation.todo
         2: keyword.title.todo
