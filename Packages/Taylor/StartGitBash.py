@@ -13,11 +13,21 @@ class StartGitBashCommand(sublime_plugin.TextCommand):
 			print("No project open")
 			return
 		#
+
+		print("Running on " + os.name)
 		
 		projectDir, projectFile = os.path.split(projectPath)
 		print(projectDir)
-		
 		print("Starting Git Bash in \"%s\"!" % (projectDir))
-		subprocess.Popen("C:\\Program Files\\Git\\git-bash.exe", cwd=projectDir)
+
+		if (os.name == "posix"):
+		#
+			subprocess.Popen("x-terminal-emulator", cwd=projectDir)
+		#
+		else:
+		#
+			subprocess.Popen("C:\\Program Files\\Git\\git-bash.exe", cwd=projectDir)
+		#
+
 	#
 #
