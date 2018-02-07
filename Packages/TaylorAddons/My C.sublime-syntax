@@ -81,9 +81,7 @@ contexts:
           scope: custom.string.c
         - match: '\@[A-Za-z0-9_]*'
           scope: custom.thing.c
-        - match: '-{3,}$'
-          scope: custom.string.c
-        - match: '[\+\-\=]{3,}$'
+        - match: '[\+\-\=]{3,}'
           scope: custom.string.c
         - match: '\| +((?:[^\s\|]+\s?){1,}) +\|$'
           scope: custom.string.c
