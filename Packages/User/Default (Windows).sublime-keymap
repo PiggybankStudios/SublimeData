@@ -540,7 +540,7 @@
 	// { "keys": ["ctrl+alt+shift+v"], "command": "do_nothing" },
 	{ "keys": ["ctrl+alt+shift+b"], "command": "insert_nums_hex", "args": { "start_num": 0, "padding": 2 } }, //TODO: Turn this into prompt_insert_nums_hex
 	{ "keys": ["ctrl+alt+shift+n"], "command": "prompt_insert_nums"},
-	// { "keys": ["ctrl+alt+shift+m"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+shift+m"], "command": "md5_hash" },
 	// { "keys": ["ctrl+alt+shift+,"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+."], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+/"], "command": "do_nothing" },
