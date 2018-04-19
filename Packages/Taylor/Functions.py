@@ -270,6 +270,46 @@ def IsHexChar(character):
 	else: return False
 #
 
+def GetHexCharValue(character):
+#
+	if (ord(character) >= ord('A') and ord(character) <= ord('F')):
+	#
+		return 10 + (ord(character) - ord('A'))
+	#
+	elif (ord(character) >= ord('a') and ord(character) <= ord('f')):
+	#
+		return 10 + (ord(character) - ord('a'))
+	#
+	elif (ord(character) >= ord('0') and ord(character) <= ord('9')):
+	#
+		return ord(character) - ord('0')
+	#
+	else:
+	#
+		return 0
+	#
+#
+
+def GetHexCharsValue(upperChar, lowerChar):
+#
+	return (GetHexCharValue(upperChar) << 4) + GetHexCharValue(lowerChar)
+#
+
+def ConvertStrToHex(inputStr):
+#
+	result = ""
+	for cIndex in range(0, len(inputStr), 2):
+	#
+		if (cIndex+1 >= len(inputStr)): break
+		if (IsHexChar(inputStr[cIndex + 0]) and IsHexChar(inputStr[cIndex + 1])):
+		#
+			newByte = GetHexCharsValue(inputStr[cIndex + 0], inputStr[cIndex + 1])
+			result += chr(newByte)
+		#
+	#
+	return result
+#
+
 def SplitScopesString(scopeString):
 #
 	scopes = []

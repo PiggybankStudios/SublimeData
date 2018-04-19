@@ -14,17 +14,16 @@ class TaylorCommand(sublime_plugin.TextCommand):
 		for region in self.view.sel():
 		#
 			selectionStr = self.view.substr(region)
-			# print("Selection: \"" + selectionStr + "\"")
+			print("Selection: \"" + selectionStr + "\"")
 			
-			function = CppFunction(selectionStr)
-			if (function.valid):
-			#
-				print("Parsed Function:", function)
-			#
-			else:
-			#
-				print("Could not parse function: \"%s\"" % (selectionStr))
-			#
+			integerValue = int(selectionStr)
+			frequency = (float)(integerValue * (32000000)) #32MHz
+			frequency /= 524288 #2^19
+			frequency /= 1000
+			frequency = round(frequency)
+			frequency /= 1000
+			print("Frequency = %fMHz" % frequency)
+			self.view.replace(edit, region, str(frequency) + "MHz")
 		#
 	#
 #

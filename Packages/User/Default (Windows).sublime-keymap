@@ -13,7 +13,7 @@
 //|                         ctrl+ Commands                          |
 //-------------------------------------------------------------------
 	// { "keys": ["ctrl+f1"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+f2"],  "command": "do_nothing" },
+	{ "keys": ["ctrl+f2"],  "command": "crc16", "args": { "convert_to_hex": false } },
 	{ "keys": ["ctrl+f3"],  "command": "convert_to_hex" },
 	{ "keys": ["ctrl+f4"],  "command": "ascii_to_hex", "args": { "prefix": "0x", "seperator": " "} },
 	{ "keys": ["ctrl+f5"],  "command": "custom_identifier", "args": { "action": "add", "mode": "Type"     } },
@@ -104,7 +104,7 @@
 //|                      ctrl+shift+ Commands                       |
 //-------------------------------------------------------------------
 	// { "keys": ["ctrl+shift+f1"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+f2"], "command": "do_nothing" },
+	{ "keys": ["ctrl+shift+f2"], "command": "crc16", "args": { "convert_to_hex": true } },
 	{ "keys": ["ctrl+shift+f3"], "command": "convert_to_hex", "args": { "undo": true } },
 	{ "keys": ["ctrl+shift+f4"], "command": "ascii_to_hex", "args": { "undo": true } },
 	{ "keys": ["ctrl+shift+f5"], "command": "custom_identifier", "args": { "action": "remove", "mode": "Type"     } },
