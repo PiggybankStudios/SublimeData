@@ -76,6 +76,7 @@ something todo something
 
 #TODO List
 	[!] Add support for detecting optional variables in a function string
+	[!] Make the function auto-complete suggestions replace with only name if character after cursor is an open parenthesis
 	[ ] Fix My C so that definition lookups still work. Maybe look at command for f12 binding?
 	[ ] Make the CreateLocalHeaderCommand work with already created headers to reformat them
 	[ ] Add a PromptInsertNumsHexCommand
