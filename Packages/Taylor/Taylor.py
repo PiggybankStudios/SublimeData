@@ -1,6 +1,71 @@
 import os, sys, sublime, sublime_plugin
 from Taylor.Functions import *
 
+class Color():
+#
+	def __init__(self):
+	#
+		self.r = 0
+		self.g = 0
+		self.b = 0
+		self.a = 0xFF
+	#
+	
+	def __repr__(self):
+	#
+		return ("(%02X, %02X, %02X, %02X)" % (self.r, self.g, self.b, self.a))
+	#
+	
+	def FromHexStrRgba(self, hexStr):
+	#
+		if (hexStr == None or len(hexStr) < 6 or len(hexStr) > 8): return False
+		
+		hexValues = ConvertStrToHex(hexStr)
+		if (len(hexValues) < 3 or len(hexValues) > 4): return False
+		
+		self.r = ord(hexValues[0])
+		self.g = ord(hexValues[1])
+		self.b = ord(hexValues[2])
+		if (len(hexValues) >= 4): self.a = ord(hexValues[3])
+		else: self.a = 0xFF
+		return True
+	#
+	
+	def FromHexStrArgb(self, hexStr):
+	#
+		if (hexStr == None or len(hexStr) != 8): return False
+		
+		hexValues = ConvertStrToHex(hexStr)
+		if (len(hexValues) != 4): return False
+		
+		self.a = ord(hexValues[0])
+		self.r = ord(hexValues[1])
+		self.g = ord(hexValues[2])
+		self.b = ord(hexValues[3])
+		return True
+	#
+	
+	def GetHexStrRgba(self):
+	#
+		return ("%02X%02X%02X%02X" % (self.r, self.g, self.b, self.a))
+	#
+	
+	def GetHexStrArgb(self):
+	#
+		return ("%02X%02X%02X%02X" % (self.a, self.r, self.g, self.b))
+	#
+	
+	def GetOpposite(self):
+	#
+		result = Color()
+		result.r = ((self.r + 128) % 256)
+		result.g = ((self.g + 128) % 256)
+		result.b = ((self.b + 128) % 256)
+		result.a = self.a
+		return result
+	#
+#
+
 # This function is simply for testing new functionality. It's bound to ctrl+;
 class TaylorCommand(sublime_plugin.TextCommand):
 #
@@ -8,22 +73,36 @@ class TaylorCommand(sublime_plugin.TextCommand):
 	#
 		print("Running the Taylor Command!")
 		
-		settings = self.view.settings()
-		print("\"syntax\" = \"%s\"" % settings.get("syntax"))
-		
+		showPos = 0
+		html = ""
 		for region in self.view.sel():
 		#
 			selectionStr = self.view.substr(region)
-			print("Selection: \"" + selectionStr + "\"")
+			# print("Selection: \"" + selectionStr + "\"")
 			
-			integerValue = int(selectionStr)
-			frequency = (float)(integerValue * (32000000)) #32MHz
-			frequency /= 524288 #2^19
-			frequency /= 1000
-			frequency = round(frequency)
-			frequency /= 1000
-			print("Frequency = %fMHz" % frequency)
-			self.view.replace(edit, region, str(frequency) + "MHz")
+			if (len(selectionStr) > 2 and selectionStr[0:2] == "0x"):
+			#
+				selectionStr = selectionStr[2:]
+			#
+			
+			color = Color()
+			if (color.FromHexStrArgb(selectionStr) == False):
+			#
+				print("Couldn't parse \"%s\" as color" % (selectionStr))
+				color.a = 0
+			#
+			
+			html += "<div style='padding:10px 50px;background-color:#" + color.GetHexStrRgba() + ";color:#" + color.GetOpposite().GetHexStrRgba() + "'>"
+			html += selectionStr
+			html += "</div>"
+			
+			showPos = region.b
+			# self.view.replace(edit, region, newString)
+		#
+		
+		if (html != ""):
+		#
+			self.view.show_popup(html, 0, showPos, 250, 500)
 		#
 	#
 #
