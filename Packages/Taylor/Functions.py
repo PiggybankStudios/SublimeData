@@ -505,6 +505,7 @@ class CppFunction():
 		self.name = ""
 		self.returnType = ""
 		self.parameterTypes = []
+		self.parametersOptional = []
 		self.parameters = []
 		self.lexicalPieces = []
 	#
@@ -516,6 +517,7 @@ class CppFunction():
 		self.name = ""
 		self.returnType = ""
 		self.parameterTypes = []
+		self.parametersOptional = []
 		self.parameters = []
 		self.lexicalPieces = []
 		
@@ -542,177 +544,15 @@ class CppFunction():
 		else: return "Invalid CppFunction"
 	#
 	
-	def OldTryParse(self, functionStr):
-	#
-		self.valid = True
-		self.name = ""
-		self.returnType = ""
-		self.parameterTypes = []
-		self.parameters = []
-		self.lexicalPieces = LexicalParse(functionStr)
-		# print("Lexical Pieces:", self.lexicalPieces)
-		
-		if (len(self.lexicalPieces) == 0):
-		#
-			print("No lexical pieces found")
-			self.valid = False
-		#
-		elif ("=" in functionStr):
-		#
-			print("Parameter assignments are not currently supported")
-			self.valid = False
-		#
-		else:
-		#
-			foundOpenParens = False
-			foundCloseParens = False
-			parameterType = ""
-			
-			for pIndex in range(0, len(self.lexicalPieces)-1):
-			#
-				# print("pIndex", pIndex)
-				part = self.lexicalPieces[pIndex]
-				nextPart = self.lexicalPieces[pIndex+1]
-				
-				if (foundOpenParens == False and nextPart.value != "("):
-				#
-					if (self.returnType != "" and part.type == "Identifier"):
-					#
-						self.returnType += " "
-					#
-					self.returnType += part.value
-				#
-				
-				if (nextPart.type == "Syntax"):
-				#
-					if (nextPart.value == "("):
-					#
-						if (foundOpenParens):
-						#
-							print("Found too many open parenthesis!")
-							self.valid = False
-							break
-						#
-						elif (part.type != "Identifier"):
-						#
-							print("Part preceding open parenthesis was not an identifier!")
-							self.valid = False
-							break
-						#
-						else:
-						#
-							foundOpenParens = True
-							self.name = part.value
-							# print("FunctionName = \"%s\"" % (part.value))
-						#
-					#
-					elif (nextPart.value == ")"):
-					#
-						if (foundOpenParens == False):
-						#
-							print("Found close parenthesis before open parenthesis!")
-							self.valid = False
-							break
-						#
-						elif (foundCloseParens):
-						#
-							print("Found too many close parenthesis!")
-							self.valid = False
-							break
-						#
-						else:
-						#
-							foundCloseParens = True
-							if (part.type == "Identifier"):
-							#
-								self.parameterTypes.append(parameterType)
-								self.parameters.append(part.value)
-								parameterType = ""
-								# print("Parameter[%u] = \"%s\"" % (len(self.parameters)-1, part.value))
-							#
-						#
-					#
-					elif (nextPart.value == ","):
-					#
-						if (foundOpenParens == False):
-						#
-							print("Found comma before open parenthesis!")
-							self.valid = False
-							break
-						#
-						elif (foundCloseParens == True):
-						#
-							print("Found comma after close parenthesis!")
-							self.valid = False
-							break
-						#
-						elif (part.type != "Identifier"):
-						#
-							print("Part preceding open comma was not an identifier!")
-							self.valid = False
-							break
-						#
-						else:
-						#
-							self.parameterTypes.append(parameterType)
-							self.parameters.append(part.value)
-							parameterType = ""
-							# print("Parameter[%u] = \"%s\"" % (len(self.parameters)-1, part.value))
-						#
-					#
-					else:
-					#
-						if (foundOpenParens and foundCloseParens == False):
-						#
-							parameterType += part.value
-						#
-					#
-				#
-				else:
-				#
-					if (part.value != "," and part.value != "(" and part.value != ")"):
-					#
-						if (foundOpenParens and foundCloseParens == False):
-						#
-							parameterType += part.value
-						#
-					#
-				#
-			#End For Loop
-			
-			if (self.valid and foundCloseParens == False):
-			#
-				print("No close parenthesis found!")
-				self.valid = False
-			#
-		#
-		
-		if (self.valid):
-		#
-			if (self.name == ""):
-			#
-				print("Found no function name")
-				self.valid = False
-			#
-			elif (self.returnType == ""):
-			#
-				print("No return type on function")
-				self.valid = False
-			#
-		#
-		
-		# print("Parsed function:", self)
-		
-		return self.valid
-	#
-	
 	def NewTryParse(self, functionStr):
 	#
 		self.valid = True
 		self.name = ""
 		self.returnType = ""
 		self.parameterTypes = []
+		self.parametersOptional = []
 		self.parameters = []
+		functionStr = functionStr.replace("...", "args")
 		self.lexicalPieces = LexicalParse(functionStr)
 		# print("Lexical Pieces:", self.lexicalPieces)
 		
@@ -882,6 +722,7 @@ class CppFunction():
 			#
 				# print("Warning: No type for parameter[%u]" % (pIndex))
 				self.parameterTypes.append("")
+				self.parametersOptional.append(False)
 				self.parameters.append(pieceList[0].value)
 			#
 			else:
@@ -933,11 +774,13 @@ class CppFunction():
 				#
 					print("Warning: No type for parameter[%u]" % (pIndex))
 					self.parameterTypes.append("")
+					self.parametersOptional.append(containsEquals)
 					self.parameters.append(beforeEquals[0].value)
 				#
 				else:
 				#
 					self.parameterTypes.append(StringifyLexicalPieces(beforeEquals[0:-1]))
+					self.parametersOptional.append(containsEquals)
 					self.parameters.append(beforeEquals[-1].value)
 				#
 			#
@@ -964,7 +807,9 @@ class TestCppParseCommand(sublime_plugin.TextCommand):
 				print("\tParameters: %u" % (len(parsedFunction.parameters)))
 				for pIndex in range(0, len(parsedFunction.parameters)):
 				#
-					print("\t\t[%u] %s - %s" % (pIndex, parsedFunction.parameterTypes[pIndex], parsedFunction.parameters[pIndex]))
+					optionalStr = ""
+					if (parsedFunction.parametersOptional[pIndex]): optionalStr = " (Optional)"
+					print("\t\t[%u] %s - %s%s" % (pIndex, parsedFunction.parameterTypes[pIndex], parsedFunction.parameters[pIndex], optionalStr))
 				#
 			#
 			else:

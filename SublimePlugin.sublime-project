@@ -37,6 +37,7 @@
 		},
 		"custom_constants":
 		[
+			"NASDMASDASD_VALUE",
 			"SOME_DEFINITION",
 			"SomeEnumValue0",
 			"SomeEnumValue1",
@@ -90,6 +91,7 @@
 			"void DEBUG_Write(outputStr)",
 			"void DEBUG_WriteLine(outputStr)",
 			"void LargeEnumFunction()",
+			"void MyFunction(int param0, int param1=10)",
 			"void SimpleFunction()"
 		],
 		"custom_globals":
