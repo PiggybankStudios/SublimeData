@@ -9,37 +9,74 @@ class KillLineCommand(sublime_plugin.TextCommand):
 #
 	def run(self, edit, next_line=True):
 	#
-		newRegions = [];
+		remRegions = []
+		newSelections = []
 		for region in self.view.sel():
 		#
-			row, col = self.view.rowcol(region.b);
-			lineRegion = self.view.full_line(region);
-			endRow, endCol = self.view.rowcol(lineRegion.end());
-			newLineRegion = self.view.line(self.view.text_point(endRow, 0));
+			# print("Region:", region)
+			row, col = self.view.rowcol(region.b)
+			lineRegion = self.view.full_line(region)
+			endRow, endCol = self.view.rowcol(lineRegion.end())
+			newLineRegion = self.view.line(self.view.text_point(endRow, 0))
 			
 			if (newLineRegion.size() >= col):
 			#
-				endPosition = self.view.text_point(endRow, col);
+				endPosition = self.view.text_point(endRow, col)
 			#
 			else:
 			#
-				endPosition = self.view.text_point(endRow, newLineRegion.size());
+				endPosition = self.view.text_point(endRow, newLineRegion.size())
 			#
 			
-			# print("Row " + str(row) + ", Col " + str(col));
-			# print("End: Row " + str(endRow) + ", Col " + str(endCol));
-			# print("End Pos: " + str(endPosition));
-			
-			newRegion = sublime.Region(endPosition, endPosition);
-			# newRegions.append(newRegion);
-			self.view.sel().add(newRegion);
-			self.view.sel().subtract(region);
-			
-			self.view.erase(edit, lineRegion);
-			# self.view.sel().add(lineRegion);
+			newSelections.append(endPosition)
+			if (lineRegion not in remRegions):
+			#
+				print("Killing line %d" % (row+1))
+				remRegions.append(lineRegion)
+			#
+			else: print("Already removing line %d" % (row+1))
 		#
 		
-		# self.view.sel().clear();
-		# self.view.sel().add_all(newRegions);
+		self.view.window().status_message("Killed %d line(s)" % len(remRegions))
+		for rIndex in range(len(remRegions)):
+		#
+			self.view.erase(edit, remRegions[rIndex])
+			# Shift all the regions above us down by the amount deleted
+			for rIndex2 in range(rIndex+1, len(remRegions)):
+			#
+				if (remRegions[rIndex2].a >= remRegions[rIndex].end()): remRegions[rIndex2].a -= (remRegions[rIndex].end() - remRegions[rIndex].begin())
+				if (remRegions[rIndex2].b >= remRegions[rIndex].end()): remRegions[rIndex2].b -= (remRegions[rIndex].end() - remRegions[rIndex].begin())
+			#
+		#
+		
+		self.view.sel().clear()
+		for selection in newSelections:
+		#
+			newLocation = selection
+			selectionRemoved = False
+			for remRegion in remRegions:
+			#
+				if (remRegion.begin() <= newLocation and remRegion.end() > newLocation):
+				#
+					# print("Selection at %d removed" % selection)
+					selectionRemoved = True
+					break
+				#
+				elif (remRegion.begin() < newLocation):
+				#
+					newLocation -= remRegion.end() - remRegion.begin()
+					if (newLocation <= 0): print("Warning, newLocation went negative") # This shouldn't happen
+				#
+			#
+			if (selectionRemoved):
+			#
+				continue
+			#
+			else:
+			#
+				# print("Selection at %d->%d added" % (selection, newLocation))
+				self.view.sel().add(sublime.Region(newLocation, newLocation))
+			#
+		#
 	#
 #
