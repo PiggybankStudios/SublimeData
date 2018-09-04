@@ -75,7 +75,6 @@ block comment
 something todo something
 
 #TODO List
-	[!] Make the AlignToCharacterCommand look at the line above it rather than below it
 	[!] Fix the RemoveLineCommand so it works with multiple consecutive selections and at the end of the file
 	[?] Fix My C so that definition lookups still work. (Why does this break sometimes?)
 	[ ] Make the CreateLocalHeaderCommand work with already created headers to reformat them
@@ -83,6 +82,7 @@ something todo something
 	[ ] Make GrabNextCommand faster in large files?
 	[ ] Make FileHeaderCommand re-date the current header if it exists
 	
+	[X] Make the AlignCharacterCommand look at the line above it rather than below it
 	[X] Make a command that selects all functions in a file
 	[X] Make a shortcut that expands the selection to the entire line
 	[X] Make the function auto-complete suggestions replace with only name if character after cursor is an open parenthesis
@@ -98,7 +98,7 @@ something todo something
 	[X] Figure out why goto header/source file isn't working when they are in seperate folders
 	[X] Add word wrapping by default to the output panel of Custom-Types plugin
 	[X] Open Header file in other column
-	[X] Add 0b0... syntax to My C
+	[X] Add 0b#... syntax to My C
 	[X] Find a way to get recent projects list. Make hotkey for it
 	[X] Create a naming conventions changer plugin
 	[X] Upgrade MyMonokai theme for JSON
