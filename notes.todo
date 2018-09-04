@@ -83,6 +83,7 @@ something todo something
 	[ ] Make GrabNextCommand faster in large files?
 	[ ] Make FileHeaderCommand re-date the current header if it exists
 	
+	[X] Make a command that selects all functions in a file
 	[X] Make a shortcut that expands the selection to the entire line
 	[X] Make the function auto-complete suggestions replace with only name if character after cursor is an open parenthesis
 	[X] Add support for detecting optional variables in a function string

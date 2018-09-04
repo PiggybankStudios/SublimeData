@@ -522,7 +522,7 @@
 	// { "keys": ["ctrl+alt+shift+]"],  "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+\\"], "command": "do_nothing" },
 	
-	// { "keys": ["ctrl+alt+shift+a"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+shift+a"], "command": "select_functions" },
 	// { "keys": ["ctrl+alt+shift+s"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+d"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+f"], "command": "do_nothing" },

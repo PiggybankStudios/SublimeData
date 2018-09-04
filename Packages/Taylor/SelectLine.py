@@ -3,45 +3,6 @@ from Taylor.Functions import *
 
 import re
 
-def FindBeginOfLineAfterIndents(view, region):
-#
-	result = region.begin()
-	while (result < view.size() and result < region.end()):
-	#
-		c = view.substr(result)
-		if (c == '\t' or c == ' '): result += 1
-		else: break
-	#
-	return result
-#
-
-def FindEndOfLineBeforeComments(view, region):
-#
-	result = region.end()
-	while (result > 0 and result > region.begin()):
-	#
-		scopeNames = view.scope_name(result-1).split(" ")
-		isComment = False
-		for scope in scopeNames:
-		#
-			scopeParts = scope.split(".")
-			if (len(scopeParts) > 0 and scopeParts[0] == "comment"):
-			#
-				isComment = True
-				break
-			#
-		#
-		if (isComment): result -= 1
-		else:
-		#
-			c = view.substr(result-1)
-			if (c == ' ' or c == '\t'): result -= 1
-			else: break
-		#
-	#
-	return result
-#
-
 class SelectLineCommand(sublime_plugin.TextCommand):
 #
 	def run(self, edit):
