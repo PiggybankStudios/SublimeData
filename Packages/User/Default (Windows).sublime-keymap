@@ -36,7 +36,7 @@
 	// { "keys": ["ctrl+9"], "command": "do_nothing" },
 	// { "keys": ["ctrl+0"], "command": "do_nothing" },
 	
-	{ "keys": ["ctrl+q"],   "command": "toggle_distraction_free" },
+	{ "keys": ["ctrl+q"],   "command": "do_nothing" }, //TODO: Rebind me
 	{ "keys": ["ctrl+w"],   "command": "close" },
 	{ "keys": ["ctrl+e"],   "command": "reopen_last_file" },
 	{ "keys": ["ctrl+r"],   "command": "kill_line" },
@@ -50,7 +50,7 @@
 	{ "keys": ["ctrl+]"],   "command": "indent" },
 	{ "keys": ["ctrl+\\"],  "command": "set_layout", "args": {"cols": [0.0, 0.5, 1.0], "rows": [0.0, 1.0], "cells": [[0, 0, 1, 1], [1, 0, 2, 1]]} },
 	
-	{ "keys": ["ctrl+a"],   "command": "select_all" },
+	{ "keys": ["ctrl+a"],   "command": "select_line" },
 	{ "keys": ["ctrl+s"],   "command": "save" },
 	{ "keys": ["ctrl+d"],   "command": "grab_next", "args": { "case_sensitive": true, "forward": true, "word_bounded": false, "show_new_location": true, "print_success_info": true } },
 	{ "keys": ["ctrl+f"],   "command": "show_panel", "args": {"panel": "find", "reverse": false} },
@@ -89,7 +89,7 @@
 	// { "keys": ["ctrl+backspace"], "command": "do_nothing" },
 	// { "keys": ["ctrl+enter"],     "command": "do_nothing" },
 	// { "keys": ["ctrl+pause"],     "command": "do_nothing" },
-	// { "keys": ["ctrl+tab"],       "command": "do_nothing" },
+	{ "keys": ["ctrl+tab"],       "command": "toggle_distraction_free" },
 	{ "keys": ["ctrl+space"],     "command": "show_at_center" },
 	// { "keys": ["ctrl+clear"],     "command": "do_nothing" },
 	
@@ -141,7 +141,7 @@
 	// { "keys": ["ctrl+shift+]"],  "command": "do_nothing" },
 	{ "keys": ["ctrl+shift+\\"], "command": "set_layout", "args": {"cols": [0.0, 1.0], "rows": [0.0, 1.0], "cells": [[0, 0, 1, 1]]} },
 	
-	// { "keys": ["ctrl+shift+a"], "command": "do_nothing" },
+	{ "keys": ["ctrl+shift+a"], "command": "select_all" },
 	// { "keys": ["ctrl+shift+s"], "command": "do_nothing" },
 	{ "keys": ["ctrl+shift+d"], "command": "grab_next", "args": { "case_sensitive": true, "forward": false, "word_bounded": false, "show_new_location": true, "print_success_info": true } },
 	{ "keys": ["ctrl+shift+f"], "command": "show_panel", "args": {"panel": "find_in_files"} },

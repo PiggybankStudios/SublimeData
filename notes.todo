@@ -77,13 +77,13 @@ something todo something
 #TODO List
 	[!] Make the AlignToCharacterCommand look at the line above it rather than below it
 	[!] Fix the RemoveLineCommand so it works with multiple consecutive selections and at the end of the file
-	[!] Make a shortcut that expands the selection to the entire line
-	[ ] Fix My C so that definition lookups still work. Maybe look at command for f12 binding?
+	[?] Fix My C so that definition lookups still work. (Why does this break sometimes?)
 	[ ] Make the CreateLocalHeaderCommand work with already created headers to reformat them
 	[ ] Add a PromptInsertNumsHexCommand
 	[ ] Make GrabNextCommand faster in large files?
 	[ ] Make FileHeaderCommand re-date the current header if it exists
 	
+	[X] Make a shortcut that expands the selection to the entire line
 	[X] Make the function auto-complete suggestions replace with only name if character after cursor is an open parenthesis
 	[X] Add support for detecting optional variables in a function string
 	[-] Make GrabNextCommand auto-choose whether or not to make the regex word bounded by whether or not the selection is word bounded (however the auto-highlight functionality works)
