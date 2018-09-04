@@ -75,12 +75,13 @@ block comment
 something todo something
 
 #TODO List
+	[!] Make a better system for indicating errors in CustomIdentifierCommand
+	[!] Make GrabNextCommand faster when many selections have already been made
 	[?] Fix My C so that definition lookups still work. (Why does this break sometimes?)
 	[ ] Make the CreateLocalHeaderCommand work with already created headers to reformat them
 	[ ] Add a PromptInsertNumsHexCommand
-	[ ] Make GrabNextCommand faster in large files?
-	[ ] Make FileHeaderCommand re-date the current header if it exists
 	
+	[X] Make CreateFileHeaderCommand re-date the current header if it exists
 	[X] Fix the KillLineCommand so it works with multiple consecutive selections and at the end of the file
 	[X] Make the AlignCharacterCommand look at the line above it rather than below it
 	[X] Make a command that selects all functions in a file
