@@ -54,13 +54,27 @@ class SelectLineCommand(sublime_plugin.TextCommand):
 			commentsIndex = FindEndOfLineBeforeComments(self.view, lineRegion)
 			if (commentsIndex < indentationIndex): commentsIndex = indentationIndex
 			
-			if (region.begin() == indentationIndex and region.end() == commentsIndex):
+			if (indentationIndex == commentsIndex): #It's a line of only comments
 			#
-				newSelections.append(sublime.Region(lineRegion.begin(), lineRegion.end()))
+				if (region.begin() == indentationIndex and region.end() == lineRegion.end()):
+				#
+					newSelections.append(sublime.Region(lineRegion.begin(), lineRegion.end()))
+				#
+				else:
+				#
+					newSelections.append(sublime.Region(indentationIndex, lineRegion.end()))
+				#
 			#
 			else:
 			#
-				newSelections.append(sublime.Region(indentationIndex, commentsIndex))
+				if (region.begin() == indentationIndex and region.end() == commentsIndex):
+				#
+					newSelections.append(sublime.Region(lineRegion.begin(), lineRegion.end()))
+				#
+				else:
+				#
+					newSelections.append(sublime.Region(indentationIndex, commentsIndex))
+				#
 			#
 		#
 		
