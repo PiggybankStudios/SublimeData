@@ -52,7 +52,7 @@
 	
 	{ "keys": ["ctrl+a"],   "command": "select_line" },
 	{ "keys": ["ctrl+s"],   "command": "save" },
-	{ "keys": ["ctrl+d"],   "command": "grab_next", "args": { "case_sensitive": true, "forward": true, "word_bounded": false, "show_new_location": true, "print_success_info": true } },
+	{ "keys": ["ctrl+d"],   "command": "find_under_expand" }, //"grab_next", "args": { "case_sensitive": true, "forward": true, "word_bounded": false, "show_new_location": true, "print_success_info": true } },
 	{ "keys": ["ctrl+f"],   "command": "show_panel", "args": {"panel": "find", "reverse": false} },
 	{ "keys": ["ctrl+g"],   "command": "my_google_search" },
 	{ "keys": ["ctrl+h"],   "command": "open_header", "args": {"extensions": ["cpp", "c", "h", "hpp"]} },
