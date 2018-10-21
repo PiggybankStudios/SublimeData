@@ -36,7 +36,7 @@
 	// { "keys": ["ctrl+9"], "command": "do_nothing" },
 	// { "keys": ["ctrl+0"], "command": "do_nothing" },
 	
-	{ "keys": ["ctrl+q"],   "command": "do_nothing" }, //TODO: Rebind me
+	{ "keys": ["ctrl+q"],   "command": "hill_cipher" }, //TODO: Rebind me
 	{ "keys": ["ctrl+w"],   "command": "close" },
 	{ "keys": ["ctrl+e"],   "command": "reopen_last_file" },
 	{ "keys": ["ctrl+r"],   "command": "kill_line" },
