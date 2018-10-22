@@ -15,6 +15,14 @@ class CreateFileHeaderCommand(sublime_plugin.TextCommand):
 		
 		dateString = time.strftime("%m\\%d\\%Y")
 		
+		existingDateRegion = self.view.find("Date\\:\\s*\\d{1,2}\\\\\\d{1,2}\\\\\\d{1,4}", 0)
+		if (existingDateRegion != None and existingDateRegion != sublime.Region(-1, -1) and self.view.match_selector(existingDateRegion.begin(), "comment")):
+		#
+			print("File header already exists. Replacing date");
+			self.view.replace(edit, existingDateRegion, "Date:   " + dateString)
+			return
+		#
+		
 		fileIsEmpty = True
 		lineNum = 0
 		cIndex = self.view.text_point(lineNum, 0)

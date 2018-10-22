@@ -29,39 +29,39 @@ class AlignCharacterCommand(sublime_plugin.TextCommand):
 			
 			print("Char \'%c\' at line %d currentCol %d:\n%s" % (currentChar, row+1, currentCol, lineStr))
 			
-			nextLineStr = " "
-			nextLineRow = row
-			nextLineRegion = None
-			foundEndOfFile = False
-			while (LineIsEmpty(nextLineStr)):
+			lastLineStr = " "
+			lastLineRow = row
+			lastLineRegion = None
+			foundBeginningOfFile = False
+			while (LineIsEmpty(lastLineStr)):
 			#
-				nextLineRow += 1
-				nextLineRegion = self.view.line(self.view.text_point(nextLineRow, 0))
+				lastLineRow -= 1
+				lastLineRegion = self.view.line(self.view.text_point(lastLineRow, 0))
 				
-				if (nextLineRegion.begin() < lineRegion.end() or nextLineRegion.begin() >= self.view.size()):
+				if (lastLineRegion.begin() <= 0):
 				#
-					foundEndOfFile = True
+					foundBeginningOfFile = True
 					break
 				#
-				nextLineStr = self.view.substr(nextLineRegion)
+				lastLineStr = self.view.substr(lastLineRegion)
 			#
 			
-			if (foundEndOfFile):
+			if (foundBeginningOfFile):
 			#
-				print("End of file without finding a non-empty line")
+				print("Found beginning of file without finding a non-empty line")
 				continue
 			#
 			
-			print("Checking line %d:\n%s" % (nextLineRow, nextLineStr))
+			print("Checking line %d:\n%s" % (lastLineRow, lastLineStr))
 			
-			nextTextPos = RowColumnTextPoint(self.view, nextLineRow, currentCol)
-			nextLineIndex = nextTextPos - nextLineRegion.begin()
+			nextTextPos = RowColumnTextPoint(self.view, lastLineRow, currentCol)
+			nextLineIndex = nextTextPos - lastLineRegion.begin()
 			
 			foundMatch  = False
 			matchColumn = 0
-			while (nextLineIndex < nextLineRegion.size()):
+			while (nextLineIndex < lastLineRegion.size()):
 			#
-				nextLineChar = self.view.substr(sublime.Region(nextLineRegion.begin() + nextLineIndex, nextLineRegion.begin() + nextLineIndex + 1))
+				nextLineChar = self.view.substr(sublime.Region(lastLineRegion.begin() + nextLineIndex, lastLineRegion.begin() + nextLineIndex + 1))
 				if (nextLineChar == None):
 				#
 					nextLineIndex += 1
@@ -73,7 +73,7 @@ class AlignCharacterCommand(sublime_plugin.TextCommand):
 				if (nextLineChar == currentChar or (not case_sensitive and nextLineChar.lower() == currentChar.lower())):
 				#
 					foundMatch = True
-					matchColumn = TextPointColumn(self.view, nextLineRegion.begin() + nextLineIndex)
+					matchColumn = TextPointColumn(self.view, lastLineRegion.begin() + nextLineIndex)
 					break
 				#
 				

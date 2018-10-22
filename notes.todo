@@ -75,14 +75,19 @@ block comment
 something todo something
 
 #TODO List
-	[!] Add support for detecting optional variables in a function string
-	[!] Make the function auto-complete suggestions replace with only name if character after cursor is an open parenthesis
-	[ ] Fix My C so that definition lookups still work. Maybe look at command for f12 binding?
+	[!] Make a better system for indicating errors in CustomIdentifierCommand
+	[!] Make GrabNextCommand faster when many selections have already been made
+	[?] Fix My C so that definition lookups still work. (Why does this break sometimes?)
 	[ ] Make the CreateLocalHeaderCommand work with already created headers to reformat them
 	[ ] Add a PromptInsertNumsHexCommand
-	[ ] Make GrabNextCommand faster in large files?
-	[ ] Make FileHeaderCommand re-date the current header if it exists
 	
+	[X] Make CreateFileHeaderCommand re-date the current header if it exists
+	[X] Fix the KillLineCommand so it works with multiple consecutive selections and at the end of the file
+	[X] Make the AlignCharacterCommand look at the line above it rather than below it
+	[X] Make a command that selects all functions in a file
+	[X] Make a shortcut that expands the selection to the entire line
+	[X] Make the function auto-complete suggestions replace with only name if character after cursor is an open parenthesis
+	[X] Add support for detecting optional variables in a function string
 	[-] Make GrabNextCommand auto-choose whether or not to make the regex word bounded by whether or not the selection is word bounded (however the auto-highlight functionality works)
 	[X] Add shortcuts to check off a checklist item in TODO list syntax
 	[X] Upgrade TODO list syntax so comments can come at end of line
@@ -94,7 +99,7 @@ something todo something
 	[X] Figure out why goto header/source file isn't working when they are in seperate folders
 	[X] Add word wrapping by default to the output panel of Custom-Types plugin
 	[X] Open Header file in other column
-	[X] Add 0b0... syntax to My C
+	[X] Add 0b#... syntax to My C
 	[X] Find a way to get recent projects list. Make hotkey for it
 	[X] Create a naming conventions changer plugin
 	[X] Upgrade MyMonokai theme for JSON

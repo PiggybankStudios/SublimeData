@@ -322,6 +322,17 @@ class CustomIdentifierEventListener(sublime_plugin.EventListener):
 			result.append([customGlobal + "\t" + "Custom Global", customGlobal])
 		#
 		
+		shouldInsertParameters = True
+		for region in view.sel():
+		#
+			if (region.b < view.size() and view.substr(sublime.Region(region.b, region.b+1)) == "("):
+			#
+				# print("Found paranthesis at index %d" % region.b)
+				shouldInsertParameters = False
+				break
+			#
+		#
+		
 		for functionStr in projectSettings["custom_functions"]:
 		#
 			parsedFunction = CppFunction(functionStr)
@@ -334,6 +345,7 @@ class CustomIdentifierEventListener(sublime_plugin.EventListener):
 				#
 					paramName = parsedFunction.parameters[pIndex]
 					paramType = parsedFunction.parameterTypes[pIndex]
+					isOptional = parsedFunction.parametersOptional[pIndex]
 					if (paramNameStr != ""):
 					#
 						paramNameStr += ", "
@@ -341,10 +353,20 @@ class CustomIdentifierEventListener(sublime_plugin.EventListener):
 						paramReplaceStr += ", "
 					#
 					if (paramType != ""):
-						paramNameTypeStr += paramType + " "
+					#
+						if (isOptional): paramNameTypeStr += "[" + paramType + "]" + " "
+						else:            paramNameTypeStr += paramType + " "
+					#
 					paramNameStr += paramName
 					paramNameTypeStr += paramName
-					paramReplaceStr += "${%u:%s}" % (pIndex+1, paramName)
+					if (isOptional):
+					#
+						paramReplaceStr += "${%u:%s}" % (pIndex+1, "_" + paramName + "_")
+					#
+					else:
+					#
+						paramReplaceStr += "${%u:%s}" % (pIndex+1, paramName)
+					#
 				#
 				
 				maxParamStrLength = 32
@@ -353,7 +375,10 @@ class CustomIdentifierEventListener(sublime_plugin.EventListener):
 				# if (len(paramStr) > maxParamStrLength): paramStr = paramNameStr[:maxParamStrLength-3] + "..."
 				
 				displayStr = parsedFunction.name + "\t(" + paramStr + ")"
-				insertStr = parsedFunction.name + "(" + paramReplaceStr + ")"
+				if (shouldInsertParameters):
+					insertStr = parsedFunction.name + "(" + paramReplaceStr + ")"
+				else:
+					insertStr = parsedFunction.name
 				# print("Suggesting function \"%s\"" % (parsedFunction.name))
 				result.append([displayStr, insertStr])
 			#

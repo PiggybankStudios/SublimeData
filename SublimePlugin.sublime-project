@@ -37,7 +37,7 @@
 		},
 		"custom_constants":
 		[
-			"SOME_DEFINITION",
+			"NASDMASDASD_VALUE",
 			"SomeEnumValue0",
 			"SomeEnumValue1",
 			"SomeEnumValue2",
@@ -53,6 +53,8 @@
 			"const Structure_t* volatile SomeFunction(const Type_t& input1, r32 input2, const AppData_t *data)",
 			"def ActualLineLength(tabSize, lineStr):",
 			"def ConvertStrToHex(inputStr)",
+			"def FindBeginOfLineAfterIndents(view, region)",
+			"def FindEndOfLineBeforeComments(view, region)",
 			"def FullyMatchesRegex(string, regex):",
 			"def GetBlockCommentStrs(view, viewPos):",
 			"def GetCString(view, region):",
@@ -90,6 +92,7 @@
 			"void DEBUG_Write(outputStr)",
 			"void DEBUG_WriteLine(outputStr)",
 			"void LargeEnumFunction()",
+			"void MyFunction(int param0, int param1=10)",
 			"void SimpleFunction()"
 		],
 		"custom_globals":
