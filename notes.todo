@@ -1,6 +1,8 @@
 # This file can be used alongside TODO.sublime-syntax
 # to test the syntax capabilities
 
+test change
+
     272822 Background
     F8F8F0 Foreground
 [ ] 66D9EF storage.type.checkbox.todo
