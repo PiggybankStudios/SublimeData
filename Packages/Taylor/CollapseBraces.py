@@ -2,6 +2,8 @@ import os, sys, sublime, sublime_plugin
 from Taylor.Functions import *
 
 #TODO: Make the cursors end up inside the collapsed/expanded braces after the edit
+#TODO: Replace line-end comment syntax with block comment syntax automatically
+#TODO: Make SplitBySemicolons aware of comments/strings
 class CollapseBracesCommand(sublime_plugin.TextCommand):
 #
 	def run(self, edit):

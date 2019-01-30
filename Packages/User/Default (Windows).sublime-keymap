@@ -36,7 +36,7 @@
 	// { "keys": ["ctrl+9"], "command": "do_nothing" },
 	// { "keys": ["ctrl+0"], "command": "do_nothing" },
 	
-	{ "keys": ["ctrl+q"],   "command": "collapse_braces" }, //TODO: Rebind me
+	{ "keys": ["ctrl+q"],   "command": "do_nothing" }, //TODO: Rebind me
 	{ "keys": ["ctrl+w"],   "command": "close" },
 	{ "keys": ["ctrl+e"],   "command": "reopen_last_file" },
 	{ "keys": ["ctrl+r"],   "command": "kill_line" },
@@ -58,7 +58,7 @@
 	{ "keys": ["ctrl+h"],   "command": "open_header", "args": {"extensions": ["cpp", "c", "h", "hpp"]} },
 	{ "keys": ["ctrl+j"],   "command": "do_nothing" }, //TODO: Rebind me
 	{ "keys": ["ctrl+k"],   "command": "do_nothing" }, //TODO: Rebind me
-	{ "keys": ["ctrl+l"],   "command": "do_nothing" }, //TODO: Rebind me
+	{ "keys": ["ctrl+l"],   "command": "collapse_braces" },
 	{ "keys": ["ctrl+;"],   "command": "taylor" },
 	{ "keys": ["ctrl+'"],   "command": "show_panel", "args": {"panel": "console", "toggle": true} },
 	
