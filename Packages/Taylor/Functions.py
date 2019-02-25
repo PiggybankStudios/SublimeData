@@ -22,14 +22,12 @@ def FullyMatchesRegex(string, regex):
 
 def IsWhitespace(char):
 #
-	if (char == '\t' or char == ' ' or char == '\n' or char == '\r'):
-	#
-		return True
-	#
-	else:
-	#
-		return False
-	#
+	return (char == '\t' or char == ' ' or char == '\n' or char == '\r')
+#
+
+def IsSpaceOrTab(char):
+#
+	return (char == '\t' or char == ' ')
 #
 
 def IsLower(char):
@@ -1118,3 +1116,58 @@ def FindEndOfLineBeforeComments(view, region):
 	return result
 #
 
+def SplitLines(string):
+#
+	result = []
+	lastSplit = 0
+	for i in range(0, len(string)):
+	#
+		if (string[i] == '\n'):
+		#
+			result.append(string[lastSplit:i])
+			lastSplit = i+1
+		#
+	#
+	result.append(string[lastSplit:])
+	return result;
+#
+
+def StripOuterWhitespace(string):
+#
+	result = string
+	while (len(result) > 0 and IsWhitespace(result[0])):
+	#
+		result = result[1:];
+	#
+	while (len(result) > 0 and IsWhitespace(result[-1])):
+	#
+		result = result[0:-1];
+	#
+	return result
+#
+
+def IsStringOrComment(view, point):
+#
+	if (view.match_selector(point, "comment")): return True
+	elif (view.match_selector(point, "string")): return True
+	else: return False
+#
+
+def SplitBySemicolons(string):
+#
+	result = []
+	lastSplit = 0
+	for i in range(0, len(string)):
+	#
+		if (string[i] == ';'):
+		#
+			result.append(StripOuterWhitespace(string[lastSplit:i+1]))
+			lastSplit = i+1
+		#
+	#
+	if (len(string) > lastSplit and StripOuterWhitespace(string[lastSplit:]) != ""):
+	#
+		result.append(StripOuterWhitespace(string[lastSplit:]))
+	#
+	return result
+#
