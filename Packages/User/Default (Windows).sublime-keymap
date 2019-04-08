@@ -68,7 +68,7 @@
 	{ "keys": ["ctrl+v"],   "command": "paste" },
 	{ "keys": ["ctrl+b"],   "command": "build" },
 	{ "keys": ["ctrl+n"],   "command": "new_file" },
-	{ "keys": ["ctrl+m"],   "command": "do_nothing" },
+	{ "keys": ["ctrl+m"],   "command": "do_nothing" }, //TODO: Rebind me
 	{ "keys": ["ctrl+,"],   "command": "jump_back" },
 	{ "keys": ["ctrl+."],   "command": "jump_forward" },
 	{ "keys": ["ctrl+/"],   "command": "toggle_comment", "args": { "block": false } },
