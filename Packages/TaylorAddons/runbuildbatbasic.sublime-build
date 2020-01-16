@@ -1,0 +1,5 @@
+{
+	"cmd": ["build.bat", "$file"],
+	"working_dir": "$project_path",
+	"shell": true,
+}

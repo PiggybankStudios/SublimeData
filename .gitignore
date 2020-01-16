@@ -12,6 +12,7 @@ Packages/pytz/*
 Packages/Settings/*
 Packages/SFTP/*
 Packages/Pretty JSON/*
+Packages/ssl-linux/*
 *Package Control*
 Installed Packages/*
 Packages/User/Preferences.sublime-settings
