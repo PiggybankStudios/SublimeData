@@ -111,7 +111,7 @@
 	{ "keys": ["ctrl+shift+f6"], "command": "custom_identifier", "args": { "action": "remove", "mode": "Constant", "update_syntax_file": false } },
 	{ "keys": ["ctrl+shift+f7"], "command": "custom_identifier", "args": { "action": "remove", "mode": "Global",   "update_syntax_file": false } },
 	{ "keys": ["ctrl+shift+f8"], "command": "custom_identifier", "args": { "action": "remove", "mode": "Function", "update_syntax_file": false } },
-	{ "keys": ["ctrl+shift+f9"], "command": "test_cpp_parse" },
+	{ "keys": ["ctrl+shift+f9"], "command": "custom_identifier", "args": { "action": "lookup", "mode": "Function" } }, //"test_cpp_parse"
 	// { "keys": ["ctrl+shift+f10"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+f11"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+f12"], "command": "do_nothing" },
@@ -398,7 +398,7 @@
 	// { "keys": ["ctrl+alt+f5"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+f6"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+f7"], "command": "do_nothing" },
-	{ "keys": ["ctrl+alt+f8"], "command": "custom_identifier", "args": { "action": "lookup", "mode": "Function" } },
+	// { "keys": ["ctrl+alt+f8"], "command": "custom_identifier", "args": { "action": "lookup", "mode": "Function" } },
 	// { "keys": ["ctrl+alt+f9"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+f10"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+f11"], "command": "do_nothing" },
