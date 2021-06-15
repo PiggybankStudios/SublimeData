@@ -11,6 +11,8 @@ Packages/python-markdown/*
 Packages/pytz/*
 Packages/User/sftp/*
 Packages/sublime_lib/*
+Packages/pymdownx/*
+Packages/pyyaml/*
 Packages/Settings/*
 Packages/SFTP/*
 Packages/Pretty JSON/*
