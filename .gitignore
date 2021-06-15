@@ -9,6 +9,9 @@ Packages/pygments/*
 Packages/python-jinja2/*
 Packages/python-markdown/*
 Packages/pytz/*
+Packages/User/sftp/*
+Packages/pymdownx/*
+Packages/pyyaml/*
 Packages/Settings/*
 Packages/SFTP/*
 Packages/Pretty JSON/*

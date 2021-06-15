@@ -689,7 +689,7 @@ class CppFunction():
 		#
 		elif (len(beforeParenPieces) == 1):
 		#
-			print("Warning: No function return type found")
+			print("Warning: No function return type found: %s" % functionStr)
 			self.name = beforeParenPieces[0].value
 			self.returnType = ""
 		#

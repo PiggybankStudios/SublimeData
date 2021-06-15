@@ -1,0 +1,8 @@
+{
+	"shell_cmd": "D:\\EpicGamesLauncher\\UE_4.26\\Engine\\Build\\BatchFiles\\Build.bat ${project_base_name}Editor Win64 Development \"$project_path/$project_base_name.uproject\" -waitmutex",
+	
+	
+	"syntax": "MSVC Build.sublime-syntax",
+	//C:\Users\robbitay\Documents\MyStuff\Programming\Unreal\FirstProject\Source\FirstProject\FirstProjectBall.cpp(54): error C3646: 's': unknown override specifier
+	"file_regex": "^\\s*(\\w\\:[^\\:\\n]+\\.[A-Za-z]+)\\((\\d+)\\)\\ ?: (?:fatal )?(?:error|warning) \\w\\d+: ()([^\\n]+)$",
+}

@@ -7,21 +7,21 @@ scope: msvc.build
 
 contexts: 
   main:
-    - match: '^((?:\w\:)?[^\:\n]+)\((\d+)\)\ ?: (?:fatal )?error \w\d+: ([^\n]+)$'
+    - match: '^\s*((?:\w\:)?[^\:\n]+)\((\d+)\)\ ?: (?:fatal )?error \w\d+: ([^\n]+)$'
       scope: keyword.title.error.msvc
-    - match: '^((?:\w\:)?[^\:\n]+)\((\d+)\)\ ?: warning \w\d+: ([^\n]+)$'
+    - match: '^\s*((?:\w\:)?[^\:\n]+)\((\d+)\)\ ?: warning \w\d+: ([^\n]+)$'
       scope: string.warning.msvc
-    - match: '^((?:\w\:)?[^\:\n]+)\((\d+)\)\ ?: note: ([^\n]+)$'
+    - match: '^\s*((?:\w\:)?[^\:\n]+)\((\d+)\)\ ?: note: ([^\n]+)$'
       scope: constant.numeric.note.msvc
-    - match: '^[^\n^\:]* : (?:fatal )?error LNK(\d+): ([^\n]+)$'
+    - match: '^\s*[^\n^\:]* : (?:fatal )?error LNK(\d+): ([^\n]+)$'
       scope: keyword.title.link-error.msvc
-    - match: '^Could Not Find [^\n]+$'
+    - match: '^\s*Could Not Find [^\n]+$'
       scope: keyword.title.missing-file.msvc
-    - match: '^\[[^\]]+\]+$'
+    - match: '^\s*\[[^\]]+\]+$'
       scope: storage.type.finish-message.msvc
-    - match: '^[^\n]*Microsoft[^\n]*$'
+    - match: '^\s*[^\n]*Microsoft[^\n]*$'
       scope: comment.compiler-version.msvc
-    - match: '^/out\:[^\n]*$'
+    - match: '^\s*/out\:[^\n]*$'
       scope: entity.name.exe-creation.msvc
-    - match: '^[\t ]*Creating[^\n]+$'
+    - match: '^\s*Creating[^\n]+$'
       scope: entity.name.dll-creation.msvc

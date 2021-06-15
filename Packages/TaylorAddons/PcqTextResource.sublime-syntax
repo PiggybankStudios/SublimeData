@@ -1,0 +1,214 @@
+%YAML 1.2
+---
+name: PCQ Text Resource
+file-extensions: 
+  - meta
+  - lvl
+scope: text.pcq
+
+contexts: 
+  
+  # +==============================+
+  # |           Comments           |
+  # +==============================+
+  comments:
+    - match: '\/\*'
+      push:
+        - meta_scope: comment.block.pcq
+        - match: '\*\/'
+          pop: true
+    - match: '\/\/'
+      push:
+        - meta_scope: comment.escaped.pcq
+        - match: '\n'
+          pop: true
+  
+  common:
+    - match: '^\s*[\sA-Za-z0-9\_]+\:\s+'
+      scope: storage.type.key.pcq
+      push:
+        - meta_scope: custom.global.value.pcq
+        - include: comments
+        - match: '\n'
+          pop: true
+    
+    - match: '^\[.*\]$'
+      scope: keyword.title.pcq
+    
+  # +==============================+
+  # |             Main             |
+  # +==============================+
+  main:
+    
+    - match: 'Princess Castle Quest Decorations \:\&'
+      push:
+        - meta_scope: decorations.pcq
+        - include: comments
+        - include: common
+        - match: '^\{'
+          push:
+            - meta_scope: valuelist.pcq
+            - match: '\n'
+              pop: true
+            - match: '\}'
+              pop: true
+            - match: '\"'
+              push:
+                - meta_scope: string.valuelist.pcq
+                - match: '[^\\]\"'
+                  pop: true
+                - match: '\n'
+                  pop: true
+            - match: '[A-Za-z0-9\_\s]+'
+              scope: entity.name.function.valuelist.pcq
+    
+    - match: 'Princess Dungeon Smasher Design \:\)'
+      push:
+        - meta_scope: design.pcq
+        - include: comments
+        - include: common
+        - match: '^\{'
+          push:
+            - meta_scope: valuelist.pcq
+            - match: '\n'
+              pop: true
+            - match: '\}'
+              pop: true
+            - match: '\"'
+              push:
+                - meta_scope: string.valuelist.pcq
+                - match: '[^\\]\"'
+                  pop: true
+                - match: '\n'
+                  pop: true
+    
+    # - match: '^\s*[A-Za-z0-9]'
+    #   push:
+    #     - meta_scope: plain.text.pcq
+    #     - include: comments
+    #     - match: '\n'
+    #       pop: true
+    
+    # - match: '[\[\{\<\(](X|x)[\]\}\>\)]\s*'
+    #   scope: comment.checkbox.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: comment.checkbox.pcq
+    #     - match: '\n'
+    #       pop: true
+    
+    # - match: '[\[\{\<\(]\-[\]\}\>\)]\s*'
+    #   scope: custom.global.checkbox.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: custom.global.checkbox.pcq
+    #     - include: comments
+    #     - match: '\n'
+    #       pop: true
+    
+    # - match: '\[ \]\s*'
+    #   scope: storage.type.checkbox.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: storage.type.checkbox.pcq
+    #     - include: common
+    
+    # - match: '\{ \}\s*'
+    #   scope: constant.language.checkbox.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: constant.language.checkbox.pcq
+    #     - include: common
+    
+    # - match: '[\[\{]\?[\]\}]\s*'
+    #   scope: custom.type.checkbox.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: custom.type.checkbox.pcq
+    #     - include: common
+    
+    # - match: '[\[\{]\![\]\}]\s*'
+    #   scope: custom.constant.checkbox.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: custom.constant.checkbox.pcq
+    #     - include: common
+    
+    # - match: '\( \)\s*'
+    #   scope: custom.thing.checkbox.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: custom.thing.checkbox.pcq
+    #     - include: common
+    
+    # - match: '\< \>\s*'
+    #   scope: keyword.title.checkbox.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: keyword.title.checkbox.pcq
+    #     - include: common
+    
+    # - match: '[\(\<]\?[\)\>]\s*'
+    #   scope: string.checkbox.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: string.checkbox.pcq
+    #     - include: common
+    
+    # - match: '[\(\<]\![\)\>]\s*'
+    #   scope: custom.prefix.checkbox.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: custom.prefix.checkbox.pcq
+    #     - include: common
+  
+    # - match: '\#\s*'
+    #   scope: keyword.title.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: keyword.title.pcq
+    #     - include: common
+    
+    # - match: '\*\s*'
+    #   scope: string.list-item.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: string.list-item.pcq
+    #     - include: common
+    
+    # - match: '\+\s*'
+    #   scope: entity.name.list-item.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: entity.name.function.list-item.pcq
+    #     - include: common
+    
+    # - match: '\-\s*'
+    #   scope: custom.prefix.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: custom.prefix.pcq
+    #     - include: common
+    
+    # - match: '\>\s*'
+    #   scope: custom.type.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: custom.type.pcq
+    #     - include: common
+    
+    # - match: '\!\s*'
+    #   scope: constant.language.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: constant.language.pcq
+    #     - include: common
+    
+    # - match: '\:\s*'
+    #   scope: custom.constant.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: custom.constant.pcq
+    #     - include: common
+    
+    # - match: '\@\s*'
+    #   scope: custom.string.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: custom.string.pcq
+    #     - include: common
+    
+    # - match: '\|\s*'
+    #   scope: custom.identifier.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: custom.identifier.pcq
+    #     - include: common
+    
+    # - match: '\=\s*'
+    #   scope: custom.thing.punctuation.pcq
+    #   push:
+    #     - meta_content_scope: custom.thing.pcq
+    #     - include: common
+  

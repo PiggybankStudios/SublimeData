@@ -1,4 +1,4 @@
-import os, sys, sublime, sublime_plugin
+import os, sys, sublime, sublime_plugin, random
 from Taylor.Functions import *
 
 class Color():
@@ -104,6 +104,19 @@ class TaylorCommand(sublime_plugin.TextCommand):
 		#
 			self.view.show_popup(html, 0, showPos, 250, 500)
 		#
+		
+		# addX = random.randint(-100,100);
+		# addY = random.randint(-100,100);
+		# for region in self.view.sel():
+		# #
+		# 	selectionStr = self.view.substr(region);
+		# 	parts = selectionStr.split(",");
+		# 	if (len(parts) != 2): continue;
+		# 	xValue = int(parts[0]);
+		# 	yValue = int(parts[1]);
+		# 	newString = str(xValue + addX) + "," + str(yValue + addY);
+		# 	self.view.replace(edit, region, newString);
+		# #
 	#
 #
 
@@ -229,6 +242,25 @@ class KillWordCommand(sublime_plugin.TextCommand):
 		#
 			word = self.view.word(region)
 			self.view.erase(edit, word)
+		#
+	#
+#
+
+class PrintScopesCommand(sublime_plugin.TextCommand):
+#
+	def run(self, edit):
+	#
+		rIndex = 0;
+		for region in self.view.sel():
+		#
+			scopes = self.view.scope_name(region.end()).split(" ");
+			
+			print("Selection[%u]:" % rIndex);
+			for scope in scopes:
+			#
+				print("  " + scope);
+			#
+			rIndex += 1;
 		#
 	#
 #
