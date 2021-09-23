@@ -463,6 +463,10 @@
 	{ "keys": ["ctrl+alt+up"],    "command": "goto_next_scope", "args": {"forward": false, "loop_around": false, "scope_match": "entity.name"} },
 	{ "keys": ["ctrl+alt+down"],  "command": "goto_next_scope", "args": {"forward": true,  "loop_around": false, "scope_match": "entity.name"} },
 	
+	//NOTE: This is a workaround for remote desktop eating the ctrl+alt+left/right bindings. We use AutoHotkey to remap to this on the local machine
+	{ "keys": ["ctrl+alt+x"], "command": "next_view" },
+	{ "keys": ["ctrl+alt+z"], "command": "prev_view" },
+	
 	// { "keys": ["ctrl+alt+escape"],    "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+backspace"], "command": "do_nothing" },
 	{ "keys": ["ctrl+alt+enter"], "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} },
