@@ -6,7 +6,7 @@
 	"auto_close_tags": true,
 	"auto_complete": true,
 	"auto_complete_commit_on_tab": false,
-	"auto_complete_cycle": false,
+	"auto_complete_cycle": true,
 	"auto_complete_delay": 50,
 	"auto_complete_selector": "meta.tag - punctuation.definition.tag.begin, source - comment - string.quoted.double.block - string.quoted.single.block - string.unquoted.heredoc",
 	"auto_complete_size_limit": 4194304,
@@ -14,7 +14,7 @@
 	[
 		{
 			"characters": "<",
-			"selector": "text.html"
+			"selector": "text.html",
 		}
 	],
 	"auto_complete_with_fields": false,
@@ -92,10 +92,12 @@
 		".hg",
 		"CVS"
 	],
+	"font_face": "noto mono",
 	"font_options":
 	[
+		"directwrite"
 	],
-	"font_size": 15,
+	"font_size": 11,
 	"gpu_window_buffer": "auto",
 	"gutter": true,
 	"highlight_line": true,
@@ -103,7 +105,7 @@
 	"hot_exit": true,
 	"ignored_packages":
 	[
-		"Vintage"
+		"Vintage",
 	],
 	"indent_guide_options":
 	[
@@ -162,5 +164,5 @@
 	"use_tab_stops": true,
 	"word_separators": "./\\()\"'-:,.;<>~!@#$%^&*|+=[]{}`~?",
 	"word_wrap": "auto",
-	"wrap_width": 0
+	"wrap_width": 0,
 }

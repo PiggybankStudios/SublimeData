@@ -4,17 +4,27 @@
 
 # List of installed packages:
 	Alignment
+	GameMaker Language (GML) Bundle
+	GDScript (Godot Engine)
 	Gitignore
 	HighlightWords
+	HLSL Syntax
 	Insert Nums
 	Intel HEX
+	JavaScript & Coffeescript Build Systems
 	LinkerScript
+	Material Theme
 	OpenGL Shading Language (GLSL)
+	P3 Assembly
 	Package Control
+	Scope Always
 	ScrollAlternative
 	SFTP
 	TrailingSpaces
 	Whitespace
+	WordCount
+
+# Favorite Font: @{Noto Mono}
 
 #TODO List
 	[!] Make a better system for indicating errors in CustomIdentifierCommand
