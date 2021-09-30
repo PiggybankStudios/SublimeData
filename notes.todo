@@ -27,6 +27,7 @@
 # Favorite Font: @{Noto Mono}
 
 #TODO List
+	[!] Fix the start_git_bash on OSX
 	[!] Make a better system for indicating errors in CustomIdentifierCommand
 	[!] Make GrabNextCommand faster when many selections have already been made
 	[?] Fix My C so that definition lookups still work. (Why does this break sometimes?)
