@@ -539,8 +539,8 @@
 	// { "keys": ["ctrl+alt+shift+;"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+'"], "command": "do_nothing" },
 	
-	// { "keys": ["ctrl+alt+shift+z"], "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+shift+x"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+shift+z"], "command": "focus_neighboring_group", "args": {"forward": false} },
+	{ "keys": ["ctrl+alt+shift+x"], "command": "focus_neighboring_group", "args": {"forward": true} },
 	// { "keys": ["ctrl+alt+shift+c"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+v"], "command": "do_nothing" },
 	{ "keys": ["ctrl+alt+shift+b"], "command": "insert_nums_hex", "args": { "start_num": 0, "padding": 2 } }, //TODO: Turn this into prompt_insert_nums_hex
