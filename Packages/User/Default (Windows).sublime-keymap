@@ -177,8 +177,8 @@
 	// { "keys": ["ctrl+shift+pageup"],   "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+pagedown"], "command": "do_nothing" },
 	
-	{ "keys": ["ctrl+shift+right"], "command": "move", "args": { "by": "word_ends", "forward": true,  "extend": true } },
-	{ "keys": ["ctrl+shift+left"],  "command": "move", "args": { "by": "word",      "forward": false, "extend": true } },
+	{ "keys": ["ctrl+shift+right"], "command": "move", "args": {"by": "word_ends", "forward": true,  "extend": true} },
+	{ "keys": ["ctrl+shift+left"],  "command": "move", "args": {"by": "words",     "forward": false, "extend": true} },
 	{ "keys": ["ctrl+shift+up"],    "command": "move_to_empty_line", "args": {"forward": false, "expand_selection": true, "show_at_center": true} },
 	{ "keys": ["ctrl+shift+down"],  "command": "move_to_empty_line", "args": {"forward": true, "expand_selection": true, "show_at_center": true} },
 	
