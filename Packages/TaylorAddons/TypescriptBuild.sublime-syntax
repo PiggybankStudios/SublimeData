@@ -1,0 +1,16 @@
+%YAML 1.2
+---
+name: Typescript Build Output
+scope: build.tsc
+
+contexts: 
+  main:
+    - match: '^(.*\.ts)\(([0-9]+)\,([0-9]+)\)\:\s*(.*)$'
+      scope: keyword.title.error.tsc
+
+# string.tsc
+# constant.numeric.tsc
+# keyword.title.tsc
+# storage.type.tsc
+# comment.tsc
+# entity.name.tsc

@@ -1,0 +1,10 @@
+{
+	"cmd": "C:/Users/robbitay/AppData/Roaming/npm/tsc --p ./",
+	"working_dir": "$project_path",
+	"shell": true,
+	
+	"syntax": "TypescriptBuild.sublime-syntax",
+	
+	// "file_regex": "^(\\w\\:[^\\:\\n]+\\.[A-Za-z]+)\\((\\d+)\\)\\ ?: (?:fatal )?(?:error|warning) \\w\\d+: ()([^\\n]+)$",
+	"file_regex": "^(.*\\.ts)\\(([0-9]+)\\,([0-9]+)\\)\\:\\s*(.*)$",
+}
