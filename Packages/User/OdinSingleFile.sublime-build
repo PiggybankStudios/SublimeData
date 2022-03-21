@@ -1,0 +1,6 @@
+{
+	"cmd": "odin build \"$file\"",
+	"shell": true,
+	// "syntax": "MSVC Build.sublime-syntax",
+	"file_regex": "^\\s*([A-Za-z\\d\\:/\\.\\\\ ]+)\\((\\d+)\\:(\\d+)\\)\\s*([^\\n]+)$",
+}
