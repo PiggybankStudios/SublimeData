@@ -27,6 +27,9 @@
 # Favorite Font: @{Noto Mono}
 
 #TODO List
+	[!] Add a keybinding that enters a mode, where every key stroke types 1 character into one of the selections and then auto advances to the next selection. Also we could do something where you type multiple characters and hit tab to advance to next selection.
+	[!] Add a keybinding that searches from the top of the file for a comment like the following and inserts whatever text it defines at the cursor. Allowing us a contextual binding to insert text based off which file we are working in. Maybe a project setting that is the backup value if no @binding is defined for the file
+		//@binding ...
 	[!] Fix the start_git_bash on OSX
 	[!] Make a better system for indicating errors in CustomIdentifierCommand
 	[!] Make GrabNextCommand faster when many selections have already been made

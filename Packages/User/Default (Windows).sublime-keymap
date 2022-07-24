@@ -442,7 +442,7 @@
 	// { "keys": ["ctrl+alt+]"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+\\"], "command": "do_nothing" },
 	
-	// { "keys": ["ctrl+alt+a"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+a"], "command": "open_visual_studio" },
 	{ "keys": ["ctrl+alt+s"], "command": "toggle_side_bar"},
 	{ "keys": ["ctrl+alt+d"], "command": "toggle_define_endings"},
 	{ "keys": ["ctrl+alt+f"], "command": "show_panel", "args": {"panel": "replace", "reverse": false} },
