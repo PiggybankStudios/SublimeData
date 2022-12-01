@@ -1,0 +1,14 @@
+<snippet>
+	<content><![CDATA[
+VoxelChunkLoop(${1:&arrayPntr}, ${2:slotIndex})
+{
+	VoxelChunkLoopGet(${1:&arrayPntr}, ${2:slotIndex}, ${3:voxelChunk}, ${4:chunkIndex})
+	{
+		
+	}
+}
+]]></content>
+	<tabTrigger>VoxelChunkLoop</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

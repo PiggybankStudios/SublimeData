@@ -1,6 +1,7 @@
 {
 	"extensions":
 	[
-		"sublime-snippet"
-	]
+		"sublime-snippet",
+		"vssettings",
+	],
 }

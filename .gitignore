@@ -17,6 +17,8 @@ Packages/Settings/*
 Packages/SFTP/*
 Packages/Pretty JSON/*
 Packages/ssl-linux/*
+Packages/Gitignore/*
+Packages/NSIS/*
 *Package Control*
 Installed Packages/*
 Packages/User/Preferences.sublime-settings
