@@ -231,6 +231,18 @@ def LineIsInclude(view, region):
 	return len(fileName) > 0
 #
 
+def GetLineStr(view, row, stripWhitespace=False):
+#
+	lineStartIndex = view.text_point(row, 0);
+	lineRegion = view.line(lineStartIndex);
+	result = view.substr(lineRegion);
+	if (stripWhitespace):
+	#
+		result = StripOuterWhitespace(result);
+	#
+	return result;
+#
+
 def ActualLineLength(tabSize, lineStr):
 #
 	result = 0
@@ -869,6 +881,7 @@ def RemoveItemsFromList(target, itemsToRemove):
 		if (item in result): result.remove(item)
 	#
 	return result
+#
 
 def RemoveFunctionsFromList(target, functionsToRemove):
 #
@@ -1144,6 +1157,26 @@ def StripOuterWhitespace(string):
 		result = result[0:-1];
 	#
 	return result
+#
+
+def StripCppComment(string):
+#
+	commentIndex = string.find("//");
+	if (commentIndex >= 0):
+	#
+		return StripOuterWhitespace(string.substr(0, commentIndex));
+	#
+	return string;
+#
+
+def StripEverythingAfterFirstSpace(string):
+#
+	spaceIndex = string.find(" ");
+	if (spaceIndex >= 0):
+	#
+		return string[0:spaceIndex];
+	#
+	return string;
 #
 
 def IsStringOrComment(view, point):

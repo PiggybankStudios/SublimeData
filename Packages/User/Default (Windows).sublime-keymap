@@ -135,7 +135,7 @@
 	
 	// { "keys": ["ctrl+shift+q"],  "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+w"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+e"],  "command": "do_nothing" },
+	{ "keys": ["ctrl+shift+e"],  "command": "genereate_enum_str_func" },
 	{ "keys": ["ctrl+shift+r"],  "command": "character_replace", "args": { "character": " " } },
 	{ "keys": ["ctrl+shift+t"],  "command": "create_local_header", "args": { "width": 64, "bold": false } },
 	// { "keys": ["ctrl+shift+y"],  "command": "do_nothing" },
