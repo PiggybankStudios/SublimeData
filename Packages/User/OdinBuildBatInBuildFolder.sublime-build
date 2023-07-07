@@ -1,5 +1,6 @@
 {
-	"cmd": "odin build \"$file\"",
+	"cmd": "build.bat",
+	"working_dir": "$project_path\\build",
 	"shell": true,
 	"syntax": "Odin Build.sublime-syntax",
 	"file_regex": "^\\s*([A-Za-z\\d\\:/\\.\\\\ _]+)\\((\\d+)\\:(\\d+)\\)\\s*([^\\n]+)$",

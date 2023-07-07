@@ -19,6 +19,8 @@ Packages/Pretty JSON/*
 Packages/ssl-linux/*
 Packages/Gitignore/*
 Packages/NSIS/*
+Packages/enum/*
+Packages/typing/*
 *Package Control*
 Installed Packages/*
 Packages/User/Preferences.sublime-settings

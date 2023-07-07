@@ -1,0 +1,25 @@
+%YAML 1.2
+---
+name: JAI Build Output
+file-extensions: 
+  - jai-build
+scope: jai.build
+
+contexts: 
+  main:
+    - match: '^[A-Z]\:[./\_0-9A-Za-z-]+\.jai\:\d+\,\d+\:\s*[^\n]*$'
+      scope: keyword.title.error.jai
+    - match: '^\s*\[[^\]\n]+\]\s*$'
+      scope: storage.type.finish-message.jai
+    - match: '^In Workspace.*'
+      scope: constant.numeric.workspacemessage.jai
+    - match: '^Stats for Workspace [^\n]*'
+      scope: constant.numeric.compilerstats.jai
+    - match: '^Lexer lines processed\: [^\n]*'
+      scope: comment.compilerstats.jai
+    - match: '^(?:Front-end|llvm|Compiler|Link|Total)\s*time\: [^\n]*'
+      scope: comment.compilerstats.jai
+    - match: '^\s*Creating library [^\n]*'
+      scope: comment.creationmessage.jai
+    - match: '^Running linker\: [^\n]*'
+      scope: comment.linkermessage.jai

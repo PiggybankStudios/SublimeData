@@ -4,27 +4,41 @@
 
 # List of installed packages:
 	Alignment
+	AutoHotkey
 	GameMaker Language (GML) Bundle
 	GDScript (Godot Engine)
 	Gitignore
+	Graphvizer
 	HighlightWords
 	HLSL Syntax
 	Indent XML
 	Insert Nums
 	Intel HEX
+	JaiTools
 	JavaScript & Coffeescript Build Systems
+	JsFormat
 	LinkerScript
 	Material Theme
 	NSIS
+	Odin
 	OpenGL Shading Language (GLSL)
 	P3 Assembly
 	Package Control
-	Scope Always
+	Pretty JSON
+	ScopeAlways
 	ScrollAlternative
+	Settings
 	SFTP
+	Unity Completions Light
+	Unity3D Shader Highlighter and Snippets
 	TrailingSpaces
 	Whitespace
 	WordCount
+	WordingStatus
+
+# Useful Things to run In Sublime Command Line:
+	[ ] sublime.log_input(True)
+	[ ] sublime.log_commands(True)
 
 # Favorite Font: @{Noto Mono}
 

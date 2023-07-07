@@ -1,0 +1,105 @@
+%YAML 1.2
+---
+name: Metadesk
+file-extensions: 
+  - meta
+  - metadesk
+scope: source.metadesk
+
+contexts:
+  main:
+    - include: comment
+    # - include: list
+    - include: tag
+    - include: string
+    - include: boolean
+    - include: identifier
+    - include: numeric
+    - include: symbol
+
+  comment:
+    - include: line-comment
+    - include: block-comment
+  block-comment:
+    - match: '/\*'
+      scope: comment.block.begin.metadesk
+      push:
+        - meta_scope: comment.block.metadesk
+        - match: '\*/'
+          scope: comment.block.end.metadesk
+          pop: true
+  line-comment:
+    - match: '//.*$'
+      scope: comment.line.double-slash.metadesk
+
+  string:
+    - include: single-string
+    - include: triple-string
+  # TODO: we need to somehow inject the string-escape quote into one of the captures regions here
+  single-string:
+    - match: "(\"|'|`).*?((?<!\\\\)\\1|$)"
+      scope: string.quoted.single.metadesk
+  triple-string:
+    - match: "(\"|'|`)\\1\\1"
+      scope: string.quoted.triple.metadesk
+      push:
+        - meta_scope: string.quoted.triple.metadesk
+        - include: string-escape
+        - match: '\0'
+          scope: string.quoted.triple.metadesk
+          pop: true
+  string-escape:
+    - match: '\\.'
+      scope: constant.character.escape.metadesk
+
+  identifier:
+    - match: '[a-zA-Z_][a-zA-Z0-9_]*'
+      scope: variable.other.metadesk
+  numeric:
+    - match: '-?[0-9]([eE][\+-]|[a-zA-Z0-9\._])*'
+      scope: constant.numeric.metadesk
+  boolean:
+    - match: '(true|false)'
+      scope: constant.language.metadesk
+  symbol:
+    - match: '[~!\$%\^&*\-=+<.>/?|]+'
+      scope: keyword.operator.metadesk
+
+  list:
+    - match: '\(|\[|{'
+      scope: list.metadesk
+      push:
+        - meta_scope: list.metadesk
+        - include: $self
+        - match: '\)|\]|}'
+          scope: list.metadesk
+          pop: true
+
+  tag:
+    - include: identifier-tag
+    - include: numeric-tag
+    - include: triple-string-tag
+    - include: single-string-tag
+    - include: symbol-tag
+  identifier-tag:
+    - match: '@[a-zA-Z_][a-zA-Z0-9_]*'
+      scope: storage.modifier.metadesk
+  numeric-tag:
+    - match: '@-?[0-9]([eE][\+-]|[a-zA-Z0-9\._])*'
+      scope: storage.modifier.metadesk
+  # TODO: we need to somehow inject the string-escape quote into one of the captures regions here
+  single-string-tag:
+    - match: "@(\"|'|`).*?(\\1|$)"
+      scope: storage.modifier.metadesk
+  triple-string-tag:
+    - match: "(\"|'|`)\\1\\1"
+      scope: storage.modifier.metadesk
+      push:
+        - meta_scope: storage.modifier.metadesk
+        - include: string-escape
+        - match: '\0'
+          scope: storage.modifier.metadesk
+          pop: true
+  symbol-tag:
+    - match: '@[~!\$%\^&*\-=+<.>/?|]+'
+      scope: storage.modifier.metadesk

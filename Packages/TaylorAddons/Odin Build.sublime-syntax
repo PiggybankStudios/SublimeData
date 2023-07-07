@@ -1,0 +1,27 @@
+%YAML 1.2
+---
+name: Odin Build Output
+file-extensions: 
+  - odin-build
+scope: odin.build
+
+contexts: 
+  main:
+    - match: '^\s*[A-Za-z\d\:/\.\\ _]+\(\d+\:\d+\)\s*[^\n]+$'
+      scope: keyword.title.error.odin
+    # - match: '^\s*((?:\w\:)?[^\:\n]+)\((\d+)\)\ ?: warning \w\d+: ([^\n]+)$'
+    #   scope: string.warning.msvc
+    # - match: '^\s*((?:\w\:)?[^\:\n]+)\((\d+)\)\ ?: note: ([^\n]+)$'
+    #   scope: constant.numeric.note.msvc
+    # - match: '^\s*[^\n^\:]* : (?:fatal )?error LNK(\d+): ([^\n]+)$'
+    #   scope: keyword.title.link-error.msvc
+    # - match: '^\s*Could Not Find [^\n]+$'
+    #   scope: keyword.title.missing-file.msvc
+    - match: '^\s*\[[^\]]+\]+$'
+      scope: storage.type.finish-message.msvc
+    # - match: '^\s*[^\n]*Microsoft[^\n]*$'
+    #   scope: comment.compiler-version.msvc
+    # - match: '^\s*/out\:[^\n]*$'
+    #   scope: entity.name.exe-creation.msvc
+    # - match: '^\s*Creating[^\n]+$'
+    #   scope: entity.name.dll-creation.msvc

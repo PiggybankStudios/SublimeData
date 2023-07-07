@@ -1,0 +1,9 @@
+{
+	"cmd": "build.bat",
+	"working_dir": "$project_path\\build",
+	"shell": true,
+	
+	"syntax": "Jai Build.sublime-syntax",
+	
+	"file_regex": "^([A-Z]\\:[./\\_0-9A-Za-z-]+\\.jai)\\:(\\d+)\\,(\\d+)\\:\\s*([^\\n]*)$",
+}

@@ -1,0 +1,9 @@
+{
+	"cmd": "jai \"$file\" & echo: & echo [Running Program] & echo: & $file_base_name.exe & echo: & echo [Deleting Program] & del $file_base_name.exe & del $file_base_name.pdb ",
+	// "cmd": "jai \\"$file\\" -plug Autorun",
+	"shell": true,
+	
+	"syntax": "Jai Build.sublime-syntax",
+	
+	"file_regex": "^([A-Z]\\:[./\\_0-9A-Za-z-]+\\.jai)\\:(\\d+)\\,(\\d+)\\:\\s*([^\\n]*)$",
+}

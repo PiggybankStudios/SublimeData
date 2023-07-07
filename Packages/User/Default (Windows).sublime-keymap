@@ -39,7 +39,7 @@
 	// { "keys": ["ctrl+-"], "command": "do_nothing" },
 	// { "keys": ["ctrl++"], "command": "do_nothing" },
 	
-	{ "keys": ["ctrl+q"],   "command": "do_nothing" }, //TODO: Rebind me
+	{ "keys": ["ctrl+q"],   "command": "open_file_with_default_program" },
 	{ "keys": ["ctrl+w"],   "command": "close" },
 	{ "keys": ["ctrl+e"],   "command": "reopen_last_file" },
 	{ "keys": ["ctrl+r"],   "command": "kill_line" },
@@ -162,7 +162,7 @@
 	{ "keys": ["ctrl+shift+z"], "command": "redo"},
 	// { "keys": ["ctrl+shift+x"], "command": "do_nothing" },
 	{ "keys": ["ctrl+shift+c"], "command": "duplicate_line" },
-	// { "keys": ["ctrl+shift+v"], "command": "do_nothing" },
+	{ "keys": ["ctrl+shift+v"], "command": "open_image", "context": [ {"key": "selector", "operator": "equal", "operand": "source.dot"} ] },
 	// { "keys": ["ctrl+shift+b"], "command": "taylor_build" },
 	{ "keys": ["ctrl+shift+b"], "command": "typescript_build" },
 	// { "keys": ["ctrl+shift+n"], "command": "do_nothing" },
@@ -457,7 +457,7 @@
 	// { "keys": ["ctrl+alt+z"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+x"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+c"], "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+v"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+v"], "command": "show_panel", "args": { "panel": "output.graphvizer_panel", "context": [ {"key": "selector", "operator": "equal", "operand": "source.dot"} ] } },
 	{ "keys": ["ctrl+alt+b"], "command": "insert_nums_hex", "args": { "start_num": 1, "padding": 2 } },
 	{ "keys": ["ctrl+alt+n"], "command": "insert_nums", "args": {"format": "0:1"} },
 	// { "keys": ["ctrl+alt+m"], "command": "do_nothing" },
