@@ -3,7 +3,7 @@
 	"working_dir": "$project_path\\dll_build",
 	"shell": true,
 	
-	"syntax": "MSVC Build.sublime-syntax",
+	"syntax": "CompilerOutput.sublime-syntax",
 	
 	"file_regex": "^(\\w\\:[^\\:\\n]+\\.[A-Za-z]+)\\((\\d+)\\)\\ ?: (?:fatal )?(?:error|warning) \\w\\d+: ()([^\\n]+)$",
 }

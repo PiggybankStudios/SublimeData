@@ -433,7 +433,7 @@
 	{ "keys": ["ctrl+alt+e"], "command": "indent_blank_lines" },
 	{ "keys": ["ctrl+alt+r"], "command": "rename_file" },
 	{ "keys": ["ctrl+alt+t"], "command": "delete_trailing_spaces"},
-	// { "keys": ["ctrl+alt+y"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+y"], "command": "permute_unique_with_counts" },
 	{ "keys": ["ctrl+alt+u"], "command": "insert_string", "args": {"string": "Unimplemented(); //TODO: Implement me!"} },
 	{ "keys": ["ctrl+alt+i"], "command": "fold_by_level", "args": {"level": 1} },
 	{ "keys": ["ctrl+alt+o"], "command": "unfold_all" },

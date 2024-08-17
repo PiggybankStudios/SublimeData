@@ -2,6 +2,7 @@ Local/*
 Backup/*
 Cache/*
 Index/*
+Lib/*
 *-ca-bundle*
 Packages/markupsafe/*
 Packages/mdpopups/*

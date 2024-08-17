@@ -1,0 +1,71 @@
+%YAML 1.2
+---
+name: Brevis Syntax (from Serenum OS)
+file-extensions: 
+  - lbc
+scope: text.brevis
+
+contexts: 
+  
+  # +==============================+
+  # |           Comments           |
+  # +==============================+
+  comments:
+    - match: '\/\*'
+      push:
+        - meta_scope: comment.block.brevis
+        - match: '\*\/'
+          pop: true
+    - match: '\/\/'
+      set:
+        - meta_scope: comment.escaped.brevis
+        - match: '\n'
+          pop: true
+  
+  # +==============================+
+  # |        Inline Syntax         |
+  # +==============================+
+  inline-syntax:
+    - match: '(\")([^\n\"]+)(\")'
+      captures:
+        1: string.punctuation.brevis
+        2: string.brevis
+        3: string.punctuation.brevis
+  
+  # +==============================+
+  # |            Common            |
+  # +==============================+
+  common:
+    - include: comments
+    - include: inline-syntax
+    - match: '\n'
+      pop: true
+  
+  # +==============================+
+  # |             Main             |
+  # +==============================+
+  # āēīōū
+  main:
+    - include: common
+    - match: '(#)(refer|dēsine|prōlātā|prōcēde|include|particulam inveni|spatium octētōrum ā scāpo|dīverte|situla trānsitōria)\b'
+      captures:
+        1: keyword.directive.punctuation.brevis
+        2: keyword.directive.brevis
+    - match: '\b(prōcēdūra)(?:\s*(compīlāta))?\s+([A-Za-zāēīōū_0-9]+(?:\s*\<(?:\s*[A-Za-zāēīōū_0-9]\s*)(?:,\s*[A-Za-zāēīōū_0-9]\s*)*,\s*\>)?)\s*\('
+      captures:
+        1: keyword.text.brevis
+        2: keyword.text.brevis
+        3: entity.name.function.brevis
+    - match: '\b(strūctūra)\s+([A-Za-zāēīōū_0-9]+(?:\s*\<(?:\s*[A-Za-zāēīōū_0-9]\s*)(?:,\s*[A-Za-zāēīōū_0-9]\s*)*,\s*\>)?)'
+      captures:
+        1: keyword.text.brevis
+        2: entity.name.type.brevis
+    - match: '\b(prōcēdūra|absolūta|peregrīna|sī nōn|sī|sīve|dum|strūctūra|variābile|cēterum)\b'
+      scope: keyword.text.brevis
+    - match: '\b(n8|n32|s32|n64|s64)\b'
+      scope: storage.type.brevis
+    - match: '\b0x[0-9A-Fa-f]+\b'
+      scope: constant.language.brevis
+    - match: '\b[0-9]+\b'
+      scope: constant.language.brevis
+  

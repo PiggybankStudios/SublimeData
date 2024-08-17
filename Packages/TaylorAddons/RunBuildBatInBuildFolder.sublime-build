@@ -3,7 +3,8 @@
 	"working_dir": "$project_path\\build",
 	"shell": true,
 	
-	"syntax": "MSVC Build.sublime-syntax",
+	"syntax": "CompilerOutput.sublime-syntax",
 	
-	"file_regex": "^(\\w\\:[^\\:\\n]+\\.[A-Za-z]+)\\((\\d+)\\)\\ ?: (?:fatal )?(?:error|warning) \\w\\d+: ()([^\\n]*)$",
+	//This matches both Clang and MSVC compiler errors
+	"file_regex": "^((?:\\w\\:)?[^\\:\\n\\(]+)[\\:\\(](\\d+)[\\:\\)](?:(\\d+))?\\:\\s*(?:fatal error|error|warning|note)(?:\\s*C[0-9]+)?\\:\\s*(.+)$",
 }

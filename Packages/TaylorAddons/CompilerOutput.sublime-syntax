@@ -1,0 +1,27 @@
+%YAML 1.2
+---
+name: Compiler Build Output
+file-extensions: 
+  - cl
+scope: compiler.build
+
+contexts: 
+  main:
+    - match: '^((?:\w\:)?[^\:\n\(]+)[\:\(](\d+)[\:\)](?:(\d+))?\:\s*(?:fatal error|error)(?:\s*C[0-9]+)?\:\s*(.+)$'
+      scope: keyword.title.error.compiler
+    - match: '^((?:\w\:)?[^\:\n\(]+)[\:\(](\d+)[\:\)](?:(\d+))?\:\s*warning(?:\s*C[0-9]+)?\:\s*(.+)$'
+      scope: string.warning.compiler
+    - match: '^((?:\w\:)?[^\:\n\(]+)[\:\(](\d+)[\:\)](?:(\d+))?\:\s*note(?:\s*C[0-9]+)?\:\s*(.+)$'
+      scope: constant.numeric.note.compiler
+    - match: '^\s*[^\n^\:]* : (?:fatal )?error LNK(\d+): ([^\n]+)$'
+      scope: keyword.title.link-error.compiler
+    - match: '^\s*Could Not Find [^\n]+$'
+      scope: keyword.title.missing-file.compiler
+    - match: '^\s*\[[^\]]+\]+$'
+      scope: storage.type.finish-message.compiler
+    - match: '^\s*[^\n]*Microsoft[^\n]*$'
+      scope: comment.compiler-version.compiler
+    - match: '^\s*/out\:[^\n]*$'
+      scope: entity.name.exe-creation.compiler
+    - match: '^\s*Creating[^\n]+$'
+      scope: entity.name.dll-creation.compiler

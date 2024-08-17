@@ -2,6 +2,6 @@
 	"cmd": ["build.bat", "$file"],
 	"working_dir": "$project_path",
 	"shell": true,
-	"syntax": "MSVC Build.sublime-syntax",
-	"file_regex": "^(\\w\\:[^\\:\\n]+\\.[A-Za-z]+)\\((\\d+)\\)\\ ?: (?:fatal )?(?:error|warning) \\w\\d+: ()([^\\n]*)$",
+	"syntax": "CompilerOutput.sublime-syntax",
+	"file_regex": "^(\\w\\:[^\\:\\n]+\\.[A-Za-z]+)\\((\\d+)\\)\\ ?: (?:fatal error|error|warning) \\w\\d+: ()([^\\n]*)$",
 }

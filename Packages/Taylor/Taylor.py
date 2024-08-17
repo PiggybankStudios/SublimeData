@@ -33,15 +33,26 @@ class Color():
 	
 	def FromHexStrArgb(self, hexStr):
 	#
-		if (hexStr == None or len(hexStr) != 8): return False
+		if (hexStr == None or (len(hexStr) != 8 and len(hexStr) != 6)): return False
 		
 		hexValues = ConvertStrToHex(hexStr)
-		if (len(hexValues) != 4): return False
+		if (len(hexValues) < 3 or len(hexValues) > 4): return False
+		hasAlpha = (len(hexValues) == 4);
 		
-		self.a = ord(hexValues[0])
-		self.r = ord(hexValues[1])
-		self.g = ord(hexValues[2])
-		self.b = ord(hexValues[3])
+		if (hasAlpha):
+		#
+			self.a = ord(hexValues[0])
+			self.r = ord(hexValues[1])
+			self.g = ord(hexValues[2])
+			self.b = ord(hexValues[3])
+		#
+		else:
+		#
+			self.a = 255
+			self.r = ord(hexValues[0])
+			self.g = ord(hexValues[1])
+			self.b = ord(hexValues[2])
+		#
 		return True
 	#
 	
@@ -72,6 +83,8 @@ class TaylorCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 	#
 		print("Running the Taylor Command!")
+		
+		print(sys.version);
 		
 		showPos = 0
 		html = ""
