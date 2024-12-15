@@ -1,0 +1,6 @@
+{
+	"shell_cmd": "zig test $file",
+	"working_dir": "$project_path",
+	"syntax": "CompilerOutput.sublime-syntax",
+	"file_regex": "^((?:\\w\\:)?[^\\:\\n\\(]+)[\\:\\(](\\d+)[\\:\\)](?:(\\d+))?\\:\\s*(?:fatal error|error|warning|note)(?:\\s*C[0-9]+)?\\:\\s*(.+)$",
+}
