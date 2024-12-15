@@ -6,7 +6,7 @@ import time
 
 class CreateFileHeaderCommand(sublime_plugin.TextCommand):
 #
-	def run(self, edit, headerExtensions=[".h", ".hpp"], sourceExtensions=[".c", ".cpp", ".py"], authorName="Taylor Robbins"):
+	def run(self, edit, headerExtensions=[".h", ".hpp"], sourceExtensions=[".c", ".cpp", ".py", ".jai", ".zig", ".odin"], authorName="Taylor Robbins"):
 	#
 		filePath = self.view.file_name()
 		fileFolder, fileName = os.path.split(filePath)
@@ -45,17 +45,20 @@ class CreateFileHeaderCommand(sublime_plugin.TextCommand):
 		
 		singleCommentStr = GetSingleCommentStr(self.view, 0)
 		blockCommentStart, blockCommentEnd = GetBlockCommentStrs(self.view, 0)
+		languageHasBlockComments = (len(blockCommentStart) != 0)
+		linePrefix = ""
+		if (not languageHasBlockComments): linePrefix = singleCommentStr + " ";
 		
 		headerString = ""
 		selectRegion = False
 		newRegion = None
 		if (fileExtension in headerExtensions):
 		#
-			headerString += blockCommentStart + "\n"
-			headerString += "File:   " + fileName   + "\n"
-			headerString += "Author: " + authorName + "\n"
-			headerString += "Date:   " + dateString + "\n"
-			headerString += blockCommentEnd + "\n"
+			if (languageHasBlockComments): headerString += blockCommentStart + "\n"
+			headerString += linePrefix + "File:   " + fileName   + "\n"
+			headerString += linePrefix + "Author: " + authorName + "\n"
+			headerString += linePrefix + "Date:   " + dateString + "\n"
+			if (languageHasBlockComments): headerString += blockCommentEnd + "\n"
 			headerString += "\n"
 			
 			if (fileIsEmpty):
@@ -82,13 +85,13 @@ class CreateFileHeaderCommand(sublime_plugin.TextCommand):
 		#
 		elif (fileExtension in sourceExtensions):
 		#
-			headerString += blockCommentStart + "\n"
-			headerString += "File:   " + fileName   + "\n"
-			headerString += "Author: " + authorName + "\n"
-			headerString += "Date:   " + dateString + "\n"
-			headerString += "Description: \n"
-			headerString += "\t** None \n"
-			headerString += blockCommentEnd + "\n\n"
+			if (languageHasBlockComments): headerString += blockCommentStart + "\n"
+			headerString += linePrefix + "File:   " + fileName   + "\n"
+			headerString += linePrefix + "Author: " + authorName + "\n"
+			headerString += linePrefix + "Date:   " + dateString + "\n"
+			headerString += linePrefix + "Description: \n"
+			headerString += linePrefix + "\t** None\n"
+			if (languageHasBlockComments): headerString += blockCommentEnd + "\n\n"
 			searchResult = re.search("\t\*\* (None)", headerString)
 			newRegion = sublime.Region(searchResult.start(1),searchResult.end(1))
 			selectRegion = True
