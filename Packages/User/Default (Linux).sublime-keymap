@@ -25,6 +25,7 @@
 	// { "keys": ["ctrl+f11"], "command": "do_nothing" },
 	{ "keys": ["ctrl+f12"], "command": "open_string_file"},
 	
+	// { "keys": ["ctrl+`"], "command": "do_nothing" },
 	// { "keys": ["ctrl+1"], "command": "do_nothing" },
 	// { "keys": ["ctrl+2"], "command": "do_nothing" },
 	// { "keys": ["ctrl+3"], "command": "do_nothing" },
@@ -35,13 +36,15 @@
 	// { "keys": ["ctrl+8"], "command": "do_nothing" },
 	// { "keys": ["ctrl+9"], "command": "do_nothing" },
 	// { "keys": ["ctrl+0"], "command": "do_nothing" },
+	// { "keys": ["ctrl+-"], "command": "do_nothing" },
+	// { "keys": ["ctrl++"], "command": "do_nothing" },
 	
-	{ "keys": ["ctrl+q"],   "command": "do_nothing" }, //TODO: Rebind me
+	{ "keys": ["ctrl+q"],   "command": "open_file_with_default_program" },
 	{ "keys": ["ctrl+w"],   "command": "close" },
 	{ "keys": ["ctrl+e"],   "command": "reopen_last_file" },
 	{ "keys": ["ctrl+r"],   "command": "kill_line" },
 	{ "keys": ["ctrl+t"],   "command": "create_local_header", "args": { "width": 32, "bold": true } },
-	{ "keys": ["ctrl+y"],   "command": "do_nothing" }, //TODO: Rebind me
+	{ "keys": ["ctrl+y"],   "command": "print_scopes" },
 	{ "keys": ["ctrl+u"],   "command": "upper_case" },
 	{ "keys": ["ctrl+i"],   "command": "fold_at_same_indentation", "args": {"single_fold": true} },
 	{ "keys": ["ctrl+o"],   "command": "open_next_fold" },
@@ -68,15 +71,15 @@
 	{ "keys": ["ctrl+v"],   "command": "paste" },
 	{ "keys": ["ctrl+b"],   "command": "build" },
 	{ "keys": ["ctrl+n"],   "command": "new_file" },
-	{ "keys": ["ctrl+m"],   "command": "do_nothing" }, //TODO: Rebind me
+	{ "keys": ["ctrl+m"],   "command": "sublime_merge_open_repo" },
 	{ "keys": ["ctrl+,"],   "command": "jump_back" },
 	{ "keys": ["ctrl+."],   "command": "jump_forward" },
 	{ "keys": ["ctrl+/"],   "command": "toggle_comment", "args": { "block": false } },
 	
 	// { "keys": ["ctrl+insert"],   "command": "do_nothing" },
 	// { "keys": ["ctrl+delete"],   "command": "do_nothing" },
-	// { "keys": ["ctrl+home"],     "command": "do_nothing" },
-	// { "keys": ["ctrl+end"],      "command": "do_nothing" },
+	{ "keys": ["ctrl+home"],     "command": "move_to", "args": { "to": "bof", "extend": false } },
+	{ "keys": ["ctrl+end"],      "command": "move_to", "args": { "to": "eof", "extend": false } },
 	// { "keys": ["ctrl+pageup"],   "command": "do_nothing" },
 	// { "keys": ["ctrl+pagedown"], "command": "do_nothing" },
 	
@@ -111,25 +114,28 @@
 	{ "keys": ["ctrl+shift+f6"], "command": "custom_identifier", "args": { "action": "remove", "mode": "Constant", "update_syntax_file": false } },
 	{ "keys": ["ctrl+shift+f7"], "command": "custom_identifier", "args": { "action": "remove", "mode": "Global",   "update_syntax_file": false } },
 	{ "keys": ["ctrl+shift+f8"], "command": "custom_identifier", "args": { "action": "remove", "mode": "Function", "update_syntax_file": false } },
-	{ "keys": ["ctrl+shift+f9"], "command": "test_cpp_parse" },
+	{ "keys": ["ctrl+shift+f9"], "command": "custom_identifier", "args": { "action": "lookup", "mode": "Function" } },
 	// { "keys": ["ctrl+shift+f10"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+f11"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+f12"], "command": "do_nothing" },
 	
+	// { "keys": ["ctrl+shift+`"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+1"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+2"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+3"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+4"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+5"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+6"], "command": "do_nothing" },
+	{ "keys": ["ctrl+shift+6"], "command": "custom_identifier", "args": { "action": "remove", "mode": "Constant", "update_syntax_file": false } },
 	// { "keys": ["ctrl+shift+7"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+8"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+9"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+0"], "command": "do_nothing" },
+	// { "keys": ["ctrl+shift+-"], "command": "do_nothing" },
+	// { "keys": ["ctrl+shift++"], "command": "do_nothing" },
 	
 	// { "keys": ["ctrl+shift+q"],  "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+w"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+e"],  "command": "do_nothing" },
+	{ "keys": ["ctrl+shift+e"],  "command": "genereate_enum_str_func" },
 	{ "keys": ["ctrl+shift+r"],  "command": "character_replace", "args": { "character": " " } },
 	{ "keys": ["ctrl+shift+t"],  "command": "create_local_header", "args": { "width": 64, "bold": false } },
 	// { "keys": ["ctrl+shift+y"],  "command": "do_nothing" },
@@ -164,20 +170,17 @@
 	// { "keys": ["ctrl+shift+."], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+/"], "command": "do_nothing" },
 	
-	{ "keys": ["ctrl+shift+up"],   "command": "move_to_empty_line", "args": {"forward": false, "expand_selection": true, "show_at_center": true} },
-	{ "keys": ["ctrl+shift+down"], "command": "move_to_empty_line", "args": {"forward": true, "expand_selection": true, "show_at_center": true} },
-	
 	// { "keys": ["ctrl+shift+insert"],   "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+delete"],   "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+home"],     "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+end"],      "command": "do_nothing" },
+	{ "keys": ["ctrl+shift+home"],     "command": "move_to", "args": { "to": "bof", "extend": true } },
+	{ "keys": ["ctrl+shift+end"],      "command": "move_to", "args": { "to": "eof", "extend": true } },
 	// { "keys": ["ctrl+shift+pageup"],   "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+pagedown"], "command": "do_nothing" },
 	
-	// { "keys": ["ctrl+shift+right"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+left"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+up"],    "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+down"],  "command": "do_nothing" },
+	{ "keys": ["ctrl+shift+right"], "command": "move", "args": {"by": "word_ends", "forward": true,  "extend": true} },
+	{ "keys": ["ctrl+shift+left"],  "command": "move", "args": {"by": "words",     "forward": false, "extend": true} },
+	{ "keys": ["ctrl+shift+up"],    "command": "move_to_empty_line", "args": {"forward": false, "expand_selection": true, "show_at_center": true} },
+	{ "keys": ["ctrl+shift+down"],  "command": "move_to_empty_line", "args": {"forward": true, "expand_selection": true, "show_at_center": true} },
 	
 	// { "keys": ["ctrl+shift+escape"],    "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+backspace"], "command": "do_nothing" },
@@ -210,6 +213,7 @@
 	// { "keys": ["alt+f11"], "command": "do_nothing" },
 	// { "keys": ["alt+f12"], "command": "do_nothing" },
 	
+	// { "keys": ["alt+`"], "command": "do_nothing" },
 	{ "keys": ["alt+1"], "command": "toggle_regex", "context":
 		[
 			{ "key": "setting.is_widget", "operator": "equal", "operand": true }
@@ -232,6 +236,8 @@
 	// { "keys": ["alt+8"], "command": "do_nothing" },
 	// { "keys": ["alt+9"], "command": "do_nothing" },
 	// { "keys": ["alt+0"], "command": "do_nothing" },
+	// { "keys": ["alt+-"], "command": "do_nothing" },
+	// { "keys": ["alt++"], "command": "do_nothing" },
 	
 	{ "keys": ["alt+q"],  "command": "change_naming_convention", "args": {"convention": "camel_case"} },
 	{ "keys": ["alt+w"],  "command": "change_naming_convention", "args": {"convention": "lower_words"} },
@@ -279,8 +285,8 @@
 	
 	// { "keys": ["alt+right"], "command": "do_nothing" },
 	// { "keys": ["alt+left"],  "command": "do_nothing" },
-	{ "keys": ["alt+up"],    "command": "scroll_lines_enhanced", "args": {"amount": -10.0 } },
-	{ "keys": ["alt+down"],  "command": "scroll_lines_enhanced", "args": {"amount": 10.0 } },
+	{ "keys": ["alt+up"],    "command": "scroll_lines_enhanced", "args": { "amount": -10.0 } },
+	{ "keys": ["alt+down"],  "command": "scroll_lines_enhanced", "args": { "amount":  10.0 } },
 	
 	// { "keys": ["alt+escape"],    "command": "do_nothing" },
 	// { "keys": ["alt+backspace"], "command": "do_nothing" },
@@ -313,6 +319,7 @@
 	// { "keys": ["alt+shift+f11"], "command": "do_nothing" },
 	// { "keys": ["alt+shift+f12"], "command": "do_nothing" },
 	
+	// { "keys": ["alt+shift+`"], "command": "do_nothing" },
 	// { "keys": ["alt+shift+1"], "command": "do_nothing" },
 	// { "keys": ["alt+shift+2"], "command": "do_nothing" },
 	// { "keys": ["alt+shift+3"], "command": "do_nothing" },
@@ -323,6 +330,8 @@
 	// { "keys": ["alt+shift+8"], "command": "do_nothing" },
 	// { "keys": ["alt+shift+9"], "command": "do_nothing" },
 	// { "keys": ["alt+shift+0"], "command": "do_nothing" },
+	// { "keys": ["alt+shift+-"], "command": "do_nothing" },
+	// { "keys": ["alt+shift++"], "command": "do_nothing" },
 	
 	{ "keys": ["alt+shift+q"],  "command": "change_naming_convention", "args": {"convention": "upper_first"} },
 	{ "keys": ["alt+shift+w"],  "command": "change_naming_convention", "args": {"convention": "upper_first_words"} },
@@ -398,12 +407,13 @@
 	// { "keys": ["ctrl+alt+f5"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+f6"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+f7"], "command": "do_nothing" },
-	{ "keys": ["ctrl+alt+f8"], "command": "custom_identifier", "args": { "action": "lookup", "mode": "Function" } },
+	// { "keys": ["ctrl+alt+f8"], "command": "custom_identifier", "args": { "action": "lookup", "mode": "Function" } },
 	// { "keys": ["ctrl+alt+f9"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+f10"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+f11"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+f12"], "command": "do_nothing" },
 	
+	// { "keys": ["ctrl+alt+`"], "command": "do_nothing" },
 	{ "keys": ["ctrl+alt+1"], "command": "fold_by_level", "args": {"level": 1} },
 	{ "keys": ["ctrl+alt+2"], "command": "fold_by_level", "args": {"level": 2} },
 	{ "keys": ["ctrl+alt+3"], "command": "fold_by_level", "args": {"level": 3} },
@@ -413,14 +423,17 @@
 	{ "keys": ["ctrl+alt+7"], "command": "fold_by_level", "args": {"level": 7} },
 	{ "keys": ["ctrl+alt+8"], "command": "fold_by_level", "args": {"level": 8} },
 	{ "keys": ["ctrl+alt+9"], "command": "fold_by_level", "args": {"level": 9} },
+	// { "keys": ["ctrl+alt+0"], "command": "do_nothing" },
+	// { "keys": ["ctrl+alt+-"], "command": "do_nothing" },
+	// { "keys": ["ctrl+alt++"], "command": "do_nothing" },
 	
 	{ "keys": ["ctrl+alt+q"], "command": "close_workspace"},
 	{ "keys": ["ctrl+alt+w"], "command": "prompt_select_workspace"},
 	{ "keys": ["ctrl+alt+e"], "command": "indent_blank_lines" },
 	{ "keys": ["ctrl+alt+r"], "command": "rename_file" },
 	{ "keys": ["ctrl+alt+t"], "command": "delete_trailing_spaces"},
-	// { "keys": ["ctrl+alt+y"], "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+u"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+y"], "command": "permute_unique_with_counts" },
+	{ "keys": ["ctrl+alt+u"], "command": "insert_string", "args": {"string": "Unimplemented(); //TODO: Implement me!"} },
 	{ "keys": ["ctrl+alt+i"], "command": "fold_by_level", "args": {"level": 1} },
 	{ "keys": ["ctrl+alt+o"], "command": "unfold_all" },
 	{ "keys": ["ctrl+alt+p"], "command": "show_overlay", "args": {"overlay": "command_palette"} },
@@ -428,7 +441,7 @@
 	// { "keys": ["ctrl+alt+]"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+\\"], "command": "do_nothing" },
 	
-	// { "keys": ["ctrl+alt+a"], "command": "do_nothing" },
+	// { "keys": ["ctrl+alt+a"], "command": "do_nothing" }, //NOTE: This is open_visual_studio on Windows, not sure what we do on Linux
 	{ "keys": ["ctrl+alt+s"], "command": "toggle_side_bar"},
 	{ "keys": ["ctrl+alt+d"], "command": "toggle_define_endings"},
 	{ "keys": ["ctrl+alt+f"], "command": "show_panel", "args": {"panel": "replace", "reverse": false} },
@@ -436,19 +449,19 @@
 	// { "keys": ["ctrl+alt+h"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+j"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+k"], "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+l"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+l"], "command": "insert_lang_str" },
 	// { "keys": ["ctrl+alt+;"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+'"], "command": "do_nothing" },
 	
-	// { "keys": ["ctrl+alt+z"], "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+x"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+z"], "command": "prev_view" },
+	{ "keys": ["ctrl+alt+x"], "command": "next_view" },
 	// { "keys": ["ctrl+alt+c"], "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+v"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+v"], "command": "show_panel", "args": { "panel": "output.graphvizer_panel", "context": [ {"key": "selector", "operator": "equal", "operand": "source.dot"} ] } },
 	{ "keys": ["ctrl+alt+b"], "command": "insert_nums_hex", "args": { "start_num": 1, "padding": 2 } },
 	{ "keys": ["ctrl+alt+n"], "command": "insert_nums", "args": {"format": "0:1"} },
 	// { "keys": ["ctrl+alt+m"], "command": "do_nothing" },
-	{ "keys": ["ctrl+alt+,"], "command": "focus_neighboring_group", "args": {"forward": false} },
-	{ "keys": ["ctrl+alt+."], "command": "focus_neighboring_group", "args": {"forward": true} },
+	{ "keys": ["ctrl+alt+,"], "command": "move_tab_between_groups", "args": { "right": true } },
+	{ "keys": ["ctrl+alt+."], "command": "move_tab_between_groups", "args": { "right": false } },
 	// { "keys": ["ctrl+alt+/"], "command": "do_nothing" },
 	
 	// { "keys": ["ctrl+alt+insert"],   "command": "do_nothing" },
@@ -465,7 +478,7 @@
 	
 	// { "keys": ["ctrl+alt+escape"],    "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+backspace"], "command": "do_nothing" },
-	{ "keys": ["ctrl+alt+enter"], "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} },
+	{ "keys": ["ctrl+alt+enter"],     "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} },
 	// { "keys": ["ctrl+alt+pause"],     "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+tab"],       "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+space"],     "command": "do_nothing" },
@@ -476,7 +489,7 @@
 	// { "keys": ["ctrl+alt+keypad_multiply"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+keypad_minus"],    "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+keypad_plus"],     "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+keypad_enter"],    "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+keypad_enter"],    "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} },
 	
 //-------------------------------------------------------------------
 //|                   ctrl+alt+shift+ Commands                      |
@@ -534,8 +547,8 @@
 	// { "keys": ["ctrl+alt+shift+;"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+'"], "command": "do_nothing" },
 	
-	// { "keys": ["ctrl+alt+shift+z"], "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+shift+x"], "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+shift+z"], "command": "focus_neighboring_group", "args": {"forward": false} },
+	{ "keys": ["ctrl+alt+shift+x"], "command": "focus_neighboring_group", "args": {"forward": true} },
 	// { "keys": ["ctrl+alt+shift+c"], "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+v"], "command": "do_nothing" },
 	{ "keys": ["ctrl+alt+shift+b"], "command": "insert_nums_hex", "args": { "start_num": 0, "padding": 2 } }, //TODO: Turn this into prompt_insert_nums_hex
@@ -554,8 +567,8 @@
 	
 	// { "keys": ["ctrl+alt+shift+up"],    "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+down"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+shift+right"], "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+shift+left"],  "command": "do_nothing" },
+	{ "keys": ["ctrl+alt+shift+right"], "command": "focus_neighboring_group", "args": {"forward": false} },
+	{ "keys": ["ctrl+alt+shift+left"],  "command": "focus_neighboring_group", "args": {"forward": true} },
 	
 	// { "keys": ["ctrl+alt+shift+escape"],    "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+backspace"], "command": "do_nothing" },
@@ -572,9 +585,9 @@
 	// { "keys": ["ctrl+alt+shift+keypad_plus"],     "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+keypad_enter"],    "command": "do_nothing" },
 	
-	// +--------------------------------------------------------------+
-	// |                     Contextual Bindings                      |
-	// +--------------------------------------------------------------+
+// +--------------------------------------------------------------+
+// |                     Contextual Bindings                      |
+// +--------------------------------------------------------------+
 	{ "keys": ["alt+x"], "command": "check_off_todo_item", "args": {"move_line": false},
 		"context":
 		[

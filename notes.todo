@@ -219,3 +219,5 @@ asd
 	C:\gamedev\projects\PigParts\game\shared\voxel_chunk_set_serialization.cpp(472) : error C2220: the following warning is treated as an error
 	C:\gamedev\projects\PigParts\game\shared\voxel_chunk_set_serialization.cpp(472) : warning C4700: uninitialized local variable 'explicitItemIndex' used
 	C:\gamedev\projects\ProcessSpy\lib\include\gylib\gy_path.h(177) : error C4716: 'PathCombine': must return a value
+	@Zig on Linux
+	/home/robbitay/MyStuff/gamedev/projects/ZigGylib/learning1.zig:10:20: error: expected ';' after statement
