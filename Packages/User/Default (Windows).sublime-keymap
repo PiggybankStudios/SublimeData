@@ -60,7 +60,7 @@
 	{ "keys": ["ctrl+g"],   "command": "my_google_search" },
 	{ "keys": ["ctrl+h"],   "command": "open_header", "args": {"extensions": ["cpp", "c", "h", "hpp"]} },
 	{ "keys": ["ctrl+j"],   "command": "do_nothing" }, //TODO: Rebind me
-	{ "keys": ["ctrl+k"],   "command": "do_nothing" }, //TODO: Rebind me
+	{ "keys": ["ctrl+k"],   "command": "toggle_record_macro" },
 	{ "keys": ["ctrl+l"],   "command": "collapse_braces" },
 	{ "keys": ["ctrl+;"],   "command": "taylor" },
 	{ "keys": ["ctrl+'"],   "command": "show_panel", "args": {"panel": "console", "toggle": true} },
@@ -142,7 +142,7 @@
 	{ "keys": ["ctrl+shift+u"],  "command": "lower_case" },
 	{ "keys": ["ctrl+shift+i"],  "command": "fold_at_same_indentation" },
 	{ "keys": ["ctrl+shift+o"],  "command": "open_next_fold", "args": {"reverse": true} },
-	// { "keys": ["ctrl+shift+p"],  "command": "do_nothing" },
+	// { "keys": ["ctrl+shift+p"],  "command": "do_nothing" }, //NOTE: This is defualting to "Show Command Pallette" which I intended to move to Ctrl+Alt+P, so some of my muscle memory might be on the old binding
 	// { "keys": ["ctrl+shift+["],  "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+]"],  "command": "do_nothing" },
 	{ "keys": ["ctrl+shift+\\"], "command": "set_layout", "args": {"cols": [0.0, 1.0], "rows": [0.0, 1.0], "cells": [[0, 0, 1, 1]]} },
@@ -154,7 +154,7 @@
 	{ "keys": ["ctrl+shift+g"], "command": "my_google_search", "args": {"remove_text": true} },
 	{ "keys": ["ctrl+shift+h"], "command": "create_file_header" },
 	// { "keys": ["ctrl+shift+j"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+k"], "command": "do_nothing" },
+	{ "keys": ["ctrl+shift+k"], "command": "run_macro" },
 	// { "keys": ["ctrl+shift+l"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+;"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+'"], "command": "do_nothing" },
@@ -572,8 +572,8 @@
 	
 	{ "keys": ["ctrl+alt+shift+right"], "command": "focus_neighboring_group", "args": {"forward": false} },
 	{ "keys": ["ctrl+alt+shift+left"],  "command": "focus_neighboring_group", "args": {"forward": true} },
-	// { "keys": ["ctrl+alt+shift+up"],    "command": "do_nothing" },
-	// { "keys": ["ctrl+alt+shift+down"],  "command": "do_nothing" },
+	// { "keys": ["ctrl+alt+shift+up"],    "command": "do_nothing" }, //TODO: Bind this to move line up
+	// { "keys": ["ctrl+alt+shift+down"],  "command": "do_nothing" }, //TODO: Bind this to move line down
 	
 	// { "keys": ["ctrl+alt+shift+escape"],    "command": "do_nothing" },
 	// { "keys": ["ctrl+alt+shift+backspace"], "command": "do_nothing" },
