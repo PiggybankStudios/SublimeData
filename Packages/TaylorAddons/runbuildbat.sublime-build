@@ -1,6 +1,6 @@
 {
-	"cmd": "..\\build.bat",
-	"working_dir": "$project_path\\build",
+	"cmd": "build.bat",
+	"working_dir": "$project_path",
 	"shell": true,
 	
 	"syntax": "CompilerOutput.sublime-syntax",
