@@ -2,7 +2,6 @@ import os, sys, sublime, sublime_plugin
 from Taylor.Functions import *
 import subprocess
 
-# This function is simply for testing new functionality. It's bound to ctrl+;
 class StartGitBashCommand(sublime_plugin.TextCommand):
 #
 	def run(self, edit):
