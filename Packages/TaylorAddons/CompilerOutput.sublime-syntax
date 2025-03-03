@@ -7,11 +7,12 @@ scope: compiler.build
 
 contexts: 
   main:
-    - match: '^((?:\w\:)?[^\:\n\(]+)[\:\(](\d+)[\:\)](?:(\d+))?\:\s*(?:fatal error|error)(?:\s*C[0-9]+)?\:\s*(.+)$'
+    
+    - match: '^((?:\w\:)?[^\:\n\(]+)[\:\(](\d+)[\:\)](?:(\d+))?\s*\:\s*(?:fatal error|error)(?:\s*C[0-9]+)?\:\s*(.+)$'
       scope: keyword.title.error.compiler
-    - match: '^((?:\w\:)?[^\:\n\(]+)[\:\(](\d+)[\:\)](?:(\d+))?\:\s*warning(?:\s*C[0-9]+)?\:\s*(.+)$'
+    - match: '^((?:\w\:)?[^\:\n\(]+)[\:\(](\d+)[\:\)](?:(\d+))?\s*\:\s*warning(?:\s*C[0-9]+)?\:\s*(.+)$'
       scope: string.warning.compiler
-    - match: '^((?:\w\:)?[^\:\n\(]+)[\:\(](\d+)[\:\)](?:(\d+))?\:\s*note(?:\s*C[0-9]+)?\:\s*(.+)$'
+    - match: '^((?:\w\:)?[^\:\n\(]+)[\:\(](\d+)[\:\)](?:(\d+))?\s*\:\s*note(?:\s*C[0-9]+)?\:\s*(.+)$'
       scope: constant.numeric.note.compiler
     - match: '^\s*[^\n^\:]* : (?:fatal )?error LNK(\d+): ([^\n]+)$'
       scope: keyword.title.link-error.compiler
