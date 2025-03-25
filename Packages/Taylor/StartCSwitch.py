@@ -15,7 +15,7 @@ class StartCswitchCommand(sublime_plugin.TextCommand):
 		
 		# print("Running on " + os.name)
 		print("Starting CSwitch on \"%s\"!" % (fileName))
-		subprocess.Popen({"cswitch.exe", fileName, "-top"});
+		subprocess.Popen(["cswitch.exe", fileName, "-top", "-size=(220,350)"]);
 
 	#
 #
