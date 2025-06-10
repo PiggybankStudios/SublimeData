@@ -21,11 +21,19 @@ class MyGoogleSearchCommand(sublime_plugin.TextCommand):
 			searchString = searchString + self.view.substr(region)
 		#
 		
+		searchUrl = "https://www.google.com/search?q=";
+		
+		_, fileName = os.path.split(self.view.file_name());
+		if (fileName.lower() == "cargo.toml"):
+		#
+			searchUrl = "https://crates.io/search?q=";
+		#
+		
 		if (len(searchString) > 0):
 		#
 			print("My Google Search: Searching for \"" + searchString + "\"")
 			searchString = searchString.replace(" ", "+")
-			webbrowser.open("https://www.google.com/search?q=" + searchString)
+			webbrowser.open(searchUrl + searchString)
 		#
 		else:
 		#
