@@ -362,6 +362,7 @@ contexts:
     - include: late-expressions
 
   early-expressions:
+    - include: extern-c
     - include: preprocessor-expressions
     - include: comments
     - include: case-default
@@ -381,6 +382,21 @@ contexts:
       scope: punctuation.separator.c
     - match: '\)|\}'
       scope: invalid.illegal.stray-bracket-end.c
+
+  ## When extern "C" { is not placed inside a #define it tends to mess up the matching of things inside it's curly brackets
+  ## In order to prevent this error we match this pattern at a very high-level to catch it before the curly bracket causes problems
+  ## punctuation.extern.c
+  extern-c:
+    - match: '(extern)\s+(\"C\")'
+      captures:
+        1: keyword.control.extern.c
+        2: string.quoted.double.extern.c
+      push:
+        - match: '[^\{\s\n]'
+          pop: true
+        - match: '\{'
+          scope: punctuation.extern.curly.c
+          pop: true
 
   late-expressions:
     - include: modifiers-parens
