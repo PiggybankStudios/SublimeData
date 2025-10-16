@@ -1,0 +1,14 @@
+<snippet>
+	<content><![CDATA[
+SparseSetV3iLoop(${2:&setPntr}, ${3:bIndex})
+{
+	SparseSetV3iLoopGet(${1:Type_t}, ${4:varName}, ${2:&setPntr}, ${3:bIndex})
+	{
+		
+	}
+}
+]]></content>
+	<tabTrigger>SparseSetV3iLoop</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

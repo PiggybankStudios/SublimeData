@@ -302,90 +302,90 @@ class CustomIdentifierCommand(sublime_plugin.TextCommand):
 class CustomIdentifierEventListener(sublime_plugin.EventListener):
 #
 	def on_query_completions(self, view, prefix, locations):
-	# #
-		#TODO: Make this more efficient so we can run it again
-		pass
-	# 	result = []
-	# 	# print("Listener!", prefix, locations)
+	#
+		pass #TODO: Make this more efficient so we can run it again
 		
-	# 	projectSettings = GetProjectSettings(view.window())
-	# 	if (projectSettings == None): return
+		# result = []
+		# # print("Listener!", prefix, locations)
 		
-	# 	for customType in projectSettings["custom_types"]:
-	# 	#
-	# 		result.append([customType + "\t" + "Custom Type", customType])
-	# 	#
-	# 	for customConstant in projectSettings["custom_constants"]:
-	# 	#
-	# 		result.append([customConstant + "\t" + "Custom Constant", customConstant])
-	# 	#
-	# 	for customGlobal in projectSettings["custom_globals"]:
-	# 	#
-	# 		result.append([customGlobal + "\t" + "Custom Global", customGlobal])
-	# 	#
+		# projectSettings = GetProjectSettings(view.window())
+		# if (projectSettings == None): return
 		
-	# 	shouldInsertParameters = True
-	# 	for region in view.sel():
-	# 	#
-	# 		if (region.b < view.size() and view.substr(sublime.Region(region.b, region.b+1)) == "("):
-	# 		#
-	# 			# print("Found paranthesis at index %d" % region.b)
-	# 			shouldInsertParameters = False
-	# 			break
-	# 		#
-	# 	#
+		# for customType in projectSettings["custom_types"]:
+		# #
+		# 	result.append([customType + "\t" + "Custom Type", customType])
+		# #
+		# for customConstant in projectSettings["custom_constants"]:
+		# #
+		# 	result.append([customConstant + "\t" + "Custom Constant", customConstant])
+		# #
+		# for customGlobal in projectSettings["custom_globals"]:
+		# #
+		# 	result.append([customGlobal + "\t" + "Custom Global", customGlobal])
+		# #
 		
-	# 	for functionStr in projectSettings["custom_functions"]:
-	# 	#
-	# 		parsedFunction = CppFunction(functionStr)
-	# 		if (parsedFunction.valid):
-	# 		#
-	# 			paramNameStr = ""
-	# 			paramNameTypeStr = ""
-	# 			paramReplaceStr = ""
-	# 			for pIndex in range(0, len(parsedFunction.parameters)):
-	# 			#
-	# 				paramName = parsedFunction.parameters[pIndex]
-	# 				paramType = parsedFunction.parameterTypes[pIndex]
-	# 				isOptional = parsedFunction.parametersOptional[pIndex]
-	# 				if (paramNameStr != ""):
-	# 				#
-	# 					paramNameStr += ", "
-	# 					paramNameTypeStr += ", "
-	# 					paramReplaceStr += ", "
-	# 				#
-	# 				if (paramType != ""):
-	# 				#
-	# 					if (isOptional): paramNameTypeStr += "[" + paramType + "]" + " "
-	# 					else:            paramNameTypeStr += paramType + " "
-	# 				#
-	# 				paramNameStr += paramName
-	# 				paramNameTypeStr += paramName
-	# 				if (isOptional):
-	# 				#
-	# 					paramReplaceStr += "${%u:%s}" % (pIndex+1, "_" + paramName + "_")
-	# 				#
-	# 				else:
-	# 				#
-	# 					paramReplaceStr += "${%u:%s}" % (pIndex+1, paramName)
-	# 				#
-	# 			#
+		# shouldInsertParameters = True
+		# for region in view.sel():
+		# #
+		# 	if (region.b < view.size() and view.substr(sublime.Region(region.b, region.b+1)) == "("):
+		# 	#
+		# 		# print("Found paranthesis at index %d" % region.b)
+		# 		shouldInsertParameters = False
+		# 		break
+		# 	#
+		# #
+		
+		# for functionStr in projectSettings["custom_functions"]:
+		# #
+		# 	parsedFunction = CppFunction(functionStr)
+		# 	if (parsedFunction.valid):
+		# 	#
+		# 		paramNameStr = ""
+		# 		paramNameTypeStr = ""
+		# 		paramReplaceStr = ""
+		# 		for pIndex in range(0, len(parsedFunction.parameters)):
+		# 		#
+		# 			paramName = parsedFunction.parameters[pIndex]
+		# 			paramType = parsedFunction.parameterTypes[pIndex]
+		# 			isOptional = parsedFunction.parametersOptional[pIndex]
+		# 			if (paramNameStr != ""):
+		# 			#
+		# 				paramNameStr += ", "
+		# 				paramNameTypeStr += ", "
+		# 				paramReplaceStr += ", "
+		# 			#
+		# 			if (paramType != ""):
+		# 			#
+		# 				if (isOptional): paramNameTypeStr += "[" + paramType + "]" + " "
+		# 				else:            paramNameTypeStr += paramType + " "
+		# 			#
+		# 			paramNameStr += paramName
+		# 			paramNameTypeStr += paramName
+		# 			if (isOptional):
+		# 			#
+		# 				paramReplaceStr += "${%u:%s}" % (pIndex+1, "_" + paramName + "_")
+		# 			#
+		# 			else:
+		# 			#
+		# 				paramReplaceStr += "${%u:%s}" % (pIndex+1, paramName)
+		# 			#
+		# 		#
 				
-	# 			maxParamStrLength = 32
-	# 			paramStr = paramNameTypeStr
-	# 			if (len(paramStr) > maxParamStrLength): paramStr = paramNameStr
-	# 			# if (len(paramStr) > maxParamStrLength): paramStr = paramNameStr[:maxParamStrLength-3] + "..."
+		# 		maxParamStrLength = 32
+		# 		paramStr = paramNameTypeStr
+		# 		if (len(paramStr) > maxParamStrLength): paramStr = paramNameStr
+		# 		# if (len(paramStr) > maxParamStrLength): paramStr = paramNameStr[:maxParamStrLength-3] + "..."
 				
-	# 			displayStr = parsedFunction.name + "\t(" + paramStr + ")"
-	# 			if (shouldInsertParameters):
-	# 				insertStr = parsedFunction.name + "(" + paramReplaceStr + ")"
-	# 			else:
-	# 				insertStr = parsedFunction.name
-	# 			# print("Suggesting function \"%s\"" % (parsedFunction.name))
-	# 			result.append([displayStr, insertStr])
-	# 		#
-	# 	#
+		# 		displayStr = parsedFunction.name + "\t(" + paramStr + ")"
+		# 		if (shouldInsertParameters):
+		# 			insertStr = parsedFunction.name + "(" + paramReplaceStr + ")"
+		# 		else:
+		# 			insertStr = parsedFunction.name
+		# 		# print("Suggesting function \"%s\"" % (parsedFunction.name))
+		# 		result.append([displayStr, insertStr])
+		# 	#
+		# #
 		
-	# 	return result
-	# #
+		# return result
+	#
 #
