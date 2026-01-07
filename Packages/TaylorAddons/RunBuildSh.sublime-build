@@ -1,0 +1,9 @@
+{
+	"shell_cmd": "./build.sh",
+	"working_dir": "$project_path",
+	// "shell": true,
+	
+	"syntax": "CompilerOutput.sublime-syntax",
+	
+	"file_regex": "^((?:\\w\\:)?[^\\:\\n\\(]+)[\\:\\(](\\d+)[\\:\\)](?:(\\d+))?\\s*\\:\\s*(?:fatal error|error|warning|note)(?:\\s*C[0-9]+)?\\:\\s*(.+)$",
+}
