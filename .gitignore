@@ -5,6 +5,7 @@ Index/*
 Lib/*
 *-ca-bundle*
 Packages/markupsafe/*
+Packages/EasyClangComplete/*
 Packages/mdpopups/*
 Packages/pygments/*
 Packages/python-jinja2/*

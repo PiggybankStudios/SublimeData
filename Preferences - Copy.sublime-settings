@@ -92,7 +92,8 @@
 		".hg",
 		"CVS"
 	],
-	"font_face": "noto mono",
+	// "font_face": "noto mono",
+	"font_face": "FiraMono Nerd Font",
 	"font_options":
 	[
 		"directwrite"
@@ -165,4 +166,5 @@
 	"word_separators": "./\\()\"'-:,.;<>~!@#$%^&*|+=[]{}`~?",
 	"word_wrap": "auto",
 	"wrap_width": 0,
+	"hardware_acceleration": "opengl",
 }
