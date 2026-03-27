@@ -1,624 +1,1446 @@
 [
-
-//NOTE: We have to change the modifier keys in the settings on mac to make it more friendly to our windows keybindings scheme
-// Control (^) Key: * Command
-// Option  (\) Key: ^ Control
-// Command (*) Key: \ Option
-
-//-------------------------------------------------------------------
-//|                             Extras                              |
-//-------------------------------------------------------------------
-	{ "keys": ["end"],             "command": "move_to", "args": {"to": "eol", "extend": false} },
-	{ "keys": ["shift+end"],       "command": "move_to", "args": {"to": "eol", "extend": true} },
+	//NOTE: MacOS keybindings are very different than Windows keybindings
+	//      There is no dedicated "Mac" key that global bindings are tied to
+	//      instead many global bindings use regular modifier keys and we need
+	//      to be careful not to conflict with them. As such I have noted which
+	//      known global bindings we know about and want to avoid in this file
+	//      with "NOTE: osx_global" as the command.
+	//      Additionally, some keys are not present on Mac keyboards, like
+	//      home and end or Insert and Delete. And what would be Windows "Backspace"
+	//      equivalent is actually called "Delete". Since home/end don't exist many
+	//      text editing programs use Cmd+Left/Right as home/end equivalents.
+	//      But also Fn+Left/Right often (but not always) work as home/end as well.
+	//      We have more modifier keys at our disposal than we did on Windows
+	//      so this file is much longer since we have more combinations of modifiers
+	//      that we want to list out.
+	//      The "Fn" key (or key with a 🌐 symbol) often changes a keys behavior
+	//      at a reporting level, sometimes giving us keys that aren't on the keyboard
+	//      like Home/End are Fn+Left/Right. And Fn+Delete is Windows-style Delete
+	//      (delete to the right). These special cases are noted with inline comments
 	
-	{ "keys": ["home"],            "command": "move_to", "args": {"to": "bol", "extend": false} },
-	{ "keys": ["shift+home"],      "command": "move_to", "args": {"to": "bol", "extend": true} },
-
-//-------------------------------------------------------------------
-//|                     (super+) Command (ctrl+)                    |
-//-------------------------------------------------------------------
-	// { "keys": ["super+f1"],  "command": "do_nothing" },
-	// { "keys": ["super+f2"],  "command": "do_nothing" },
-	{ "keys": ["super+f3"],  "command": "convert_to_hex" },
-	{ "keys": ["super+f4"],  "command": "ascii_to_hex", "args": {"prefix": "0x", "seperator": " "} },
-	{ "keys": ["super+f5"],  "command": "custom_identifier", "args": {"action": "add", "mode": "Type"     } },
-	{ "keys": ["super+f6"],  "command": "custom_identifier", "args": {"action": "add", "mode": "Constant" } },
-	{ "keys": ["super+f7"],  "command": "custom_identifier", "args": {"action": "add", "mode": "Global"   } },
-	{ "keys": ["super+f8"],  "command": "custom_identifier", "args": {"action": "add", "mode": "Function", "update_syntax_file": false} },
-	{ "keys": ["super+f9"],  "command": "custom_identifier", "args": {"action": "update"} },
-	// { "keys": ["super+f10"], "command": "do_nothing" },
-	// { "keys": ["super+f11"], "command": "do_nothing" },
-	{ "keys": ["super+f12"], "command": "open_string_file" },
+	// Modifier Keys
+	//   super/command = ⌘ Command (option maps similarly to Ctrl on Windows but not always)
+	//   option = Option (sometimes feels natural to treat it like Alt on Windows, but really it lives in the same place on the keyboard as Windows key)
+	//   ctrl/control = Control (Lives in nearly the same spot as Ctrl on Windows, but treating very differently in most Mac programs)
+	//   Fn = Function/Globe (Cannot be used directly but some unique key names are exposed by Fn+[key] combinations, like Fn+Delete is "delete" key)
+	//   shift = Shift (Works the same as Window for the most part)
 	
-	// { "keys": ["super+`"], "command": "do_nothing" },
-	// { "keys": ["super+1"], "command": "do_nothing" },
-	// { "keys": ["super+2"], "command": "do_nothing" },
-	// { "keys": ["super+3"], "command": "do_nothing" },
-	// { "keys": ["super+4"], "command": "do_nothing" },
-	// { "keys": ["super+5"], "command": "do_nothing" },
-	// { "keys": ["super+6"], "command": "do_nothing" },
-	// { "keys": ["super+7"], "command": "do_nothing" },
-	// { "keys": ["super+8"], "command": "do_nothing" },
-	// { "keys": ["super+9"], "command": "do_nothing" },
-	// { "keys": ["super+0"], "command": "do_nothing" },
-	// { "keys": ["super+-"], "command": "do_nothing" },
-	// { "keys": ["super++"], "command": "do_nothing" },
+	// Order of sections in this file:
+	//   Unmodified
+	//   (shift+)
+	//   (command+)
+	//   (command+shift)
+	//   (option+)
+	//   (option+shift+)
+	//   (control+)
+	//   (control+shift+)
+	//   (command+option+)
+	//   (command+option+shift+)
+	//   (command+control+)
+	//   (command+control+shift+)
+	//   (option+control+)
+	//   (option+control+shift+)
+	//   (command+option+control+)
+	//   (command+option+control+shift+)
 	
-	{ "keys": ["super+q"], "command": "do_nothing" }, //TODO: Rebind me
-	{ "keys": ["super+w"], "command": "close" },
-	{ "keys": ["super+e"], "command": "reopen_last_file" },
-	{ "keys": ["super+r"], "command": "kill_line" },
-	{ "keys": ["super+t"], "command": "create_local_header", "args": {"width": 32, "bold": true} },
-	{ "keys": ["super+y"], "command": "print_scopes" },
-	{ "keys": ["super+u"], "command": "upper_case" },
-	{ "keys": ["super+i"], "command": "fold_at_same_indentation", "args": {"single_fold": true} },
-	{ "keys": ["super+o"], "command": "open_next_fold" },
-	{ "keys": ["super+p"], "command": "show_overlay", "args": {"overlay": "goto", "show_files": true} },
-	{ "keys": ["super+["], "command": "unindent" },
-	{ "keys": ["super+]"], "command": "indent" },
-	{ "keys": ["super+\\"], "command": "set_layout", "args": {"cols": [0.0, 0.5, 1.0], "rows": [0.0, 1.0], "cells": [[0, 0, 1, 1], [1, 0, 2, 1]]} },
+	//TODO: How do we move by subwords?
+	//TODO: How do we add multi-cursors up/down?
+	//TODO: How do we add/remove custom types/constants/globals/functions?
+	//TODO: "start_cswitch"
+	//TODO: "start_git_bash"?
+	//TODO: "insert_nums"/"insert_nums_hex"/"prompt_insert_nums"
+	//TODO: "check_off_todo_item"
+	//TODO: "move_tab_between_groups"?
+	//TODO: "focus_neighboring_group"?
+	//TODO: "md5_hash"?
 	
-	{ "keys": ["super+a"], "command": "select_line" },
-	{ "keys": ["super+s"], "command": "save" },
-	{ "keys": ["super+d"], "command": "find_under_expand" }, //"grab_next", "args": { "case_sensitive": true, "forward": true, "word_bounded": false, "show_new_location": true, "print_success_info": true } },
-	{ "keys": ["super+f"], "command": "show_panel", "args": {"panel": "find", "reverse": false} },
-	{ "keys": ["super+g"], "command": "my_google_search" },
-	{ "keys": ["super+h"], "command": "open_header", "args": {"extensions": ["cpp", "c", "h", "hpp"]} },
-	{ "keys": ["super+j"], "command": "do_nothing" }, //TODO: Rebind me
-	{ "keys": ["super+k"], "command": "do_nothing" }, //TODO: Rebind me
-	{ "keys": ["super+l"], "command": "collapse_braces" },
-	{ "keys": ["super+;"], "command": "taylor" },
-	{ "keys": ["super+'"], "command": "show_panel", "args": {"panel": "console", "togle": true} },
-	
-	{ "keys": ["super+z"], "command": "undo" },
-	{ "keys": ["super+x"], "command": "cut" },
-	{ "keys": ["super+c"], "command": "copy" },
-	{ "keys": ["super+v"], "command": "paste" },
-	{ "keys": ["super+b"], "command": "build" },
-	{ "keys": ["super+n"], "command": "new_file" },
-	{ "keys": ["super+m"], "command": "do_nothing" }, //TODO: Rebind me
-	{ "keys": ["super+,"], "command": "jump_back" },
-	{ "keys": ["super+."], "command": "jump_forward" },
-	{ "keys": ["super+/"], "command": "toggle_comment", "args": {"block": false} },
-	
-	// { "keys": ["super+insert"],   "command": "do_nothing" },
-	// { "keys": ["super+delete"],   "command": "do_nothing" },
-	{ "keys": ["super+home"],     "command": "move_to", "args": {"to": "bof", "extend": false} },
-	{ "keys": ["super+end"],      "command": "move_to", "args": {"to": "eof", "extend": false} },
-	// { "keys": ["super+pageup"],   "command": "do_nothing" },
-	// { "keys": ["super+pagedown"], "command": "do_nothing" },
-	
-	{ "keys": ["super+up"],    "command": "move_to_empty_line", "args": {"forward": false} },
-	{ "keys": ["super+down"],  "command": "move_to_empty_line", "args": {"forward": true} },
-	{ "keys": ["super+left"],  "command": "move", "args": {"by": "words", "forward": false} },
-	{ "keys": ["super+right"], "command": "move", "args": {"by": "word_ends", "forward": true} },
-	
-	// { "keys": ["super+escape"],    "command": "do_nothing" },
-	// { "keys": ["super+backspace"], "command": "do_nothing" },
-	// { "keys": ["super+enter"],     "command": "do_nothing" },
-	// { "keys": ["super+pause"],     "command": "do_nothing" },
-	{ "keys": ["super+tab"],       "command": "toggle_distraction_free" },
-	{ "keys": ["super+space"],     "command": "show_at_center" }, //NOTE: Have rebind spotlight to Win+S and Win+Shift+S
-	// { "keys": ["super+clear"],     "command": "do_nothing" },
-	
-	// { "keys": ["super+keypad_period"],   "command": "do_nothing" },
-	// { "keys": ["super+keypad_divide"],   "command": "do_nothing" },
-	// { "keys": ["super+keypad_multiply"], "command": "do_nothing" },
-	// { "keys": ["super+keypad_minus"],    "command": "do_nothing" },
-	// { "keys": ["super+keypad_plus"],     "command": "do_nothing" },
-	// { "keys": ["super+keypad_enter"],    "command": "do_nothing" },
-
-//-------------------------------------------------------------------
-//|              (super+shift+) Commands (ctrl+shift+)              |
-//-------------------------------------------------------------------
-	// { "keys": ["super+shift+f1"],  "command": "do_nothing" },
-	// { "keys": ["super+shift+f2"],  "command": "do_nothing" },
-	{ "keys": ["super+shift+f3"],  "command": "convert_to_hex", "args": {"undo": true} },
-	{ "keys": ["super+shift+f4"],  "command": "ascii_to_hex", "args": {"undo": true} },
-	{ "keys": ["super+shift+f5"],  "command": "custom_identifier", "args": { "action": "remove", "mode": "Type"     } },
-	{ "keys": ["super+shift+f7"],  "command": "custom_identifier", "args": { "action": "remove", "mode": "Global"   } },
-	{ "keys": ["super+shift+f6"],  "command": "custom_identifier", "args": { "action": "remove", "mode": "Constant" } },
-	{ "keys": ["super+shift+f8"],  "command": "custom_identifier", "args": { "action": "remove", "mode": "Function", "update_syntax_file": false} },
-	{ "keys": ["super+shift+f9"],  "command": "custom_identifier", "args": { "action": "lookup", "mode": "Function" } },
-	// { "keys": ["super+shift+f10"], "command": "do_nothing" },
-	// { "keys": ["super+shift+f11"], "command": "do_nothing" },
-	// { "keys": ["super+shift+f12"], "command": "do_nothing" },
-	
-	// { "keys": ["super+shift+`"], "command": "do_nothing" },
-	// { "keys": ["super+shift+1"], "command": "do_nothing" },
-	// { "keys": ["super+shift+2"], "command": "do_nothing" },
-	// { "keys": ["super+shift+3"], "command": "do_nothing" },
-	// { "keys": ["super+shift+4"], "command": "do_nothing" },
-	// { "keys": ["super+shift+5"], "command": "do_nothing" },
-	{ "keys": ["super+shift+6"], "command": "custom_identifier", "args": { "action": "remove", "mode": "Constant", "update_syntax_file": false } },
-	// { "keys": ["super+shift+7"], "command": "do_nothing" },
-	// { "keys": ["super+shift+8"], "command": "do_nothing" },
-	// { "keys": ["super+shift+9"], "command": "do_nothing" },
-	// { "keys": ["super+shift+0"], "command": "do_nothing" },
-	// { "keys": ["super+shift+-"], "command": "do_nothing" },
-	// { "keys": ["super+shift++"], "command": "do_nothing" },
-	
-	// { "keys": ["super+shift+q"],  "command": "do_nothing" },
-	// { "keys": ["super+shift+w"],  "command": "do_nothing" },
-	// { "keys": ["super+shift+e"],  "command": "do_nothing" },
-	{ "keys": ["super+shift+r"],  "command": "character_replace", "args": {"character": " "} },
-	{ "keys": ["super+shift+t"],  "command": "create_local_header", "args": {"width": 64, "bold": false} },
-	// { "keys": ["super+shift+y"],  "command": "do_nothing" },
-	{ "keys": ["super+shift+u"],  "command": "lower_case" },
-	{ "keys": ["super+shift+i"],  "command": "fold_at_same_indentation" },
-	{ "keys": ["super+shift+o"],  "command": "open_next_fold", "args": {"reverse": true} },
-	// { "keys": ["super+shift+p"],  "command": "do_nothing" },
-	// { "keys": ["super+shift+["],  "command": "do_nothing" },
-	// { "keys": ["super+shift+]"],  "command": "do_nothing" },
-	{ "keys": ["super+shift+\\"], "command": "set_layout", "args": {"cols": [0.0, 1.0], "rows": [0.0, 1.0], "cells": [[0, 0, 1, 1]]} },
-	
-	{ "keys": ["super+shift+a"], "command": "select_all" },
-	// { "keys": ["super+shift+s"], "command": "do_nothing" },
-	{ "keys": ["super+shift+d"], "command": "grab_next", "args": { "case_sensitive": true, "forward": false, "word_bounded": false, "show_new_location": true, "print_success_info": true } },
-	{ "keys": ["super+shift+f"], "command": "show_panel", "args": {"panel": "find_in_files"} },
-	{ "keys": ["super+shift+g"], "command": "my_google_search", "args": {"remove_text": true} },
-	{ "keys": ["super+shift+h"], "command": "create_file_header" },
-	// { "keys": ["super+shift+j"], "command": "do_nothing" },
-	// { "keys": ["super+shift+k"], "command": "do_nothing" },
-	// { "keys": ["super+shift+l"], "command": "do_nothing" },
-	// { "keys": ["super+shift+;"], "command": "do_nothing" },
-	// { "keys": ["super+shift+'"], "command": "do_nothing" },
-	
-	{ "keys": ["super+shift+z"], "command": "redo" },
-	// { "keys": ["super+shift+x"], "command": "do_nothing" },
-	{ "keys": ["super+shift+c"], "command": "duplicate_line" },
-	// { "keys": ["super+shift+v"], "command": "do_nothing" },
-	{ "keys": ["super+shift+b"], "command": "taylor_build" },
-	// { "keys": ["super+shift+n"], "command": "do_nothing" },
-	// { "keys": ["super+shift+m"], "command": "do_nothing" },
-	// { "keys": ["super+shift+,"], "command": "do_nothing" },
-	// { "keys": ["super+shift+."], "command": "do_nothing" },
-	// { "keys": ["super+shift+/"], "command": "do_nothing" },
-	
-	// { "keys": ["super+shift+insert"],   "command": "do_nothing" },
-	// { "keys": ["super+shift+delete"],   "command": "do_nothing" },
-	{ "keys": ["super+shift+home"],     "command": "move_to", "args": {"to": "bof", "extend": true} },
-	{ "keys": ["super+shift+end"],      "command": "move_to", "args": {"to": "eof", "extend": true} },
-	// { "keys": ["super+shift+pageup"],   "command": "do_nothing" },
-	// { "keys": ["super+shift+pagedown"], "command": "do_nothing" },
-	
-	{ "keys": ["super+shift+right"], "command": "move", "args": {"by": "word_ends", "forward": true,  "extend": true} },
-	{ "keys": ["super+shift+left"],  "command": "move", "args": {"by": "words",     "forward": false, "extend": true} },
-	{ "keys": ["super+shift+up"],    "command": "move_to_empty_line", "args": {"forward": false, "expand_selection": true, "show_at_center": true} },
-	{ "keys": ["super+shift+down"],  "command": "move_to_empty_line", "args": {"forward": true,  "expand_selection": true, "show_at_center": true} },
-	
-	// { "keys": ["super+shift+escape"],    "command": "do_nothing" },
-	// { "keys": ["super+shift+backspace"], "command": "do_nothing" },
-	// { "keys": ["super+shift+enter"],     "command": "do_nothing" },
-	// { "keys": ["super+shift+pause"],     "command": "do_nothing" },
-	// { "keys": ["super+shift+tab"],       "command": "do_nothing" },
-	// { "keys": ["super+shift+space"],     "command": "do_nothing" },
-	// { "keys": ["super+shift+clear"],     "command": "do_nothing" },
-	
-	// { "keys": ["super+shift+keypad_period"],   "command": "do_nothing" },
-	// { "keys": ["super+shift+keypad_divide"],   "command": "do_nothing" },
-	// { "keys": ["super+shift+keypad_multiply"], "command": "do_nothing" },
-	// { "keys": ["super+shift+keypad_minus"],    "command": "do_nothing" },
-	// { "keys": ["super+shift+keypad_plus"],     "command": "do_nothing" },
-	// { "keys": ["super+shift+keypad_enter"],    "command": "do_nothing" },
-
-//-------------------------------------------------------------------
-//|                     (ctrl+) Commands (alt+)                     |
-//-------------------------------------------------------------------
-	// { "keys": ["ctrl+f1"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+f2"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+f3"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+f4"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+f5"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+f6"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+f7"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+f8"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+f9"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+f10"], "command": "do_nothing" },
-	// { "keys": ["ctrl+f11"], "command": "do_nothing" },
-	// { "keys": ["ctrl+f12"], "command": "do_nothing" },
-	
-	// { "keys": ["ctrl+`"], "command": "do_nothing" },
-	{ "keys": ["ctrl+1"], "command": "toggle_regex", "context":
-		[
-			{ "key": "setting.is_widget", "operator": "equal", "operand": true }
-		]
-	},
-	{ "keys": ["ctrl+2"], "command": "toggle_case_sensitive", "context":
-		[
-			{ "key": "setting.is_widget", "operator": "equal", "operand": true }
-		]
-	},
-	{ "keys": ["ctrl+3"], "command": "toggle_whole_word", "context":
-		[
-			{ "key": "setting.is_widget", "operator": "equal", "operand": true }
-		]
-	},
-	// { "keys": ["ctrl+4"], "command": "do_nothing" },
-	// { "keys": ["ctrl+5"], "command": "do_nothing" },
-	// { "keys": ["ctrl+6"], "command": "do_nothing" },
-	// { "keys": ["ctrl+7"], "command": "do_nothing" },
-	// { "keys": ["ctrl+8"], "command": "do_nothing" },
-	// { "keys": ["ctrl+9"], "command": "do_nothing" },
-	// { "keys": ["ctrl+0"], "command": "do_nothing" },
-	// { "keys": ["ctrl+-"], "command": "do_nothing" },
-	// { "keys": ["ctrl++"], "command": "do_nothing" },
-	
-	{ "keys": ["ctrl+q"],  "command": "change_naming_convention", "args": {"convention": "camel_case"} },
-	{ "keys": ["ctrl+w"],  "command": "change_naming_convention", "args": {"convention": "lower_words"} },
-	{ "keys": ["ctrl+e"],  "command": "change_naming_convention", "args": {"convention": "lower_underscores"} },
-	// { "keys": ["ctrl+r"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+t"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+y"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+u"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+i"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+o"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+p"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+["],  "command": "do_nothing" },
-	// { "keys": ["ctrl+]"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+\\"], "command": "do_nothing" },
-	
-	{ "keys": ["ctrl+a"], "command": "alignment" },
-	{ "keys": ["ctrl+s"], "command": "grab_next", "args": {"case_sensitive": true, "forward": true, "word_bounded": false, "show_new_location": true, "print_success_info": true, "add_to_selection": false} },
-	{ "keys": ["ctrl+d"], "command": "show_overlay", "args": {"overlay": "goto", "text": "@"} },
-	// { "keys": ["ctrl+f"], "command": "do_nothing" },
-	// { "keys": ["ctrl+g"], "command": "do_nothing" },
-	// { "keys": ["ctrl+h"], "command": "do_nothing" },
-	// { "keys": ["ctrl+j"], "command": "do_nothing" },
-	// { "keys": ["ctrl+k"], "command": "do_nothing" },
-	// { "keys": ["ctrl+l"], "command": "do_nothing" },
-	// { "keys": ["ctrl+;"], "command": "do_nothing" },
-	// { "keys": ["ctrl+'"], "command": "do_nothing" },
-	
-	// { "keys": ["ctrl+z"], "command": "do_nothing" },
-	// { "keys": ["ctrl+x"], "command": "do_nothing" },
-	// { "keys": ["ctrl+c"], "command": "do_nothing" },
-	// { "keys": ["ctrl+v"], "command": "do_nothing" },
-	{ "keys": ["ctrl+b"], "command": "move_to", "args": {"to": "brackets"} },
-	// { "keys": ["ctrl+n"], "command": "do_nothing" },
-	// { "keys": ["ctrl+m"], "command": "do_nothing" },
-	// { "keys": ["ctrl+,"], "command": "do_nothing" },
-	// { "keys": ["ctrl+."], "command": "do_nothing" },
-	// { "keys": ["ctrl+/"], "command": "do_nothing" },
-	
-	// { "keys": ["ctrl+insert"],   "command": "do_nothing" },
-	// { "keys": ["ctrl+delete"],   "command": "do_nothing" },
-	// { "keys": ["ctrl+home"],     "command": "do_nothing" },
-	// { "keys": ["ctrl+end"],      "command": "do_nothing" },
-	// { "keys": ["ctrl+pageup"],   "command": "do_nothing" },
-	// { "keys": ["ctrl+pagedown"], "command": "do_nothing" },
-	
-	// { "keys": ["ctrl+right"], "command": "do_nothing" },
-	// { "keys": ["ctrl+left"],  "command": "do_nothing" },
-	{ "keys": ["ctrl+up"],    "command": "scroll_lines_enhanced", "args": { "amount": -10.0 } }, //NOTE: Have to rebind Mission Control to Win+Up
-	{ "keys": ["ctrl+down"],  "command": "scroll_lines_enhanced", "args": { "amount":  10.0 } }, //NOTE: Have to rebind Mission Control->Application Windows to Win+Down
-	
-	// { "keys": ["ctrl+escape"],    "command": "do_nothing" },
-	// { "keys": ["ctrl+backspace"], "command": "do_nothing" },
-	// { "keys": ["ctrl+enter"],     "command": "do_nothing" },
-	// { "keys": ["ctrl+pause"],     "command": "do_nothing" },
-	// { "keys": ["ctrl+tab"],       "command": "do_nothing" },
-	// { "keys": ["ctrl+space"],     "command": "do_nothing" },
-	// { "keys": ["ctrl+clear"],     "command": "do_nothing" },
-	
-	// { "keys": ["ctrl+keypad_period"],   "command": "do_nothing" },
-	// { "keys": ["ctrl+keypad_divide"],   "command": "do_nothing" },
-	// { "keys": ["ctrl+keypad_multiply"], "command": "do_nothing" },
-	// { "keys": ["ctrl+keypad_minus"],    "command": "do_nothing" },
-	// { "keys": ["ctrl+keypad_plus"],     "command": "do_nothing" },
-	// { "keys": ["ctrl+keypad_enter"],    "command": "do_nothing" },
-
-//-------------------------------------------------------------------
-//|                (ctrl+shift+) Command (alt+shift+)               |
-//-------------------------------------------------------------------
-	// { "keys": ["ctrl+shift+f1"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+f2"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+f3"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+f4"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+f5"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+f6"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+f7"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+f8"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+f9"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+f10"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+f11"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+f12"], "command": "do_nothing" },
-	
-	// { "keys": ["ctrl+shift+`"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+1"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+2"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+3"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+4"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+5"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+6"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+7"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+8"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+9"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+0"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+-"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift++"], "command": "do_nothing" },
-	
-	{ "keys": ["ctrl+shift+q"],  "command": "change_naming_convention", "args": {"convention": "upper_first"} },
-	{ "keys": ["ctrl+shift+w"],  "command": "change_naming_convention", "args": {"convention": "upper_first_words"} },
-	{ "keys": ["ctrl+shift+e"],  "command": "change_naming_convention", "args": {"convention": "upper_underscores"} },
-	// { "keys": ["ctrl+shift+r"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+t"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+y"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+u"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+i"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+o"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+p"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+["],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+]"],  "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+\\"], "command": "do_nothing" },
-	
-	{ "keys": ["ctrl+shift+a"], "command": "align_character" },
-	{ "keys": ["ctrl+shift+s"], "command": "grab_next", "args": {"case_sensitive": true, "forward": false, "word_bounded": false, "show_new_location": true, "print_success_info": true, "add_to_selection": false} },
-	{ "keys": ["ctrl+shift+d"], "command": "goto_symbol_in_project" },
-	// { "keys": ["ctrl+shift+f"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+g"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+h"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+j"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+k"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+l"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+;"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+'"], "command": "do_nothing" },
-	
-	// { "keys": ["ctrl+shift+z"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+x"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+c"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+v"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+b"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+n"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+m"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+,"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+."], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+/"], "command": "do_nothing" },
-	
-	// { "keys": ["ctrl+shift+insert"],   "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+delete"],   "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+home"],     "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+end"],      "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+pageup"],   "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+pagedown"], "command": "do_nothing" },
-	
-	// { "keys": ["ctrl+shift+right"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+left"],  "command": "do_nothing" },
-	{ "keys": ["ctrl+shift+up"],    "command": "select_lines", "args": {"forward": false} },
-	{ "keys": ["ctrl+shift+down"],  "command": "select_lines", "args": {"forward": true} },
-	
-	// { "keys": ["ctrl+shift+escape"],    "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+backspace"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+enter"],     "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+pause"],     "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+tab"],       "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+space"],     "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+clear"],     "command": "do_nothing" },
-	
-	// { "keys": ["ctrl+shift+keypad_period"],   "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+keypad_divide"],   "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+keypad_multiply"], "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+keypad_minus"],    "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+keypad_plus"],     "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+keypad_enter"],    "command": "do_nothing" },
-
-//-------------------------------------------------------------------
-//|                (super+ctrl+) Commands (ctrl+alt+)               |
-//-------------------------------------------------------------------
-	// { "keys": ["super+ctrl+f1"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+f2"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+f3"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+f4"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+f5"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+f6"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+f7"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+f8"],  "command": "custom_identifier", "args": {"action": "lookup", "mode": "Function"} },
-	// { "keys": ["super+ctrl+f9"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+f10"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+f11"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+f12"], "command": "do_nothing" },
-	
-	// { "keys": ["super+ctrl+`"], "command": "do_nothing" },
-	{ "keys": ["super+ctrl+1"], "command": "fold_by_level", "args": {"level": 1} },
-	{ "keys": ["super+ctrl+2"], "command": "fold_by_level", "args": {"level": 2} },
-	{ "keys": ["super+ctrl+3"], "command": "fold_by_level", "args": {"level": 3} },
-	{ "keys": ["super+ctrl+4"], "command": "fold_by_level", "args": {"level": 4} },
-	{ "keys": ["super+ctrl+5"], "command": "fold_by_level", "args": {"level": 5} },
-	{ "keys": ["super+ctrl+6"], "command": "fold_by_level", "args": {"level": 6} },
-	{ "keys": ["super+ctrl+7"], "command": "fold_by_level", "args": {"level": 7} },
-	{ "keys": ["super+ctrl+8"], "command": "fold_by_level", "args": {"level": 8} },
-	{ "keys": ["super+ctrl+9"], "command": "fold_by_level", "args": {"level": 9} },
-	// { "keys": ["super+ctrl+0"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+-"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl++"], "command": "do_nothing" },
-	
-	{ "keys": ["super+ctrl+q"],  "command": "close_workspace" },
-	{ "keys": ["super+ctrl+w"],  "command": "prompt_select_workspace" },
-	{ "keys": ["super+ctrl+e"],  "command": "indent_blank_lines" },
-	{ "keys": ["super+ctrl+r"],  "command": "rename_file" },
-	{ "keys": ["super+ctrl+t"],  "command": "delete_trailing_spaces" },
-	// { "keys": ["super+ctrl+y"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+u"],  "command": "do_nothing" },
-	{ "keys": ["super+ctrl+i"],  "command": "fold_by_level", "args": {"level": 1} },
-	{ "keys": ["super+ctrl+o"],  "command": "unfold_all" },
-	{ "keys": ["super+ctrl+p"],  "command": "show_overlay", "args": {"overlay": "command_palette"} },
-	// { "keys": ["super+ctrl+["],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+]"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+\\"], "command": "do_nothing" },
-	
-	// { "keys": ["super+ctrl+a"], "command": "do_nothing" },
-	{ "keys": ["super+ctrl+s"], "command": "toggle_side_bar" },
-	{ "keys": ["super+ctrl+d"], "command": "toggle_define_endings" },
-	{ "keys": ["super+ctrl+f"], "command": "show_panel", "args": {"panel": "replace", "reverse": false} },
-	{ "keys": ["super+ctrl+g"], "command": "start_git_bash" }, //TODO: Change this to something that works on OSX?
-	// { "keys": ["super+ctrl+h"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+j"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+k"], "command": "do_nothing" },
-	{ "keys": ["super+ctrl+l"], "command": "insert_lang_str" },
-	// { "keys": ["super+ctrl+;"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+'"], "command": "do_nothing" },
-	
-	// { "keys": ["super+ctrl+z"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+x"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+c"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+v"], "command": "do_nothing" },
-	{ "keys": ["super+ctrl+b"], "command": "insert_nums_hex", "args": {"start_num": 1, "padding": 2} },
-	{ "keys": ["super+ctrl+n"], "command": "insert_nums", "args": {"format": "0:1"} },
-	// { "keys": ["super+ctrl+m"], "command": "do_nothing" },
-	{ "keys": ["super+ctrl+,"], "command": "move_tab_between_groups", "args": { "right": true } },
-	{ "keys": ["super+ctrl+."], "command": "move_tab_between_groups", "args": { "right": false } },
-	// { "keys": ["super+ctrl+/"], "command": "do_nothing" },
-	
-	// { "keys": ["super+ctrl+insert"],   "command": "do_nothing" },
-	// { "keys": ["super+ctrl+delete"],   "command": "do_nothing" },
-	// { "keys": ["super+ctrl+home"],     "command": "do_nothing" },
-	// { "keys": ["super+ctrl+end"],      "command": "do_nothing" },
-	// { "keys": ["super+ctrl+pageup"],   "command": "do_nothing" },
-	// { "keys": ["super+ctrl+pagedown"], "command": "do_nothing" },
-	
-	{ "keys": ["super+ctrl+right"], "command": "next_view" },
-	{ "keys": ["super+ctrl+left"],  "command": "prev_view" },
-	{ "keys": ["super+ctrl+up"],    "command": "goto_next_scope", "args": {"forward": false, "loop_around": false, "scope_match": "entity.name"} },
-	{ "keys": ["super+ctrl+down"],  "command": "goto_next_scope", "args": {"forward": true,  "loop_around": false, "scope_match": "entity.name"} },
-	
-	//NOTE: This is a workaround for remote desktop eating the ctrl+alt+left/right bindings. We use AutoHotkey to remap to this on the local machine
-	{ "keys": ["super+ctrl+x"], "command": "next_view" }, //NOTE: These don't work??
-	{ "keys": ["super+ctrl+z"], "command": "prev_view" },
-	
-	// { "keys": ["super+ctrl+escape"],    "command": "do_nothing" },
-	// { "keys": ["super+ctrl+backspace"], "command": "do_nothing" },
-	{ "keys": ["super+ctrl+enter"],     "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} },
-	// { "keys": ["super+ctrl+pause"],     "command": "do_nothing" },
-	// { "keys": ["super+ctrl+tab"],       "command": "do_nothing" },
-	// { "keys": ["super+ctrl+space"],     "command": "do_nothing" },
-	// { "keys": ["super+ctrl+clear"],     "command": "do_nothing" },
-	
-	// { "keys": ["super+ctrl+keypad_period"],   "command": "do_nothing" },
-	// { "keys": ["super+ctrl+keypad_divide"],   "command": "do_nothing" },
-	// { "keys": ["super+ctrl+keypad_multiply"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+keypad_minus"],    "command": "do_nothing" },
-	// { "keys": ["super+ctrl+keypad_plus"],     "command": "do_nothing" },
-	{ "keys": ["super+ctrl+keypad_enter"],    "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} },
-
-//-------------------------------------------------------------------
-//|          (super+ctrl+shift) Commands (ctrl+alt+shift+)          |
-//-------------------------------------------------------------------
-	// { "keys": ["super+ctrl+shift+f1"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+f2"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+f3"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+f4"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+f5"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+f6"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+f7"],  "command": "do_nothing" },
-	{ "keys": ["super+ctrl+shift+f8"],  "command": "document_function" },
-	// { "keys": ["super+ctrl+shift+f9"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+f10"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+f11"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+f12"], "command": "do_nothing" },
-	
-	// { "keys": ["super+ctrl+shift+`"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+1"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+2"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+3"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+4"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+5"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+6"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+7"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+8"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+9"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+0"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+-"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift++"], "command": "do_nothing" },
-	
-	// { "keys": ["super+ctrl+shift+q"],  "command": "do_nothing" },
-	{ "keys": ["super+ctrl+shift+w"],  "command": "change_naming_convention", "args": {"convention": "sentence"} },
-	// { "keys": ["super+ctrl+shift+e"],  "command": "do_nothing"},
-	{ "keys": ["super+ctrl+shift+r"],  "command": "delete_file" },
-	// { "keys": ["super+ctrl+shift+t"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+y"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+u"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+i"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+o"],  "command": "do_nothing" },
-	{ "keys": ["super+ctrl+shift+p"],  "command": "show_scope_name" },
-	// { "keys": ["super+ctrl+shift+["],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+]"],  "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+\\"], "command": "do_nothing" },
-	
-	{ "keys": ["super+ctrl+shift+a"], "command": "select_functions" },
-	// { "keys": ["super+ctrl+shift+s"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+d"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+f"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+g"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+h"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+j"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+k"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+l"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+;"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+'"], "command": "do_nothing" },
-	
-	// { "keys": ["super+ctrl+shift+z"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+x"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+c"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+v"], "command": "do_nothing" },
-	{ "keys": ["super+ctrl+shift+b"], "command": "insert_nums_hex", "args": {"start_num": 0, "padding": 2} },
-	{ "keys": ["super+ctrl+shift+n"], "command": "prompt_insert_nums" },
-	{ "keys": ["super+ctrl+shift+m"], "command": "md5_hash" },
-	// { "keys": ["super+ctrl+shift+,"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+."], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+/"], "command": "do_nothing" },
-	
-	// { "keys": ["super+ctrl+shift+insert"],   "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+delete"],   "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+home"],     "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+end"],      "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+pageup"],   "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+pagedown"], "command": "do_nothing" },
-	
-	{ "keys": ["super+ctrl+shift+right"], "command": "focus_neighboring_group", "args": {"forward": false} },
-	{ "keys": ["super+ctrl+shift+left"],  "command": "focus_neighboring_group", "args": {"forward": true} },
-	// { "keys": ["super+ctrl+shift+up"],    "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+down"],  "command": "do_nothing" },
-	
-	// { "keys": ["super+ctrl+shift+escape"],    "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+backspace"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+enter"],     "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+pause"],     "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+tab"],       "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+space"],     "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+clear"],     "command": "do_nothing" },
-	
-	// { "keys": ["super+ctrl+shift+keypad_period"],   "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+keypad_divide"],   "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+keypad_multiply"], "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+keypad_minus"],    "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+keypad_plus"],     "command": "do_nothing" },
-	// { "keys": ["super+ctrl+shift+keypad_enter"],    "command": "do_nothing" },
-
 // +--------------------------------------------------------------+
-// |                     Contextual Bindings                      |
+// |                   Unmodified (Single Key)                    |
 // +--------------------------------------------------------------+
-	{ "keys": ["ctrl+x"], "command": "check_off_todo_item", "args": {"move_line": false},
-		"context":
-		[
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "[\\[\\(\\<\\{][ \\?\\!xX\\-][\\]\\)\\>\\}]"}
-		]
-	},
-	{ "keys": ["ctrl+shift+x"], "command": "check_off_todo_item", "args": {"move_line": true},
-		"context":
-		[
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "[\\[\\(\\<\\{][ \\?\\!xX\\-][\\]\\)\\>\\}]"}
-		]
-	},
-	{ "keys": ["ctrl+-"], "command": "check_off_todo_item", "args": {"move_line": false, "check_str": "-"},
-		"context":
-		[
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "[\\[\\(\\<\\{][ \\?\\!xX\\-][\\]\\)\\>\\}]"}
-		]
-	},
-	{ "keys": ["ctrl+shift+-"], "command": "check_off_todo_item", "args": {"move_line": true, "check_str": "-"},
-		"context":
-		[
-			{ "key": "preceding_text", "operator": "regex_contains", "operand": "[\\[\\(\\<\\{][ \\?\\!xX\\-][\\]\\)\\>\\}]"}
-		]
-	},
+	// { "keys": ["f1"],  "command": "do_nothing" },
+	{ "keys": ["f2"],  "command": "next_bookmark" }, //default binding
+	// { "keys": ["f3"],  "command": "do_nothing" },
+	{ "keys": ["f4"],  "command": "next_result" }, //default binding
+	{ "keys": ["f5"],  "command": "sort_lines", "args": {"case_sensitive": false} }, //default binding
+	{ "keys": ["f6"],  "command": "toggle_setting", "args": {"setting": "spell_check"} }, //default binding
+	{ "keys": ["f7"],  "command": "build" }, //default binding
+	// { "keys": ["f8"],  "command": "do_nothing" },
+	// { "keys": ["f9"],  "command": "do_nothing" },
+	// { "keys": ["f10"], "command": "do_nothing" },
+	// { "keys": ["f11"], "command": "NOTE: osx_global" }, //Show Desktop
+	{ "keys": ["f12"], "command": "goto_definition" }, //default binding
+	
+	// { "keys": ["up"],    "command": "do_nothing" },
+	// { "keys": ["down"],  "command": "do_nothing" },
+	// { "keys": ["left"],  "command": "do_nothing" },
+	// { "keys": ["right"], "command": "do_nothing" },
+	
+	// { "keys": ["escape"],    "command": "do_nothing" }, //Lots of context-dependent default bindings
+	// { "keys": ["backspace"], "command": "do_nothing" }, //NOTE: This is actually "Delete"
+	// { "keys": ["delete"],    "command": "do_nothing" }, //NOTE: This is actually Fn+"Delete"
+	{ "keys": ["home"],      "command": "move_to", "args": {"to": "bol", "extend": false} }, //default binding NOTE: This is actually Fn+Left
+	{ "keys": ["end"],       "command": "move_to", "args": {"to": "eol", "extend": false} }, //default binding NOTE: This is actually Fn+Right
+	
+// +--------------------------------------------------------------+
+// |                        Shift (shift+)                        |
+// +--------------------------------------------------------------+
+	// { "keys": ["shift+f1"],  "command": "do_nothing" },
+	{ "keys": ["shift+f2"],  "command": "prev_bookmark" }, //default binding
+	// { "keys": ["shift+f3"],  "command": "do_nothing" },
+	{ "keys": ["shift+f4"],  "command": "prev_result" }, //default binding
+	// { "keys": ["shift+f5"],  "command": "do_nothing" },
+	// { "keys": ["shift+f6"],  "command": "do_nothing" },
+	// { "keys": ["shift+f7"],  "command": "do_nothing" },
+	// { "keys": ["shift+f8"],  "command": "do_nothing" },
+	// { "keys": ["shift+f9"],  "command": "do_nothing" },
+	// { "keys": ["shift+f10"], "command": "do_nothing" },
+	// { "keys": ["shift+f11"], "command": "do_nothing" },
+	{ "keys": ["shift+f12"], "command": "goto_reference" }, //default binding
+	
+	// { "keys": ["shift+up"],    "command": "do_nothing" },
+	// { "keys": ["shift+down"],  "command": "do_nothing" },
+	// { "keys": ["shift+left"],  "command": "do_nothing" },
+	// { "keys": ["shift+right"], "command": "do_nothing" },
+	
+	// { "keys": ["shift+escape"],    "command": "do_nothing" }, //default binding => show_panel("output.exec") if no panel is visible
+	// { "keys": ["shift+backspace"], "command": "do_nothing" }, //NOTE: This is actually Shift+"Delete"
+	// { "keys": ["shift+delete"],    "command": "do_nothing" }, //NOTE: This is actually Fn+Shift+"Delete"
+	{ "keys": ["shift+home"],      "command": "move_to", "args": {"to": "bol", "extend": true} }, //default binding NOTE: This is actually Fn+Shift+Left
+	{ "keys": ["shift+end"],       "command": "move_to", "args": {"to": "eol", "extend": true} }, //default binding NOTE: This is actually Fn+Shift+Right
+	// { "keys": ["shift+enter"],     "command": "do_nothing" }, //Some context-dependent default bindings
+	{ "keys": ["shift+tab"],       "command": "insert", "args": {"characters": "\t"} }, //default binding
+	// { "keys": ["shift+space"],     "command": "do_nothing" },
+	
+// +--------------------------------------------------------------+
+// |                     ⌘ Command (command+)                     |
+// +--------------------------------------------------------------+
+	// { "keys": ["command+f1"],  "command": "do_nothing" },
+	{ "keys": ["command+f2"],  "command": "toggle_bookmark", "args": {"toggle_line": true } }, //default binding
+	// { "keys": ["command+f3"],  "command": "do_nothing" },
+	// { "keys": ["command+f4"],  "command": "do_nothing" },
+	// { "keys": ["command+f5"],  "command": "NOTE: osx_global" }, //Toggle voiceover
+	// { "keys": ["command+f6"],  "command": "do_nothing" },
+	// { "keys": ["command+f7"],  "command": "do_nothing" },
+	// { "keys": ["command+f8"],  "command": "do_nothing" },
+	// { "keys": ["command+f9"],  "command": "do_nothing" },
+	// { "keys": ["command+f10"], "command": "do_nothing" },
+	// { "keys": ["command+f11"], "command": "do_nothing" },
+	{ "keys": ["command+f12"], "command": "goto_definition", "args": {"side_by_side": true, "clear_to_right": true} }, //default binding
+	
+	// { "keys": ["command+`"], "command": "NOTE: osx_global" }, //Move focus to next window
+	{ "keys": ["command+1"], "command": "fold_by_level", "args": {"level": 1} }, //default binding
+	{ "keys": ["command+2"], "command": "fold_by_level", "args": {"level": 2} }, //default binding
+	{ "keys": ["command+3"], "command": "fold_by_level", "args": {"level": 3} }, //default binding
+	{ "keys": ["command+4"], "command": "fold_by_level", "args": {"level": 4} }, //default binding
+	{ "keys": ["command+5"], "command": "fold_by_level", "args": {"level": 5} }, //default binding
+	{ "keys": ["command+6"], "command": "fold_by_level", "args": {"level": 6} }, //default binding
+	{ "keys": ["command+7"], "command": "fold_by_level", "args": {"level": 7} }, //default binding
+	{ "keys": ["command+8"], "command": "fold_by_level", "args": {"level": 8} }, //default binding
+	{ "keys": ["command+9"], "command": "fold_by_level", "args": {"level": 9} }, //default binding
+	{ "keys": ["command+0"], "command": "unfold_all" }, //default binding
+	// { "keys": ["command+-"], "command": "do_nothing" },
+	// { "keys": ["command++"], "command": "do_nothing" },
+	
+	// { "keys": ["command+q"], "command": "do_nothing" },
+	{ "keys": ["command+w"], "command": "close" }, //default binding
+	{ "keys": ["command+e"], "command": "reopen_last_file" }, //default = "slurp_find_string"
+	{ "keys": ["command+r"], "command": "kill_line" }, //TODO: Rebind Windows Alt+D
+	{ "keys": ["command+t"], "command": "create_local_header", "args": { "width": 32, "bold": true } },
+	{ "keys": ["command+y"], "command": "print_scopes" },
+	{ "keys": ["command+u"], "command": "upper_case" }, //TODO: Rebind "soft_undo"?
+	{ "keys": ["command+i"], "command": "fold_at_same_indentation", "args": {"single_fold": true} }, //TODO: Rebind incremental_find panel
+	{ "keys": ["command+o"], "command": "open_next_fold" },
+	{ "keys": ["command+p"], "command": "show_overlay", "args": {"overlay": "goto", "show_files": true} }, //default binding
+	{ "keys": ["command+["], "command": "unindent" }, //default binding
+	{ "keys": ["command+]"], "command": "indent" }, //default binding
+	{ "keys": ["command+\\"], "command": "set_layout", "args": {"cols": [0.0, 0.5, 1.0], "rows": [0.0, 1.0], "cells": [[0, 0, 1, 1], [1, 0, 2, 1]]} },
+	
+	{ "keys": ["command+a"], "command": "select_line" },
+	{ "keys": ["command+s"], "command": "save", "args": { "async": true } }, //default binding
+	{ "keys": ["command+d"], "command": "find_under_expand" }, //TODO: Use "grab_next"? default binding
+	{ "keys": ["command+f"], "command": "show_panel", "args": {"panel": "find", "reverse": false} }, //default binding
+	{ "keys": ["command+g"], "command": "my_google_search" }, //TODO: Rebind "find_next"
+	{ "keys": ["command+h"], "command": "open_header", "args": {"extensions": ["cpp", "c", "h", "hpp"]} },
+	{ "keys": ["command+j"], "command": "toggle_distraction_free" }, //Lots of multi-stroke default bindings
+	{ "keys": ["command+k"], "command": "toggle_record_macro" }, //Tons of multi-stroke default bindings
+	{ "keys": ["command+l"], "command": "collapse_braces" },
+	{ "keys": ["command+;"], "command": "taylor" },
+	{ "keys": ["command+'"], "command": "show_panel", "args": {"panel": "console", "toggle": true} },
+	
+	{ "keys": ["command+z"], "command": "undo" }, //default binding
+	{ "keys": ["command+x"], "command": "cut" }, //default binding
+	{ "keys": ["command+c"], "command": "copy" }, //default binding
+	{ "keys": ["command+v"], "command": "paste" }, //default binding
+	{ "keys": ["command+b"], "command": "build" }, //default binding
+	{ "keys": ["command+n"], "command": "new_file" }, //default binding
+	// { "keys": ["command+m"], "command": "NOTE: osx_global" }, //Minimize Window
+	{ "keys": ["command+,"], "command": "jump_back" }, //TODO: Rebind "edit_settings"
+	{ "keys": ["command+."], "command": "jump_forward" },
+	{ "keys": ["command+/"], "command": "toggle_comment", "args": {"block": false} }, //default binding
+	
+	// { "keys": ["command+insert"],   "command": "not_available_on_mac?" },
+	// { "keys": ["command+delete"],   "command": "not_available_on_mac" },
+	{ "keys": ["command+home"],     "command": "move_to", "args": { "to": "bof", "extend": false } }, //NOTE: This is actually Fn+Command+Left
+	{ "keys": ["command+end"],      "command": "move_to", "args": { "to": "eof", "extend": false } }, //NOTE: This is actually Fn+Command+Right
+	// { "keys": ["command+pageup"],   "command": "not_available_on_mac?" },
+	// { "keys": ["command+pagedown"], "command": "not_available_on_mac?" },
+	
+	{ "keys": ["command+up"],    "command": "move_to_empty_line", "args": {"forward": false, "show_at_center": true} },
+	{ "keys": ["command+down"],  "command": "move_to_empty_line", "args": {"forward": true, "show_at_center": true} },
+	// { "keys": ["command+left"],  "command": "NOTE: osx_global" }, //Home equivalent
+	// { "keys": ["command+right"], "command": "NOTE: osx_global" }, //End equivalent
+	
+	// { "keys": ["command+escape"],    "command": "do_nothing" },
+	// { "keys": ["command+backspace"], "command": "NOTE: osx_global" }, //Delete to Hard BOL NOTE: This is actually Command+"Delete"
+	// { "keys": ["command+delete"],    "command": "NOTE: osx_global" }, //Delete to Hard EOL NOTE: This is actually Fn+Command+"Delete"
+	// { "keys": ["command+enter"],     "command": "do_nothing" },
+	// { "keys": ["command+pause"],     "command": "do_nothing" },
+	// { "keys": ["command+tab"],       "command": "NOTE: osx_global" }, //Cycle window focus
+	// { "keys": ["command+space"],     "command": "NOTE: osx_global" }, //Spotlight search
+	// { "keys": ["command+clear"],     "command": "do_nothing" },
+	
+	// { "keys": ["command+keypad_period"],   "command": "do_nothing" },
+	// { "keys": ["command+keypad_divide"],   "command": "do_nothing" },
+	// { "keys": ["command+keypad_multiply"], "command": "do_nothing" },
+	// { "keys": ["command+keypad_minus"],    "command": "do_nothing" },
+	// { "keys": ["command+keypad_plus"],     "command": "do_nothing" },
+	// { "keys": ["command+keypad_enter"],    "command": "do_nothing" },
+	
+// +--------------------------------------------------------------+
+// |               ⌘ Command+Shift (command+shift)                |
+// +--------------------------------------------------------------+
+	// { "keys": ["command+shift+f1"],  "command": "do_nothing" },
+	// { "keys": ["command+shift+f2"],  "command": "do_nothing" },
+	// { "keys": ["command+shift+f3"],  "command": "do_nothing" },
+	// { "keys": ["command+shift+f4"],  "command": "do_nothing" },
+	// { "keys": ["command+shift+f5"],  "command": "do_nothing" },
+	// { "keys": ["command+shift+f6"],  "command": "do_nothing" },
+	// { "keys": ["command+shift+f7"],  "command": "do_nothing" },
+	// { "keys": ["command+shift+f8"],  "command": "do_nothing" },
+	// { "keys": ["command+shift+f9"],  "command": "do_nothing" },
+	// { "keys": ["command+shift+f10"], "command": "do_nothing" },
+	// { "keys": ["command+shift+f11"], "command": "do_nothing" },
+	// { "keys": ["command+shift+f12"], "command": "do_nothing" },
+	
+	// { "keys": ["command+shift+`"], "command": "do_nothing" },
+	// { "keys": ["command+shift+1"], "command": "do_nothing" },
+	// { "keys": ["command+shift+2"], "command": "do_nothing" },
+	// { "keys": ["command+shift+3"], "command": "NOTE: osx_global" }, //Save picture of screen as a file
+	// { "keys": ["command+shift+4"], "command": "NOTE: osx_global" }, //Save picture of selected area as a file
+	// { "keys": ["command+shift+5"], "command": "NOTE: osx_global" }, //Screenshot and recording options
+	// { "keys": ["command+shift+6"], "command": "do_nothing" },
+	// { "keys": ["command+shift+7"], "command": "do_nothing" },
+	// { "keys": ["command+shift+8"], "command": "do_nothing" },
+	// { "keys": ["command+shift+9"], "command": "do_nothing" },
+	// { "keys": ["command+shift+0"], "command": "do_nothing" },
+	// { "keys": ["command+shift+-"], "command": "do_nothing" },
+	// { "keys": ["command+shift++"], "command": "do_nothing" },
+	
+	// { "keys": ["command+shift+q"], "command": "do_nothing" },
+	// { "keys": ["command+shift+w"], "command": "do_nothing" },
+	{ "keys": ["command+shift+e"], "command": "genereate_enum_str_func" },
+	{ "keys": ["command+shift+r"], "command": "character_replace", "args": { "character": " " } },
+	{ "keys": ["command+shift+t"], "command": "create_local_header", "args": { "width": 64, "bold": false } },
+	// { "keys": ["command+shift+y"], "command": "NOTE: osx_global" }, //Make New Sticky Note
+	{ "keys": ["command+shift+u"], "command": "lower_case" },
+	{ "keys": ["command+shift+i"], "command": "fold_at_same_indentation" },
+	{ "keys": ["command+shift+o"], "command": "open_next_fold", "args": {"reverse": true} },
+	{ "keys": ["command+shift+p"], "command": "show_overlay", "args": {"overlay": "command_palette"} }, //default binding
+	// { "keys": ["command+shift+["], "command": "do_nothing" },
+	// { "keys": ["command+shift+]"], "command": "do_nothing" },
+	// { "keys": ["command+shift+\\"], "command": "do_nothing" },
+	
+	{ "keys": ["command+shift+a"], "command": "select_all" }, //TODO: rebind expand_selection(to="smart")
+	// { "keys": ["command+shift+s"], "command": "do_nothing" },
+	{ "keys": ["command+shift+d"], "command": "grab_next", "args": { "case_sensitive": true, "forward": false, "word_bounded": false, "show_new_location": true, "print_success_info": true } },
+	{ "keys": ["command+shift+f"], "command": "show_panel", "args": {"panel": "find_in_files"} }, //default binding
+	{ "keys": ["command+shift+g"], "command": "my_google_search", "args": {"remove_text": true} },
+	{ "keys": ["command+shift+h"], "command": "create_file_header" },
+	// { "keys": ["command+shift+j"], "command": "do_nothing" },
+	{ "keys": ["command+shift+k"], "command": "run_macro" },
+	// { "keys": ["command+shift+l"], "command": "do_nothing" },
+	// { "keys": ["command+shift+;"], "command": "do_nothing" },
+	// { "keys": ["command+shift+'"], "command": "do_nothing" },
+	
+	{ "keys": ["command+shift+z"], "command": "redo" }, //TODO: Should this be "redo_or_repeat"?
+	// { "keys": ["command+shift+x"], "command": "do_nothing" },
+	{ "keys": ["command+shift+c"], "command": "duplicate_line" },
+	// { "keys": ["command+shift+v"], "command": "do_nothing" },
+	// { "keys": ["command+shift+b"], "command": "do_nothing" },
+	// { "keys": ["command+shift+n"], "command": "do_nothing" },
+	// { "keys": ["command+shift+m"], "command": "do_nothing" },
+	// { "keys": ["command+shift+,"], "command": "do_nothing" },
+	// { "keys": ["command+shift+."], "command": "do_nothing" },
+	// { "keys": ["command+shift+/"], "command": "NOTE: osx_global" }, //Show help menu
+	
+	// { "keys": ["command+shift+insert"],   "command": "not_available_on_mac?" },
+	// { "keys": ["command+shift+delete"],   "command": "not_available_on_mac" },
+	{ "keys": ["command+shift+home"],     "command": "move_to", "args": { "to": "bof", "extend": true } }, //NOTE: This is actually Fn+Command+Shift+Left
+	{ "keys": ["command+shift+end"],      "command": "move_to", "args": { "to": "eof", "extend": true } }, //NOTE: This is actually Fn+Command+Shift+Left
+	// { "keys": ["command+shift+pageup"],   "command": "not_available_on_mac?" },
+	// { "keys": ["command+shift+pagedown"], "command": "not_available_on_mac?" },
+	
+	{ "keys": ["command+shift+up"],    "command": "move_to_empty_line", "args": {"forward": false, "expand_selection": true, "show_at_center": true} },
+	{ "keys": ["command+shift+down"],  "command": "move_to_empty_line", "args": {"forward": true,  "expand_selection": true, "show_at_center": true} },
+	// { "keys": ["command+shift+left"],  "command": "NOTE: osx_global" }, //Shift+Home equivalent
+	// { "keys": ["command+shift+right"], "command": "NOTE: osx_global" }, //Shift+End equivalent
+	
+	// { "keys": ["command+shift+escape"],    "command": "do_nothing" },
+	// { "keys": ["command+shift+backspace"], "command": "do_nothing" }, //NOTE: This is actually Command+Shift+"Delete"
+	// { "keys": ["command+shift+delete"],    "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Shift+"Delete"
+	// { "keys": ["command+shift+enter"],     "command": "do_nothing" },
+	// { "keys": ["command+shift+pause"],     "command": "do_nothing" },
+	// { "keys": ["command+shift+tab"],       "command": "NOTE: osx_global" }, //Cycle window focus backwards
+	// { "keys": ["command+shift+space"],     "command": "do_nothing" },
+	// { "keys": ["command+shift+clear"],     "command": "do_nothing" },
+	
+	// { "keys": ["command+shift+keypad_period"],   "command": "do_nothing" },
+	// { "keys": ["command+shift+keypad_divide"],   "command": "do_nothing" },
+	// { "keys": ["command+shift+keypad_multiply"], "command": "do_nothing" },
+	// { "keys": ["command+shift+keypad_minus"],    "command": "do_nothing" },
+	// { "keys": ["command+shift+keypad_plus"],     "command": "do_nothing" },
+	// { "keys": ["command+shift+keypad_enter"],    "command": "do_nothing" },
+	
+// +--------------------------------------------------------------+
+// |                       Option (option+)                       |
+// +--------------------------------------------------------------+
+	// { "keys": ["option+f1"],  "command": "do_nothing" },
+	// { "keys": ["option+f2"],  "command": "do_nothing" },
+	// { "keys": ["option+f3"],  "command": "do_nothing" },
+	// { "keys": ["option+f4"],  "command": "do_nothing" },
+	// { "keys": ["option+f5"],  "command": "do_nothing" },
+	// { "keys": ["option+f6"],  "command": "do_nothing" },
+	// { "keys": ["option+f7"],  "command": "do_nothing" },
+	// { "keys": ["option+f8"],  "command": "do_nothing" },
+	// { "keys": ["option+f9"],  "command": "do_nothing" },
+	// { "keys": ["option+f10"], "command": "do_nothing" },
+	// { "keys": ["option+f11"], "command": "do_nothing" },
+	// { "keys": ["option+f12"], "command": "do_nothing" },
+	
+	// { "keys": ["option+`"], "command": "do_nothing" },
+	{ "keys": ["option+1"], "command": "toggle_regex",          "context": [ { "key": "setting.is_widget", "operator": "equal", "operand": true } ] },
+	{ "keys": ["option+2"], "command": "toggle_case_sensitive", "context": [ { "key": "setting.is_widget", "operator": "equal", "operand": true } ] },
+	{ "keys": ["option+3"], "command": "toggle_whole_word",     "context": [ { "key": "setting.is_widget", "operator": "equal", "operand": true } ] },
+	// { "keys": ["option+4"], "command": "do_nothing" },
+	// { "keys": ["option+5"], "command": "do_nothing" },
+	// { "keys": ["option+6"], "command": "do_nothing" },
+	// { "keys": ["option+7"], "command": "do_nothing" },
+	// { "keys": ["option+8"], "command": "do_nothing" },
+	// { "keys": ["option+9"], "command": "do_nothing" },
+	// { "keys": ["option+0"], "command": "do_nothing" },
+	// { "keys": ["option+-"], "command": "do_nothing" },
+	// { "keys": ["option++"], "command": "do_nothing" },
+	
+	// { "keys": ["option+q"], "command": "do_nothing" }, //Used to type: œ
+	// { "keys": ["option+w"], "command": "do_nothing" }, //Used to type: ∑
+	// { "keys": ["option+e"], "command": "do_nothing" }, //Used to type: ´
+	// { "keys": ["option+r"], "command": "do_nothing" }, //Used to type: ®
+	// { "keys": ["option+t"], "command": "do_nothing" }, //Used to type: †
+	// { "keys": ["option+y"], "command": "do_nothing" }, //Used to type: ¥
+	// { "keys": ["option+u"], "command": "do_nothing" }, //Used to type: ¨
+	// { "keys": ["option+i"], "command": "do_nothing" }, //Used to type: ˆ
+	// { "keys": ["option+o"], "command": "do_nothing" }, //Used to type: ø
+	// { "keys": ["option+p"], "command": "do_nothing" }, //Used to type: π
+	// { "keys": ["option+["], "command": "do_nothing" },
+	// { "keys": ["option+]"], "command": "do_nothing" },
+	// { "keys": ["option+\\"], "command": "do_nothing" },
+	
+	{ "keys": ["option+a"], "command": "alignment" }, //Used to type: å
+	{ "keys": ["option+s"], "command": "grab_next", "args": { "case_sensitive": true, "forward": true, "word_bounded": false, "show_new_location": true, "print_success_info": true, "add_to_selection": false } }, //Used to type: ß
+	{ "keys": ["option+d"], "command": "show_overlay", "args": {"overlay": "goto", "text": "@"} }, //Used to type: ∂
+	// { "keys": ["option+f"], "command": "do_nothing" }, //Used to type: ƒ
+	// { "keys": ["option+g"], "command": "do_nothing" }, //Used to type: ©
+	// { "keys": ["option+h"], "command": "do_nothing" }, //Used to type: ˙
+	// { "keys": ["option+j"], "command": "do_nothing" }, //Used to type: ∆
+	// { "keys": ["option+k"], "command": "do_nothing" }, //Used to type: ˚
+	// { "keys": ["option+l"], "command": "do_nothing" }, //Used to type: ¬
+	// { "keys": ["option+;"], "command": "do_nothing" },
+	// { "keys": ["option+'"], "command": "do_nothing" },
+	
+	// { "keys": ["option+z"], "command": "do_nothing" }, //Used to type: Ω
+	// { "keys": ["option+x"], "command": "do_nothing" }, //Used to type: ≈
+	// { "keys": ["option+c"], "command": "do_nothing" }, //Used to type: ç
+	// { "keys": ["option+v"], "command": "do_nothing" }, //Used to type: √
+	// { "keys": ["option+b"], "command": "do_nothing" }, //Used to type: ∫
+	// { "keys": ["option+n"], "command": "do_nothing" }, //Used to type: ˜
+	// { "keys": ["option+m"], "command": "do_nothing" }, //Used to type: µ
+	// { "keys": ["option+,"], "command": "do_nothing" },
+	// { "keys": ["option+."], "command": "do_nothing" },
+	// { "keys": ["option+/"], "command": "do_nothing" },
+	
+	// { "keys": ["option+insert"],   "command": "not_available_on_mac?" },
+	// { "keys": ["option+delete"],   "command": "not_available_on_mac" },
+	// { "keys": ["option+home"],     "command": "do_nothing" }, //NOTE: This is actually Fn+Option+Left
+	// { "keys": ["option+end"],      "command": "do_nothing" }, //NOTE: This is actually Fn+Option+Right
+	// { "keys": ["option+pageup"],   "command": "not_available_on_mac?" },
+	// { "keys": ["option+pagedown"], "command": "not_available_on_mac?" },
+	
+	{ "keys": ["option+up"],    "command": "move_to_empty_line", "args": {"forward": false, "show_at_center": true} },
+	{ "keys": ["option+down"],  "command": "move_to_empty_line", "args": {"forward": true,  "show_at_center": true} },
+	{ "keys": ["option+left"],  "command": "move", "args": {"by": "words",     "forward": false} }, //default binding
+	{ "keys": ["option+right"], "command": "move", "args": {"by": "word_ends", "forward": true }  }, //default binding
+	
+	// { "keys": ["option+escape"],    "command": "do_nothing" },
+	// { "keys": ["option+backspace"], "command": "do_nothing" }, //NOTE: This is actually Option+"Delete"
+	// { "keys": ["option+delete"],    "command": "do_nothing" }, //NOTE: This is actually Fn+Option+"Delete"
+	// { "keys": ["option+enter"],     "command": "do_nothing" },
+	// { "keys": ["option+pause"],     "command": "do_nothing" },
+	// { "keys": ["option+tab"],       "command": "do_nothing" },
+	// { "keys": ["option+space"],     "command": "do_nothing" },
+	// { "keys": ["option+clear"],     "command": "do_nothing" },
+	
+	// { "keys": ["option+keypad_period"],   "command": "do_nothing" },
+	// { "keys": ["option+keypad_divide"],   "command": "do_nothing" },
+	// { "keys": ["option+keypad_multiply"], "command": "do_nothing" },
+	// { "keys": ["option+keypad_minus"],    "command": "do_nothing" },
+	// { "keys": ["option+keypad_plus"],     "command": "do_nothing" },
+	// { "keys": ["option+keypad_enter"],    "command": "do_nothing" },
+	
+// +--------------------------------------------------------------+
+// |                 Option+Shift (option+shift+)                 |
+// +--------------------------------------------------------------+
+	// { "keys": ["option+shift+f1"],  "command": "do_nothing" },
+	// { "keys": ["option+shift+f2"],  "command": "do_nothing" },
+	// { "keys": ["option+shift+f3"],  "command": "do_nothing" },
+	// { "keys": ["option+shift+f4"],  "command": "do_nothing" },
+	// { "keys": ["option+shift+f5"],  "command": "do_nothing" },
+	// { "keys": ["option+shift+f6"],  "command": "do_nothing" },
+	// { "keys": ["option+shift+f7"],  "command": "do_nothing" },
+	// { "keys": ["option+shift+f8"],  "command": "do_nothing" },
+	// { "keys": ["option+shift+f9"],  "command": "do_nothing" },
+	// { "keys": ["option+shift+f10"], "command": "do_nothing" },
+	// { "keys": ["option+shift+f11"], "command": "do_nothing" },
+	// { "keys": ["option+shift+f12"], "command": "do_nothing" },
+	
+	// { "keys": ["option+shift+`"], "command": "do_nothing" },
+	// { "keys": ["option+shift+1"], "command": "do_nothing" },
+	// { "keys": ["option+shift+2"], "command": "do_nothing" },
+	// { "keys": ["option+shift+3"], "command": "do_nothing" },
+	// { "keys": ["option+shift+4"], "command": "do_nothing" },
+	// { "keys": ["option+shift+5"], "command": "do_nothing" },
+	// { "keys": ["option+shift+6"], "command": "do_nothing" },
+	// { "keys": ["option+shift+7"], "command": "do_nothing" },
+	// { "keys": ["option+shift+8"], "command": "do_nothing" },
+	// { "keys": ["option+shift+9"], "command": "do_nothing" },
+	// { "keys": ["option+shift+0"], "command": "do_nothing" },
+	// { "keys": ["option+shift+-"], "command": "do_nothing" },
+	// { "keys": ["option+shift++"], "command": "do_nothing" },
+	
+	// { "keys": ["option+shift+q"], "command": "do_nothing" }, //Used to type: Œ
+	// { "keys": ["option+shift+w"], "command": "do_nothing" }, //Used to type: „
+	// { "keys": ["option+shift+e"], "command": "do_nothing" }, //Used to type: ´
+	// { "keys": ["option+shift+r"], "command": "do_nothing" }, //Used to type: ‰
+	// { "keys": ["option+shift+t"], "command": "do_nothing" }, //Used to type: ˇ
+	// { "keys": ["option+shift+y"], "command": "do_nothing" }, //Used to type: Á
+	// { "keys": ["option+shift+u"], "command": "do_nothing" }, //Used to type: ¨
+	// { "keys": ["option+shift+i"], "command": "do_nothing" }, //Used to type: ˆ
+	// { "keys": ["option+shift+o"], "command": "do_nothing" }, //Used to type: Ø
+	// { "keys": ["option+shift+p"], "command": "do_nothing" }, //Used to type: ∏
+	// { "keys": ["option+shift+["], "command": "do_nothing" },
+	// { "keys": ["option+shift+]"], "command": "do_nothing" },
+	// { "keys": ["option+shift+\\"], "command": "do_nothing" },
+	
+	{ "keys": ["option+shift+a"], "command": "align_character" }, //Used to type: Å
+	{ "keys": ["option+shift+s"], "command": "grab_next", "args": { "case_sensitive": true, "forward": false, "word_bounded": false, "show_new_location": true, "print_success_info": true, "add_to_selection": false } }, //Used to type: Í
+	{ "keys": ["option+shift+d"], "command": "goto_symbol_in_project"}, //Used to type: Î
+	// { "keys": ["option+shift+f"], "command": "do_nothing" }, //Used to type: Ï
+	// { "keys": ["option+shift+g"], "command": "do_nothing" }, //Used to type: ˝
+	// { "keys": ["option+shift+h"], "command": "do_nothing" }, //Used to type: Ó
+	// { "keys": ["option+shift+j"], "command": "do_nothing" }, //Used to type: Ô
+	// { "keys": ["option+shift+k"], "command": "do_nothing" }, //Used to type: 
+	// { "keys": ["option+shift+l"], "command": "do_nothing" }, //Used to type: Ò
+	// { "keys": ["option+shift+;"], "command": "do_nothing" },
+	// { "keys": ["option+shift+'"], "command": "do_nothing" },
+	
+	// { "keys": ["option+shift+z"], "command": "do_nothing" }, //Used to type: ¸
+	// { "keys": ["option+shift+x"], "command": "do_nothing" }, //Used to type: ˛
+	// { "keys": ["option+shift+c"], "command": "do_nothing" }, //Used to type: Ç
+	// { "keys": ["option+shift+v"], "command": "do_nothing" }, //Used to type: ◊
+	// { "keys": ["option+shift+b"], "command": "do_nothing" }, //Used to type: ı
+	// { "keys": ["option+shift+n"], "command": "do_nothing" }, //Used to type: ˜
+	// { "keys": ["option+shift+m"], "command": "do_nothing" }, //Used to type: Â
+	// { "keys": ["option+shift+,"], "command": "do_nothing" },
+	// { "keys": ["option+shift+."], "command": "do_nothing" },
+	// { "keys": ["option+shift+/"], "command": "do_nothing" },
+	
+	// { "keys": ["option+shift+insert"],   "command": "not_available_on_mac?" },
+	// { "keys": ["option+shift+delete"],   "command": "not_available_on_mac" },
+	// { "keys": ["option+shift+home"],     "command": "do_nothing" }, //NOTE: This is actually Fn+Option+Shift+Left
+	// { "keys": ["option+shift+end"],      "command": "do_nothing" }, //NOTE: This is actually Fn+Option+Shift+Right
+	// { "keys": ["option+shift+pageup"],   "command": "not_available_on_mac?" },
+	// { "keys": ["option+shift+pagedown"], "command": "not_available_on_mac?" },
+	
+	{ "keys": ["option+shift+up"],    "command": "move_to_empty_line", "args": {"forward": false, "expand_selection": true, "show_at_center": true} },
+	{ "keys": ["option+shift+down"],  "command": "move_to_empty_line", "args": {"forward": true,  "expand_selection": true, "show_at_center": true} },
+	{ "keys": ["option+shift+left"],  "command": "move", "args": {"by": "words",     "forward": false, "extend": true} }, //default binding
+	{ "keys": ["option+shift+right"], "command": "move", "args": {"by": "word_ends", "forward": true,  "extend": true} }, //default binding
+	
+	// { "keys": ["option+shift+escape"],    "command": "do_nothing" },
+	// { "keys": ["option+shift+backspace"], "command": "do_nothing" }, //NOTE: This is actually Option+Shift+"Delete"
+	// { "keys": ["option+shift+delete"],    "command": "do_nothing" }, //NOTE: This is actually Fn+Option+Shift+"Delete"
+	// { "keys": ["option+shift+enter"],     "command": "do_nothing" },
+	// { "keys": ["option+shift+pause"],     "command": "do_nothing" },
+	// { "keys": ["option+shift+tab"],       "command": "do_nothing" },
+	// { "keys": ["option+shift+space"],     "command": "do_nothing" },
+	// { "keys": ["option+shift+clear"],     "command": "do_nothing" },
+	
+	// { "keys": ["option+shift+keypad_period"],   "command": "do_nothing" },
+	// { "keys": ["option+shift+keypad_divide"],   "command": "do_nothing" },
+	// { "keys": ["option+shift+keypad_multiply"], "command": "do_nothing" },
+	// { "keys": ["option+shift+keypad_minus"],    "command": "do_nothing" },
+	// { "keys": ["option+shift+keypad_plus"],     "command": "do_nothing" },
+	// { "keys": ["option+shift+keypad_enter"],    "command": "do_nothing" },
+	
+// +--------------------------------------------------------------+
+// |                      Control (control+)                      |
+// +--------------------------------------------------------------+
+	// { "keys": ["control+f1"],  "command": "NOTE: osx_global" }, //Turn keyboard access on or off
+	// { "keys": ["control+f2"],  "command": "NOTE: osx_global" }, //Move focus to the menu bar
+	// { "keys": ["control+f3"],  "command": "NOTE: osx_global" }, //Move focus to the dock
+	// { "keys": ["control+f4"],  "command": "NOTE: osx_global" }, //Move focus to active or next window
+	// { "keys": ["control+f5"],  "command": "NOTE: osx_global" }, //Move focus to the window toolbar
+	// { "keys": ["control+f6"],  "command": "NOTE: osx_global" }, //Move focus to the floating window
+	// { "keys": ["control+f7"],  "command": "NOTE: osx_global" }, //Change the way Tab moves focus
+	// { "keys": ["control+f8"],  "command": "NOTE: osx_global" }, //Move focus to status menus
+	// { "keys": ["control+f9"],  "command": "do_nothing" },
+	// { "keys": ["control+f10"], "command": "do_nothing" },
+	// { "keys": ["control+f11"], "command": "do_nothing" },
+	// { "keys": ["control+f12"], "command": "do_nothing" },
+	
+	// { "keys": ["control+`"], "command": "do_nothing" },
+	// { "keys": ["control+1"], "command": "do_nothing" },
+	// { "keys": ["control+2"], "command": "do_nothing" },
+	// { "keys": ["control+3"], "command": "do_nothing" },
+	// { "keys": ["control+4"], "command": "do_nothing" },
+	// { "keys": ["control+5"], "command": "do_nothing" },
+	// { "keys": ["control+6"], "command": "do_nothing" },
+	// { "keys": ["control+7"], "command": "do_nothing" },
+	// { "keys": ["control+8"], "command": "do_nothing" },
+	// { "keys": ["control+9"], "command": "do_nothing" },
+	// { "keys": ["control+0"], "command": "do_nothing" },
+	// { "keys": ["control+-"], "command": "do_nothing" },
+	// { "keys": ["control++"], "command": "do_nothing" },
+	
+	// { "keys": ["control+q"], "command": "do_nothing" },
+	// { "keys": ["control+w"], "command": "do_nothing" },
+	// { "keys": ["control+e"], "command": "do_nothing" },
+	// { "keys": ["control+r"], "command": "do_nothing" },
+	// { "keys": ["control+t"], "command": "do_nothing" },
+	// { "keys": ["control+y"], "command": "NOTE: osx_global" }, //yank
+	// { "keys": ["control+u"], "command": "do_nothing" },
+	// { "keys": ["control+i"], "command": "do_nothing" },
+	// { "keys": ["control+o"], "command": "NOTE: osx_global" }, //Insert "$0\n"
+	// { "keys": ["control+p"], "command": "do_nothing" },
+	// { "keys": ["control+["], "command": "do_nothing" },
+	// { "keys": ["control+]"], "command": "do_nothing" },
+	// { "keys": ["control+\\"], "command": "do_nothing" },
+	
+	// { "keys": ["control+a"], "command": "do_nothing" },
+	// { "keys": ["control+s"], "command": "do_nothing" },
+	// { "keys": ["control+d"], "command": "do_nothing" },
+	// { "keys": ["control+f"], "command": "do_nothing" },
+	{ "keys": ["control+g"], "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} }, //default binding
+	// { "keys": ["control+h"], "command": "do_nothing" },
+	// { "keys": ["control+j"], "command": "do_nothing" },
+	// { "keys": ["control+k"], "command": "NOTE: osx_global" }, //Delete to Hard EOL
+	// { "keys": ["control+l"], "command": "NOTE: osx_global" }, //show_at_center
+	// { "keys": ["control+;"], "command": "do_nothing" },
+	// { "keys": ["control+'"], "command": "do_nothing" },
+	
+	// { "keys": ["control+z"], "command": "do_nothing" },
+	// { "keys": ["control+x"], "command": "do_nothing" },
+	// { "keys": ["control+c"], "command": "do_nothing" },
+	// { "keys": ["control+v"], "command": "do_nothing" },
+	// { "keys": ["control+b"], "command": "do_nothing" },
+	// { "keys": ["control+n"], "command": "do_nothing" },
+	// { "keys": ["control+m"], "command": "do_nothing" },
+	// { "keys": ["control+,"], "command": "do_nothing" },
+	// { "keys": ["control+."], "command": "do_nothing" },
+	// { "keys": ["control+/"], "command": "do_nothing" },
+	
+	// { "keys": ["control+insert"],   "command": "not_available_on_mac?" },
+	// { "keys": ["control+delete"],   "command": "not_available_on_mac" },
+	// { "keys": ["control+home"],     "command": "do_nothing" }, //NOTE: This is actually Fn+Control+Left
+	// { "keys": ["control+end"],      "command": "do_nothing" }, //NOTE: This is actually Fn+Control+Right
+	// { "keys": ["control+pageup"],   "command": "not_available_on_mac?" },
+	// { "keys": ["control+pagedown"], "command": "not_available_on_mac?" },
+	
+	// { "keys": ["control+up"],    "command": "NOTE: osx_global" }, //Mission Control
+	// { "keys": ["control+down"],  "command": "NOTE: osx_global" }, //Application windows
+	// { "keys": ["control+left"],  "command": "NOTE: osx_global" }, //Workspace Left
+	// { "keys": ["control+right"], "command": "NOTE: osx_global" }, //Workspace Right
+	
+	// { "keys": ["control+escape"],    "command": "do_nothing" },
+	// { "keys": ["control+backspace"], "command": "do_nothing" }, //NOTE: This is actually Control+"Delete"
+	// { "keys": ["control+delete"],    "command": "do_nothing" }, //NOTE: This is actually Fn+Control+"Delete"
+	// { "keys": ["control+enter"],     "command": "do_nothing" },
+	// { "keys": ["control+pause"],     "command": "do_nothing" },
+	{ "keys": ["control+tab"],       "command": "next_view" }, //default binding
+	{ "keys": ["control+space"],     "command": "show_at_center" },
+	// { "keys": ["control+clear"],     "command": "do_nothing" },
+	
+	// { "keys": ["control+keypad_period"],   "command": "do_nothing" },
+	// { "keys": ["control+keypad_divide"],   "command": "do_nothing" },
+	// { "keys": ["control+keypad_multiply"], "command": "do_nothing" },
+	// { "keys": ["control+keypad_minus"],    "command": "do_nothing" },
+	// { "keys": ["control+keypad_plus"],     "command": "do_nothing" },
+	// { "keys": ["control+keypad_enter"],    "command": "do_nothing" },
+	
+// +--------------------------------------------------------------+
+// |                Control+Shift (control+shift+)                |
+// +--------------------------------------------------------------+
+	// { "keys": ["control+shift+f1"],  "command": "do_nothing" },
+	// { "keys": ["control+shift+f2"],  "command": "do_nothing" },
+	// { "keys": ["control+shift+f3"],  "command": "do_nothing" },
+	// { "keys": ["control+shift+f4"],  "command": "do_nothing" },
+	// { "keys": ["control+shift+f5"],  "command": "do_nothing" },
+	// { "keys": ["control+shift+f6"],  "command": "do_nothing" },
+	// { "keys": ["control+shift+f7"],  "command": "do_nothing" },
+	// { "keys": ["control+shift+f8"],  "command": "do_nothing" },
+	// { "keys": ["control+shift+f9"],  "command": "do_nothing" },
+	// { "keys": ["control+shift+f10"], "command": "do_nothing" },
+	// { "keys": ["control+shift+f11"], "command": "do_nothing" },
+	// { "keys": ["control+shift+f12"], "command": "do_nothing" },
+	
+	// { "keys": ["control+shift+`"], "command": "do_nothing" },
+	// { "keys": ["control+shift+1"], "command": "do_nothing" },
+	// { "keys": ["control+shift+2"], "command": "do_nothing" },
+	// { "keys": ["control+shift+3"], "command": "do_nothing" },
+	// { "keys": ["control+shift+4"], "command": "do_nothing" },
+	// { "keys": ["control+shift+5"], "command": "do_nothing" },
+	// { "keys": ["control+shift+6"], "command": "do_nothing" },
+	// { "keys": ["control+shift+7"], "command": "do_nothing" },
+	// { "keys": ["control+shift+8"], "command": "do_nothing" },
+	// { "keys": ["control+shift+9"], "command": "do_nothing" },
+	// { "keys": ["control+shift+0"], "command": "do_nothing" },
+	// { "keys": ["control+shift+-"], "command": "do_nothing" },
+	// { "keys": ["control+shift++"], "command": "do_nothing" },
+	
+	// { "keys": ["control+shift+q"], "command": "do_nothing" },
+	// { "keys": ["control+shift+w"], "command": "do_nothing" },
+	// { "keys": ["control+shift+e"], "command": "do_nothing" },
+	// { "keys": ["control+shift+r"], "command": "do_nothing" },
+	// { "keys": ["control+shift+t"], "command": "do_nothing" },
+	// { "keys": ["control+shift+y"], "command": "do_nothing" },
+	// { "keys": ["control+shift+u"], "command": "do_nothing" },
+	// { "keys": ["control+shift+i"], "command": "do_nothing" },
+	// { "keys": ["control+shift+o"], "command": "do_nothing" },
+	// { "keys": ["control+shift+p"], "command": "do_nothing" },
+	// { "keys": ["control+shift+["], "command": "do_nothing" },
+	// { "keys": ["control+shift+]"], "command": "do_nothing" },
+	// { "keys": ["control+shift+\\"], "command": "do_nothing" },
+	
+	// { "keys": ["control+shift+a"], "command": "do_nothing" },
+	// { "keys": ["control+shift+s"], "command": "do_nothing" },
+	// { "keys": ["control+shift+d"], "command": "do_nothing" },
+	// { "keys": ["control+shift+f"], "command": "do_nothing" },
+	// { "keys": ["control+shift+g"], "command": "do_nothing" },
+	// { "keys": ["control+shift+h"], "command": "do_nothing" },
+	// { "keys": ["control+shift+j"], "command": "do_nothing" },
+	// { "keys": ["control+shift+k"], "command": "do_nothing" },
+	// { "keys": ["control+shift+l"], "command": "do_nothing" },
+	// { "keys": ["control+shift+;"], "command": "do_nothing" },
+	// { "keys": ["control+shift+'"], "command": "do_nothing" },
+	
+	// { "keys": ["control+shift+z"], "command": "do_nothing" },
+	// { "keys": ["control+shift+x"], "command": "do_nothing" },
+	// { "keys": ["control+shift+c"], "command": "do_nothing" },
+	// { "keys": ["control+shift+v"], "command": "do_nothing" },
+	// { "keys": ["control+shift+b"], "command": "do_nothing" },
+	// { "keys": ["control+shift+n"], "command": "do_nothing" },
+	// { "keys": ["control+shift+m"], "command": "do_nothing" },
+	// { "keys": ["control+shift+,"], "command": "do_nothing" },
+	// { "keys": ["control+shift+."], "command": "do_nothing" },
+	// { "keys": ["control+shift+/"], "command": "do_nothing" },
+	
+	// { "keys": ["control+shift+insert"],   "command": "not_available_on_mac?" },
+	// { "keys": ["control+shift+delete"],   "command": "not_available_on_mac" },
+	// { "keys": ["control+shift+home"],     "command": "do_nothing" }, //NOTE: This is actually Fn+Control+Shift+Left
+	// { "keys": ["control+shift+end"],      "command": "do_nothing" }, //NOTE: This is actually Fn+Control+Shift+Right
+	// { "keys": ["control+shift+pageup"],   "command": "not_available_on_mac?" },
+	// { "keys": ["control+shift+pagedown"], "command": "not_available_on_mac?" },
+	
+	// { "keys": ["control+shift+up"],    "command": "do_nothing" },
+	// { "keys": ["control+shift+down"],  "command": "do_nothing" },
+	// { "keys": ["control+shift+left"],  "command": "do_nothing" },
+	// { "keys": ["control+shift+right"], "command": "do_nothing" },
+	
+	// { "keys": ["control+shift+escape"],    "command": "do_nothing" },
+	// { "keys": ["control+shift+backspace"], "command": "do_nothing" }, //NOTE: This is actually Control+Shift+"Delete"
+	// { "keys": ["control+shift+delete"],    "command": "do_nothing" }, //NOTE: This is actually Fn+Control+Shift+"Delete"
+	// { "keys": ["control+shift+enter"],     "command": "do_nothing" },
+	// { "keys": ["control+shift+pause"],     "command": "do_nothing" },
+	{ "keys": ["control+shift+tab"],       "command": "prev_view" }, //default binding
+	// { "keys": ["control+shift+space"],     "command": "do_nothing" },
+	// { "keys": ["control+shift+clear"],     "command": "do_nothing" },
+	
+	// { "keys": ["control+shift+keypad_period"],   "command": "do_nothing" },
+	// { "keys": ["control+shift+keypad_divide"],   "command": "do_nothing" },
+	// { "keys": ["control+shift+keypad_multiply"], "command": "do_nothing" },
+	// { "keys": ["control+shift+keypad_minus"],    "command": "do_nothing" },
+	// { "keys": ["control+shift+keypad_plus"],     "command": "do_nothing" },
+	// { "keys": ["control+shift+keypad_enter"],    "command": "do_nothing" },
+	
+// +--------------------------------------------------------------+
+// |              ⌘ Command+Option (command+option+)              |
+// +--------------------------------------------------------------+
+	// { "keys": ["command+option+f1"],  "command": "do_nothing" },
+	// { "keys": ["command+option+f2"],  "command": "do_nothing" },
+	// { "keys": ["command+option+f3"],  "command": "do_nothing" },
+	// { "keys": ["command+option+f4"],  "command": "do_nothing" },
+	// { "keys": ["command+option+f5"],  "command": "NOTE: osx_global" }, //Show accessability controls
+	// { "keys": ["command+option+f6"],  "command": "do_nothing" },
+	// { "keys": ["command+option+f7"],  "command": "do_nothing" },
+	// { "keys": ["command+option+f8"],  "command": "do_nothing" },
+	// { "keys": ["command+option+f9"],  "command": "do_nothing" },
+	// { "keys": ["command+option+f10"], "command": "do_nothing" },
+	// { "keys": ["command+option+f11"], "command": "do_nothing" },
+	// { "keys": ["command+option+f12"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+`"], "command": "do_nothing" },
+	// { "keys": ["command+option+1"], "command": "do_nothing" },
+	// { "keys": ["command+option+2"], "command": "do_nothing" },
+	// { "keys": ["command+option+3"], "command": "do_nothing" },
+	// { "keys": ["command+option+4"], "command": "do_nothing" },
+	// { "keys": ["command+option+5"], "command": "do_nothing" },
+	// { "keys": ["command+option+6"], "command": "do_nothing" },
+	// { "keys": ["command+option+7"], "command": "do_nothing" },
+	// { "keys": ["command+option+8"], "command": "do_nothing" },
+	// { "keys": ["command+option+9"], "command": "do_nothing" },
+	// { "keys": ["command+option+0"], "command": "do_nothing" },
+	// { "keys": ["command+option+-"], "command": "do_nothing" },
+	// { "keys": ["command+option++"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+q"], "command": "do_nothing" },
+	// { "keys": ["command+option+w"], "command": "do_nothing" },
+	// { "keys": ["command+option+e"], "command": "do_nothing" },
+	// { "keys": ["command+option+r"], "command": "do_nothing" },
+	// { "keys": ["command+option+t"], "command": "do_nothing" },
+	// { "keys": ["command+option+y"], "command": "do_nothing" },
+	// { "keys": ["command+option+u"], "command": "do_nothing" },
+	// { "keys": ["command+option+i"], "command": "do_nothing" },
+	// { "keys": ["command+option+o"], "command": "do_nothing" },
+	// { "keys": ["command+option+p"], "command": "do_nothing" },
+	// { "keys": ["command+option+["], "command": "do_nothing" },
+	// { "keys": ["command+option+]"], "command": "do_nothing" },
+	// { "keys": ["command+option+\\"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+a"], "command": "do_nothing" },
+	// { "keys": ["command+option+s"], "command": "do_nothing" },
+	// { "keys": ["command+option+d"], "command": "NOTE: osx_global" }, //Toggle dock hiding
+	// { "keys": ["command+option+f"], "command": "do_nothing" },
+	// { "keys": ["command+option+g"], "command": "do_nothing" },
+	// { "keys": ["command+option+h"], "command": "do_nothing" },
+	// { "keys": ["command+option+j"], "command": "do_nothing" },
+	// { "keys": ["command+option+k"], "command": "do_nothing" },
+	// { "keys": ["command+option+l"], "command": "do_nothing" },
+	// { "keys": ["command+option+;"], "command": "do_nothing" },
+	// { "keys": ["command+option+'"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+z"], "command": "do_nothing" },
+	// { "keys": ["command+option+x"], "command": "do_nothing" },
+	// { "keys": ["command+option+c"], "command": "do_nothing" },
+	// { "keys": ["command+option+v"], "command": "do_nothing" },
+	// { "keys": ["command+option+b"], "command": "do_nothing" },
+	// { "keys": ["command+option+n"], "command": "do_nothing" },
+	// { "keys": ["command+option+m"], "command": "do_nothing" },
+	// { "keys": ["command+option+,"], "command": "do_nothing" },
+	// { "keys": ["command+option+."], "command": "do_nothing" },
+	// { "keys": ["command+option+/"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+insert"],   "command": "not_available_on_mac?" },
+	// { "keys": ["command+option+delete"],   "command": "not_available_on_mac" },
+	// { "keys": ["command+option+home"],     "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Option+Left
+	// { "keys": ["command+option+end"],      "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Option+Left
+	// { "keys": ["command+option+pageup"],   "command": "not_available_on_mac?" },
+	// { "keys": ["command+option+pagedown"], "command": "not_available_on_mac?" },
+	
+	// { "keys": ["command+option+up"],    "command": "do_nothing" },
+	// { "keys": ["command+option+down"],  "command": "do_nothing" },
+	// { "keys": ["command+option+left"],  "command": "do_nothing" },
+	// { "keys": ["command+option+right"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+escape"],    "command": "do_nothing" },
+	// { "keys": ["control+backspace"], "command": "do_nothing" }, //NOTE: This is actually Control+"Delete"
+	// { "keys": ["control+delete"],    "command": "do_nothing" }, //NOTE: This is actually Fn+Control+"Delete"
+	// { "keys": ["command+option+delete"],    "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Option+"Delete"
+	// { "keys": ["command+option+enter"],     "command": "do_nothing" },
+	// { "keys": ["command+option+pause"],     "command": "do_nothing" },
+	// { "keys": ["command+option+tab"],       "command": "do_nothing" },
+	// { "keys": ["command+option+space"],     "command": "NOTE: osx_global" }, //Show Finder search window
+	// { "keys": ["command+option+clear"],     "command": "do_nothing" },
+	
+	// { "keys": ["command+option+keypad_period"],   "command": "do_nothing" },
+	// { "keys": ["command+option+keypad_divide"],   "command": "do_nothing" },
+	// { "keys": ["command+option+keypad_multiply"], "command": "do_nothing" },
+	// { "keys": ["command+option+keypad_minus"],    "command": "do_nothing" },
+	// { "keys": ["command+option+keypad_plus"],     "command": "do_nothing" },
+	// { "keys": ["command+option+keypad_enter"],    "command": "do_nothing" },
+	
+// +--------------------------------------------------------------+
+// |        ⌘ Command+Option+Shift (command+option+shift+)        |
+// +--------------------------------------------------------------+
+	// { "keys": ["command+option+shift+f1"],  "command": "do_nothing" },
+	// { "keys": ["command+option+shift+f2"],  "command": "do_nothing" },
+	// { "keys": ["command+option+shift+f3"],  "command": "do_nothing" },
+	// { "keys": ["command+option+shift+f4"],  "command": "do_nothing" },
+	// { "keys": ["command+option+shift+f5"],  "command": "do_nothing" },
+	// { "keys": ["command+option+shift+f6"],  "command": "do_nothing" },
+	// { "keys": ["command+option+shift+f7"],  "command": "do_nothing" },
+	// { "keys": ["command+option+shift+f8"],  "command": "do_nothing" },
+	// { "keys": ["command+option+shift+f9"],  "command": "do_nothing" },
+	// { "keys": ["command+option+shift+f10"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+f11"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+f12"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+shift+`"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+1"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+2"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+3"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+4"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+5"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+6"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+7"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+8"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+9"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+0"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+-"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift++"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+shift+q"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+w"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+e"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+r"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+t"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+y"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+u"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+i"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+o"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+p"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+["], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+]"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+\\"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+shift+a"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+s"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+d"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+f"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+g"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+h"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+j"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+k"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+l"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+;"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+'"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+shift+z"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+x"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+c"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+v"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+b"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+n"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+m"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+,"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+."], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+/"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+shift+insert"],   "command": "not_available_on_mac?" },
+	// { "keys": ["command+option+shift+delete"],   "command": "not_available_on_mac" },
+	// { "keys": ["command+option+shift+home"],     "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Option+Shift+Left
+	// { "keys": ["command+option+shift+end"],      "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Option+Shift+Right
+	// { "keys": ["command+option+shift+pageup"],   "command": "not_available_on_mac?" },
+	// { "keys": ["command+option+shift+pagedown"], "command": "not_available_on_mac?" },
+	
+	// { "keys": ["command+option+shift+up"],    "command": "do_nothing" },
+	// { "keys": ["command+option+shift+down"],  "command": "do_nothing" },
+	// { "keys": ["command+option+shift+left"],  "command": "do_nothing" },
+	// { "keys": ["command+option+shift+right"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+shift+escape"],    "command": "do_nothing" },
+	// { "keys": ["control+backspace"], "command": "do_nothing" }, //NOTE: This is actually Control+"Delete"
+	// { "keys": ["control+delete"],    "command": "do_nothing" }, //NOTE: This is actually Fn+Control+"Delete"
+	// { "keys": ["command+option+shift+delete"],    "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Option+Shift+"Delete"
+	// { "keys": ["command+option+shift+enter"],     "command": "do_nothing" },
+	// { "keys": ["command+option+shift+pause"],     "command": "do_nothing" },
+	// { "keys": ["command+option+shift+tab"],       "command": "do_nothing" },
+	// { "keys": ["command+option+shift+space"],     "command": "do_nothing" },
+	// { "keys": ["command+option+shift+clear"],     "command": "do_nothing" },
+	
+	// { "keys": ["command+option+shift+keypad_period"],   "command": "do_nothing" },
+	// { "keys": ["command+option+shift+keypad_divide"],   "command": "do_nothing" },
+	// { "keys": ["command+option+shift+keypad_multiply"], "command": "do_nothing" },
+	// { "keys": ["command+option+shift+keypad_minus"],    "command": "do_nothing" },
+	// { "keys": ["command+option+shift+keypad_plus"],     "command": "do_nothing" },
+	// { "keys": ["command+option+shift+keypad_enter"],    "command": "do_nothing" },
+	
+// +--------------------------------------------------------------+
+// |             ⌘ Command+Control (command+control+)             |
+// +--------------------------------------------------------------+
+	// { "keys": ["command+control+f1"],  "command": "do_nothing" },
+	// { "keys": ["command+control+f2"],  "command": "do_nothing" },
+	// { "keys": ["command+control+f3"],  "command": "do_nothing" },
+	// { "keys": ["command+control+f4"],  "command": "do_nothing" },
+	// { "keys": ["command+control+f5"],  "command": "do_nothing" },
+	// { "keys": ["command+control+f6"],  "command": "do_nothing" },
+	// { "keys": ["command+control+f7"],  "command": "do_nothing" },
+	// { "keys": ["command+control+f8"],  "command": "do_nothing" },
+	// { "keys": ["command+control+f9"],  "command": "do_nothing" },
+	// { "keys": ["command+control+f10"], "command": "do_nothing" },
+	// { "keys": ["command+control+f11"], "command": "do_nothing" },
+	// { "keys": ["command+control+f12"], "command": "do_nothing" },
+	
+	// { "keys": ["command+control+`"], "command": "do_nothing" },
+	// { "keys": ["command+control+1"], "command": "do_nothing" },
+	// { "keys": ["command+control+2"], "command": "do_nothing" },
+	// { "keys": ["command+control+3"], "command": "do_nothing" },
+	// { "keys": ["command+control+4"], "command": "do_nothing" },
+	// { "keys": ["command+control+5"], "command": "do_nothing" },
+	// { "keys": ["command+control+6"], "command": "do_nothing" },
+	// { "keys": ["command+control+7"], "command": "do_nothing" },
+	// { "keys": ["command+control+8"], "command": "do_nothing" },
+	// { "keys": ["command+control+9"], "command": "do_nothing" },
+	// { "keys": ["command+control+0"], "command": "do_nothing" },
+	// { "keys": ["command+control+-"], "command": "do_nothing" },
+	// { "keys": ["command+control++"], "command": "do_nothing" },
+	
+	{ "keys": ["command+control+q"], "command": "close_workspace" },
+	{ "keys": ["command+control+w"], "command": "prompt_select_workspace" },
+	{ "keys": ["command+control+e"], "command": "indent_blank_lines" },
+	{ "keys": ["command+control+r"], "command": "rename_file" },
+	{ "keys": ["command+control+t"], "command": "delete_trailing_spaces" },
+	{ "keys": ["command+control+y"], "command": "permute_unique_with_counts" },
+	{ "keys": ["command+control+u"], "command": "insert_string", "args": {"string": "Unimplemented(); //TODO: Implement me!"} },
+	{ "keys": ["command+control+i"], "command": "fold_by_level", "args": {"level": 1} },
+	{ "keys": ["command+control+o"], "command": "unfold_all" },
+	{ "keys": ["command+control+p"], "command": "show_overlay", "args": {"overlay": "command_palette"} },
+	// { "keys": ["command+control+["], "command": "do_nothing" },
+	// { "keys": ["command+control+]"], "command": "do_nothing" },
+	// { "keys": ["command+control+\\"], "command": "do_nothing" },
+	
+	// { "keys": ["command+control+a"], "command": "do_nothing" },
+	{ "keys": ["command+control+s"], "command": "toggle_side_bar" },
+	// { "keys": ["command+control+d"], "command": "NOTE: osx_global" }, //noop
+	{ "keys": ["command+control+f"], "command": "toggle_full_screen" }, //default binding
+	// { "keys": ["command+control+g"], "command": "do_nothing" },
+	// { "keys": ["command+control+h"], "command": "do_nothing" },
+	// { "keys": ["command+control+j"], "command": "do_nothing" },
+	// { "keys": ["command+control+k"], "command": "do_nothing" },
+	// { "keys": ["command+control+l"], "command": "do_nothing" },
+	// { "keys": ["command+control+;"], "command": "do_nothing" },
+	// { "keys": ["command+control+'"], "command": "do_nothing" },
+	
+	{ "keys": ["command+control+z"], "command": "prev_view" },
+	{ "keys": ["command+control+x"], "command": "next_view" },
+	// { "keys": ["command+control+c"], "command": "do_nothing" },
+	// { "keys": ["command+control+v"], "command": "do_nothing" },
+	// { "keys": ["command+control+b"], "command": "do_nothing" },
+	// { "keys": ["command+control+n"], "command": "do_nothing" },
+	// { "keys": ["command+control+m"], "command": "do_nothing" },
+	// { "keys": ["command+control+,"], "command": "do_nothing" },
+	// { "keys": ["command+control+."], "command": "do_nothing" },
+	// { "keys": ["command+control+/"], "command": "do_nothing" },
+	
+	// { "keys": ["command+control+insert"],   "command": "not_available_on_mac?" },
+	// { "keys": ["command+control+delete"],   "command": "not_available_on_mac" },
+	// { "keys": ["command+control+home"],     "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Control+Left
+	// { "keys": ["command+control+end"],      "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Control+Right
+	// { "keys": ["command+control+pageup"],   "command": "not_available_on_mac?" },
+	// { "keys": ["command+control+pagedown"], "command": "not_available_on_mac?" },
+	
+	{ "keys": ["command+control+up"],    "command": "goto_next_scope", "args": {"forward": false, "loop_around": false, "scope_match": "entity.name"} },
+	{ "keys": ["command+control+down"],  "command": "goto_next_scope", "args": {"forward": true,  "loop_around": false, "scope_match": "entity.name"} },
+	// { "keys": ["command+control+left"],  "command": "do_nothing" },
+	// { "keys": ["command+control+right"], "command": "do_nothing" },
+	
+	// { "keys": ["command+control+escape"],    "command": "do_nothing" },
+	// { "keys": ["command+control+backspace"], "command": "do_nothing" }, //NOTE: This is actually Command+Control+"Delete"
+	// { "keys": ["command+control+delete"],    "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Control+"Delete"
+	{ "keys": ["command+control+enter"],     "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} },
+	// { "keys": ["command+control+pause"],     "command": "do_nothing" },
+	// { "keys": ["command+control+tab"],       "command": "do_nothing" },
+	// { "keys": ["command+control+space"],     "command": "do_nothing" },
+	// { "keys": ["command+control+clear"],     "command": "do_nothing" },
+	
+	// { "keys": ["command+control+keypad_period"],   "command": "do_nothing" },
+	// { "keys": ["command+control+keypad_divide"],   "command": "do_nothing" },
+	// { "keys": ["command+control+keypad_multiply"], "command": "do_nothing" },
+	// { "keys": ["command+control+keypad_minus"],    "command": "do_nothing" },
+	// { "keys": ["command+control+keypad_plus"],     "command": "do_nothing" },
+	{ "keys": ["command+control+keypad_enter"],    "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} },
+	
+// +--------------------------------------------------------------+
+// |       ⌘ Command+Control+Shift (command+control+shift+)       |
+// +--------------------------------------------------------------+
+	// { "keys": ["command+control+shift+f1"],  "command": "do_nothing" },
+	// { "keys": ["command+control+shift+f2"],  "command": "do_nothing" },
+	// { "keys": ["command+control+shift+f3"],  "command": "do_nothing" },
+	// { "keys": ["command+control+shift+f4"],  "command": "do_nothing" },
+	// { "keys": ["command+control+shift+f5"],  "command": "do_nothing" },
+	// { "keys": ["command+control+shift+f6"],  "command": "do_nothing" },
+	// { "keys": ["command+control+shift+f7"],  "command": "do_nothing" },
+	// { "keys": ["command+control+shift+f8"],  "command": "do_nothing" },
+	// { "keys": ["command+control+shift+f9"],  "command": "do_nothing" },
+	// { "keys": ["command+control+shift+f10"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+f11"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+f12"], "command": "do_nothing" },
+	
+	// { "keys": ["command+control+shift+`"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+1"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+2"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+3"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+4"], "command": "NOTE: osx_global" }, //Copy picture of screen to the clipboard
+	// { "keys": ["command+control+shift+5"], "command": "NOTE: osx_global" }, //Copy picture of selected area to the clipboard
+	// { "keys": ["command+control+shift+6"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+7"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+8"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+9"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+0"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+-"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift++"], "command": "do_nothing" },
+	
+	// { "keys": ["command+control+shift+q"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+w"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+e"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+r"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+t"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+y"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+u"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+i"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+o"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+p"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+["], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+]"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+\\"], "command": "do_nothing" },
+	
+	// { "keys": ["command+control+shift+a"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+s"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+d"], "command": "NOTE: osx_global" }, //noop
+	{ "keys": ["command+control+shift+f"], "command": "toggle_distraction_free" }, //default binding
+	// { "keys": ["command+control+shift+g"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+h"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+j"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+k"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+l"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+;"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+'"], "command": "do_nothing" },
+	
+	// { "keys": ["command+control+shift+z"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+x"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+c"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+v"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+b"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+n"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+m"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+,"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+."], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+/"], "command": "do_nothing" },
+	
+	// { "keys": ["command+control+shift+insert"],   "command": "not_available_on_mac?" },
+	// { "keys": ["command+control+shift+delete"],   "command": "not_available_on_mac" },
+	// { "keys": ["command+control+shift+home"],     "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Control+Shift+Leftng" }, //NOTE: This is actually Option+Control+Left
+	// { "keys": ["command+control+shift+end"],      "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Control+Shift+Rightng" }, //NOTE: This is actually Fn+Command+Control+Left
+	// { "keys": ["command+control+shift+pageup"],   "command": "not_available_on_mac?" },
+	// { "keys": ["command+control+shift+pagedown"], "command": "not_available_on_mac?" },
+	
+	// { "keys": ["command+control+shift+up"],    "command": "do_nothing" },
+	// { "keys": ["command+control+shift+down"],  "command": "do_nothing" },
+	// { "keys": ["command+control+shift+left"],  "command": "do_nothing" },
+	// { "keys": ["command+control+shift+right"], "command": "do_nothing" },
+	
+	// { "keys": ["command+control+shift+escape"],    "command": "do_nothing" },
+	// { "keys": ["command+control+backspace"], "command": "do_nothing" }, //NOTE: This is actually Command+Control+"Delete"
+	// { "keys": ["command+control+delete"],    "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Control+"Delete"
+	// { "keys": ["command+control+shift+delete"],    "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Control+Shift+"Delete"
+	// { "keys": ["command+control+shift+enter"],     "command": "do_nothing" },
+	// { "keys": ["command+control+shift+pause"],     "command": "do_nothing" },
+	// { "keys": ["command+control+shift+tab"],       "command": "do_nothing" },
+	// { "keys": ["command+control+shift+space"],     "command": "do_nothing" },
+	// { "keys": ["command+control+shift+clear"],     "command": "do_nothing" },
+	
+	// { "keys": ["command+control+shift+keypad_period"],   "command": "do_nothing" },
+	// { "keys": ["command+control+shift+keypad_divide"],   "command": "do_nothing" },
+	// { "keys": ["command+control+shift+keypad_multiply"], "command": "do_nothing" },
+	// { "keys": ["command+control+shift+keypad_minus"],    "command": "do_nothing" },
+	// { "keys": ["command+control+shift+keypad_plus"],     "command": "do_nothing" },
+	// { "keys": ["command+control+shift+keypad_enter"],    "command": "do_nothing" },
+	
+// +--------------------------------------------------------------+
+// |               Option+Control (option+control+)               |
+// +--------------------------------------------------------------+
+	// { "keys": ["option+control+f1"],  "command": "do_nothing" },
+	// { "keys": ["option+control+f2"],  "command": "do_nothing" },
+	// { "keys": ["option+control+f3"],  "command": "do_nothing" },
+	// { "keys": ["option+control+f4"],  "command": "do_nothing" },
+	// { "keys": ["option+control+f5"],  "command": "do_nothing" },
+	// { "keys": ["option+control+f6"],  "command": "do_nothing" },
+	// { "keys": ["option+control+f7"],  "command": "do_nothing" },
+	// { "keys": ["option+control+f8"],  "command": "do_nothing" },
+	// { "keys": ["option+control+f9"],  "command": "do_nothing" },
+	// { "keys": ["option+control+f10"], "command": "do_nothing" },
+	// { "keys": ["option+control+f11"], "command": "do_nothing" },
+	// { "keys": ["option+control+f12"], "command": "do_nothing" },
+	
+	// { "keys": ["option+control+`"], "command": "do_nothing" },
+	// { "keys": ["option+control+1"], "command": "do_nothing" },
+	// { "keys": ["option+control+2"], "command": "do_nothing" },
+	// { "keys": ["option+control+3"], "command": "do_nothing" },
+	// { "keys": ["option+control+4"], "command": "do_nothing" },
+	// { "keys": ["option+control+5"], "command": "do_nothing" },
+	// { "keys": ["option+control+6"], "command": "do_nothing" },
+	// { "keys": ["option+control+7"], "command": "do_nothing" },
+	// { "keys": ["option+control+8"], "command": "do_nothing" },
+	// { "keys": ["option+control+9"], "command": "do_nothing" },
+	// { "keys": ["option+control+0"], "command": "do_nothing" },
+	// { "keys": ["option+control+-"], "command": "do_nothing" },
+	// { "keys": ["option+control++"], "command": "do_nothing" },
+	
+	// { "keys": ["option+control+q"], "command": "do_nothing" },
+	// { "keys": ["option+control+w"], "command": "do_nothing" },
+	// { "keys": ["option+control+e"], "command": "do_nothing" },
+	// { "keys": ["option+control+r"], "command": "do_nothing" },
+	// { "keys": ["option+control+t"], "command": "do_nothing" },
+	// { "keys": ["option+control+y"], "command": "do_nothing" },
+	// { "keys": ["option+control+u"], "command": "do_nothing" },
+	// { "keys": ["option+control+i"], "command": "do_nothing" },
+	// { "keys": ["option+control+o"], "command": "do_nothing" },
+	// { "keys": ["option+control+p"], "command": "do_nothing" },
+	// { "keys": ["option+control+["], "command": "do_nothing" },
+	// { "keys": ["option+control+]"], "command": "do_nothing" },
+	// { "keys": ["option+control+\\"], "command": "do_nothing" },
+	
+	// { "keys": ["option+control+a"], "command": "do_nothing" },
+	// { "keys": ["option+control+s"], "command": "do_nothing" },
+	// { "keys": ["option+control+d"], "command": "do_nothing" },
+	// { "keys": ["option+control+f"], "command": "do_nothing" },
+	// { "keys": ["option+control+g"], "command": "do_nothing" },
+	// { "keys": ["option+control+h"], "command": "do_nothing" },
+	// { "keys": ["option+control+j"], "command": "do_nothing" },
+	// { "keys": ["option+control+k"], "command": "do_nothing" },
+	// { "keys": ["option+control+l"], "command": "do_nothing" },
+	// { "keys": ["option+control+;"], "command": "do_nothing" },
+	// { "keys": ["option+control+'"], "command": "do_nothing" },
+	
+	// { "keys": ["option+control+z"], "command": "do_nothing" },
+	// { "keys": ["option+control+x"], "command": "do_nothing" },
+	// { "keys": ["option+control+c"], "command": "do_nothing" },
+	// { "keys": ["option+control+v"], "command": "do_nothing" },
+	// { "keys": ["option+control+b"], "command": "do_nothing" },
+	// { "keys": ["option+control+n"], "command": "do_nothing" },
+	// { "keys": ["option+control+m"], "command": "do_nothing" },
+	// { "keys": ["option+control+,"], "command": "do_nothing" },
+	// { "keys": ["option+control+."], "command": "do_nothing" },
+	// { "keys": ["option+control+/"], "command": "do_nothing" },
+	
+	// { "keys": ["option+control+insert"],   "command": "not_available_on_mac?" },
+	// { "keys": ["option+control+delete"],   "command": "not_available_on_mac" },
+	// { "keys": ["option+control+home"],     "command": "do_nothing" }, //NOTE: This is actually Fn+Option+Control+Left
+	// { "keys": ["option+control+end"],      "command": "do_nothing" }, //NOTE: This is actually Fn+Option+Control+Right
+	// { "keys": ["option+control+pageup"],   "command": "not_available_on_mac?" },
+	// { "keys": ["option+control+pagedown"], "command": "not_available_on_mac?" },
+	
+	// { "keys": ["option+control+up"],    "command": "do_nothing" },
+	// { "keys": ["option+control+down"],  "command": "do_nothing" },
+	// { "keys": ["option+control+left"],  "command": "do_nothing" },
+	// { "keys": ["option+control+right"], "command": "do_nothing" },
+	
+	// { "keys": ["option+control+escape"],    "command": "do_nothing" },
+	// { "keys": ["option+control+backspace"], "command": "do_nothing" }, //NOTE: This is actually Option+Control+"Delete"s
+	// { "keys": ["option+control+delete"],    "command": "do_nothing" }, //NOTE: This is actually Fn+Option+Control+"Delete"
+	// { "keys": ["option+control+enter"],     "command": "do_nothing" },
+	// { "keys": ["option+control+pause"],     "command": "do_nothing" },
+	// { "keys": ["option+control+tab"],       "command": "do_nothing" },
+	// { "keys": ["option+control+space"],     "command": "do_nothing" },
+	// { "keys": ["option+control+clear"],     "command": "do_nothing" },
+	
+	// { "keys": ["option+control+keypad_period"],   "command": "do_nothing" },
+	// { "keys": ["option+control+keypad_divide"],   "command": "do_nothing" },
+	// { "keys": ["option+control+keypad_multiply"], "command": "do_nothing" },
+	// { "keys": ["option+control+keypad_minus"],    "command": "do_nothing" },
+	// { "keys": ["option+control+keypad_plus"],     "command": "do_nothing" },
+	// { "keys": ["option+control+keypad_enter"],    "command": "do_nothing" },
+	
+// +--------------------------------------------------------------+
+// |         Option+Control+Shift (option+control+shift+)         |
+// +--------------------------------------------------------------+
+	// { "keys": ["option+control+shift+f1"],  "command": "do_nothing" },
+	// { "keys": ["option+control+shift+f2"],  "command": "do_nothing" },
+	// { "keys": ["option+control+shift+f3"],  "command": "do_nothing" },
+	// { "keys": ["option+control+shift+f4"],  "command": "do_nothing" },
+	// { "keys": ["option+control+shift+f5"],  "command": "do_nothing" },
+	// { "keys": ["option+control+shift+f6"],  "command": "do_nothing" },
+	// { "keys": ["option+control+shift+f7"],  "command": "do_nothing" },
+	// { "keys": ["option+control+shift+f8"],  "command": "do_nothing" },
+	// { "keys": ["option+control+shift+f9"],  "command": "do_nothing" },
+	// { "keys": ["option+control+shift+f10"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+f11"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+f12"], "command": "do_nothing" },
+	
+	// { "keys": ["option+control+shift+`"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+1"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+2"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+3"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+4"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+5"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+6"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+7"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+8"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+9"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+0"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+-"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift++"], "command": "do_nothing" },
+	
+	// { "keys": ["option+control+shift+q"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+w"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+e"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+r"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+t"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+y"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+u"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+i"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+o"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+p"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+["], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+]"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+\\"], "command": "do_nothing" },
+	
+	// { "keys": ["option+control+shift+a"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+s"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+d"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+f"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+g"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+h"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+j"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+k"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+l"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+;"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+'"], "command": "do_nothing" },
+	
+	// { "keys": ["option+control+shift+z"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+x"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+c"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+v"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+b"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+n"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+m"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+,"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+."], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+/"], "command": "do_nothing" },
+	
+	// { "keys": ["option+control+shift+insert"],   "command": "not_available_on_mac?" },
+	// { "keys": ["option+control+shift+delete"],   "command": "not_available_on_mac" },
+	// { "keys": ["option+control+shift+home"],     "command": "do_nothing" }, //NOTE: This is actually Fn+Option+Control+Shift+Left
+	// { "keys": ["option+control+shift+end"],      "command": "do_nothing" }, //NOTE: This is actually Fn+Option+Control+Shift+Right
+	// { "keys": ["option+control+shift+pageup"],   "command": "not_available_on_mac?" },
+	// { "keys": ["option+control+shift+pagedown"], "command": "not_available_on_mac?" },
+	
+	// { "keys": ["option+control+shift+up"],    "command": "do_nothing" },
+	// { "keys": ["option+control+shift+down"],  "command": "do_nothing" },
+	// { "keys": ["option+control+shift+left"],  "command": "do_nothing" },
+	// { "keys": ["option+control+shift+right"], "command": "do_nothing" },
+	
+	// { "keys": ["option+control+shift+escape"],    "command": "do_nothing" },
+	// { "keys": ["option+control+shift+backspace"], "command": "do_nothing" }, //NOTE: This is actually Option+Control+Shift+"Delete"
+	// { "keys": ["option+control+shift+delete"],    "command": "do_nothing" }, //NOTE: This is actually Fn+Option+Control+Shift+"Delete"
+	// { "keys": ["option+control+shift+enter"],     "command": "do_nothing" },
+	// { "keys": ["option+control+shift+pause"],     "command": "do_nothing" },
+	// { "keys": ["option+control+shift+tab"],       "command": "do_nothing" },
+	// { "keys": ["option+control+shift+space"],     "command": "do_nothing" },
+	// { "keys": ["option+control+shift+clear"],     "command": "do_nothing" },
+	
+	// { "keys": ["option+control+shift+keypad_period"],   "command": "do_nothing" },
+	// { "keys": ["option+control+shift+keypad_divide"],   "command": "do_nothing" },
+	// { "keys": ["option+control+shift+keypad_multiply"], "command": "do_nothing" },
+	// { "keys": ["option+control+shift+keypad_minus"],    "command": "do_nothing" },
+	// { "keys": ["option+control+shift+keypad_plus"],     "command": "do_nothing" },
+	// { "keys": ["option+control+shift+keypad_enter"],    "command": "do_nothing" },
+	
+// +--------------------------------------------------------------+
+// |      ⌘ Command+Option+Control (command+option+control+)      |
+// +--------------------------------------------------------------+
+	// { "keys": ["command+option+control+f1"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+f2"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+f3"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+f4"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+f5"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+f6"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+f7"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+f8"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+f9"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+f10"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+f11"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+f12"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+control+`"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+1"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+2"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+3"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+4"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+5"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+6"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+7"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+8"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+9"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+0"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+-"], "command": "do_nothing" },
+	// { "keys": ["command+option+control++"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+control+q"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+w"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+e"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+r"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+t"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+y"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+u"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+i"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+o"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+p"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+["], "command": "do_nothing" },
+	// { "keys": ["command+option+control+]"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+\\"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+control+a"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+s"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+d"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+f"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+g"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+h"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+j"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+k"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+l"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+;"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+'"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+control+z"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+x"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+c"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+v"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+b"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+n"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+m"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+,"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+."], "command": "do_nothing" },
+	// { "keys": ["command+option+control+/"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+control+insert"],   "command": "not_available_on_mac?" },
+	// { "keys": ["command+option+control+delete"],   "command": "not_available_on_mac" },
+	// { "keys": ["command+option+control+home"],     "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Option+Control+Left //NOTE: This is actually Fn+Command+Option+Control+Left
+	// { "keys": ["command+option+control+end"],      "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Option+Control+Right //NOTE: This is actually Fn+Command+Option+Control+Right
+	// { "keys": ["command+option+control+pageup"],   "command": "not_available_on_mac?" },
+	// { "keys": ["command+option+control+pagedown"], "command": "not_available_on_mac?" },
+	
+	// { "keys": ["command+option+control+up"],    "command": "do_nothing" },
+	// { "keys": ["command+option+control+down"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+left"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+right"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+control+escape"],    "command": "do_nothing" },
+	// { "keys": ["command+option+control+backspace"], "command": "do_nothing" }, //NOTE: This is actually Command+Option+Control+"Delete"
+	// { "keys": ["command+option+control+delete"],    "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Option+Control+"Delete"
+	// { "keys": ["command+option+control+enter"],     "command": "do_nothing" },
+	// { "keys": ["command+option+control+pause"],     "command": "do_nothing" },
+	// { "keys": ["command+option+control+tab"],       "command": "do_nothing" },
+	// { "keys": ["command+option+control+space"],     "command": "do_nothing" },
+	// { "keys": ["command+option+control+clear"],     "command": "do_nothing" },
+	
+	// { "keys": ["command+option+control+keypad_period"],   "command": "do_nothing" },
+	// { "keys": ["command+option+control+keypad_divide"],   "command": "do_nothing" },
+	// { "keys": ["command+option+control+keypad_multiply"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+keypad_minus"],    "command": "do_nothing" },
+	// { "keys": ["command+option+control+keypad_plus"],     "command": "do_nothing" },
+	// { "keys": ["command+option+control+keypad_enter"],    "command": "do_nothing" },
+	
+// +----------------------------------------------------------------+
+// | ⌘ Command+Option+Control+Shift (command+option+control+shift+) |
+// +----------------------------------------------------------------+
+	// { "keys": ["command+option+control+shift+f1"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+f2"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+f3"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+f4"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+f5"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+f6"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+f7"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+f8"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+f9"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+f10"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+f11"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+f12"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+control+shift+`"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+1"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+2"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+3"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+4"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+5"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+6"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+7"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+8"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+9"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+0"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+-"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift++"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+control+shift+q"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+w"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+e"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+r"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+t"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+y"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+u"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+i"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+o"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+p"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+["], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+]"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+\\"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+control+shift+a"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+s"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+d"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+f"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+g"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+h"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+j"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+k"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+l"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+;"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+'"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+control+shift+z"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+x"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+c"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+v"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+b"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+n"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+m"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+,"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+."], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+/"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+control+shift+insert"],   "command": "not_available_on_mac?" },
+	// { "keys": ["command+option+control+shift+delete"],   "command": "not_available_on_mac" },
+	// { "keys": ["command+option+control+shift+home"],     "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Option+Control+Shift+Left
+	// { "keys": ["command+option+control+shift+end"],      "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Option+Control+Shift+Right
+	// { "keys": ["command+option+control+shift+pageup"],   "command": "not_available_on_mac?" },
+	// { "keys": ["command+option+control+shift+pagedown"], "command": "not_available_on_mac?" },
+	
+	// { "keys": ["command+option+control+shift+up"],    "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+down"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+left"],  "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+right"], "command": "do_nothing" },
+	
+	// { "keys": ["command+option+control+shift+escape"],    "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+backspace"], "command": "do_nothing" }, //NOTE: This is actually Command+Option+Control+Shift+"Delete"
+	// { "keys": ["command+option+control+shift+delete"],    "command": "do_nothing" }, //NOTE: This is actually Fn+Command+Option+Control+Shift+"Delete"
+	// { "keys": ["command+option+control+shift+enter"],     "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+pause"],     "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+tab"],       "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+space"],     "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+clear"],     "command": "do_nothing" },
+	
+	// { "keys": ["command+option+control+shift+keypad_period"],   "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+keypad_divide"],   "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+keypad_multiply"], "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+keypad_minus"],    "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+keypad_plus"],     "command": "do_nothing" },
+	// { "keys": ["command+option+control+shift+keypad_enter"],    "command": "do_nothing" },
 ]

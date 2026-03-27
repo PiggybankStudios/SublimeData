@@ -59,7 +59,7 @@
 	{ "keys": ["ctrl+f"],   "command": "show_panel", "args": {"panel": "find", "reverse": false} },
 	{ "keys": ["ctrl+g"],   "command": "my_google_search" },
 	{ "keys": ["ctrl+h"],   "command": "open_header", "args": {"extensions": ["cpp", "c", "h", "hpp"]} },
-	{ "keys": ["ctrl+j"],   "command": "do_nothing" }, //TODO: Rebind me
+	{ "keys": ["ctrl+j"],   "command": "toggle_distraction_free" },
 	{ "keys": ["ctrl+k"],   "command": "toggle_record_macro" },
 	{ "keys": ["ctrl+l"],   "command": "collapse_braces" },
 	{ "keys": ["ctrl+;"],   "command": "taylor" },
@@ -92,7 +92,7 @@
 	// { "keys": ["ctrl+backspace"], "command": "do_nothing" },
 	// { "keys": ["ctrl+enter"],     "command": "do_nothing" },
 	// { "keys": ["ctrl+pause"],     "command": "do_nothing" },
-	{ "keys": ["ctrl+tab"],       "command": "toggle_distraction_free" },
+	{ "keys": ["ctrl+tab"],       "command": "next_view" },
 	{ "keys": ["ctrl+space"],     "command": "show_at_center" },
 	// { "keys": ["ctrl+clear"],     "command": "do_nothing" },
 	
@@ -142,7 +142,7 @@
 	{ "keys": ["ctrl+shift+u"],  "command": "lower_case" },
 	{ "keys": ["ctrl+shift+i"],  "command": "fold_at_same_indentation" },
 	{ "keys": ["ctrl+shift+o"],  "command": "open_next_fold", "args": {"reverse": true} },
-	// { "keys": ["ctrl+shift+p"],  "command": "do_nothing" }, //NOTE: This is defualting to "Show Command Pallette" which I intended to move to Ctrl+Alt+P, so some of my muscle memory might be on the old binding
+	{ "keys": ["ctrl+shift+p"],  "command": "show_overlay", "args": {"overlay": "command_palette"} }, //NOTE: This is defualting to "Show Command Pallette" which I intended to move to Ctrl+Alt+P, so some of my muscle memory might be on the old binding
 	// { "keys": ["ctrl+shift+["],  "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+]"],  "command": "do_nothing" },
 	{ "keys": ["ctrl+shift+\\"], "command": "set_layout", "args": {"cols": [0.0, 1.0], "rows": [0.0, 1.0], "cells": [[0, 0, 1, 1]]} },
@@ -159,7 +159,7 @@
 	// { "keys": ["ctrl+shift+;"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+'"], "command": "do_nothing" },
 	
-	{ "keys": ["ctrl+shift+z"], "command": "redo"},
+	{ "keys": ["ctrl+shift+z"], "command": "redo"}, //TODO: Should this be "redo_or_repeat"?
 	// { "keys": ["ctrl+shift+x"], "command": "do_nothing" },
 	{ "keys": ["ctrl+shift+c"], "command": "duplicate_line" },
 	{ "keys": ["ctrl+shift+v"], "command": "open_image", "context": [ {"key": "selector", "operator": "equal", "operand": "source.dot"} ] },
@@ -187,7 +187,7 @@
 	// { "keys": ["ctrl+shift+backspace"], "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+enter"],     "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+pause"],     "command": "do_nothing" },
-	// { "keys": ["ctrl+shift+tab"],       "command": "do_nothing" },
+	{ "keys": ["ctrl+shift+tab"],       "command": "prev_view" },
 	// { "keys": ["ctrl+shift+space"],     "command": "do_nothing" },
 	// { "keys": ["ctrl+shift+clear"],     "command": "do_nothing" },
 	
