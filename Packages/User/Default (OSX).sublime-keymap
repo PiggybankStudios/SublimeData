@@ -18,6 +18,11 @@
 	//      like Home/End are Fn+Left/Right. And Fn+Delete is Windows-style Delete
 	//      (delete to the right). These special cases are noted with inline comments
 	
+	//NOTE: In order to use Control+Left/Right bindings to move by subwords you need
+	//      to rebind "Move left/right a space" in Mac Settings app
+	//      Keyboard -> Keyboard Shortcuts... -> Mission Control -> Mission Control -> Move left/right a workspace
+	//      We recommend rebinding it to something like Control+Alt+Left/Right or just use three finger swipe on touchpad
+	
 	// Modifier Keys
 	//   super/command = ⌘ Command (option maps similarly to Ctrl on Windows but not always)
 	//   option = Option (sometimes feels natural to treat it like Alt on Windows, but really it lives in the same place on the keyboard as Windows key)
@@ -567,8 +572,8 @@
 	
 	// { "keys": ["control+up"],    "command": "NOTE: osx_global" }, //Mission Control
 	// { "keys": ["control+down"],  "command": "NOTE: osx_global" }, //Application windows
-	// { "keys": ["control+left"],  "command": "NOTE: osx_global" }, //Workspace Left
-	// { "keys": ["control+right"], "command": "NOTE: osx_global" }, //Workspace Right
+	{ "keys": ["control+left"],  "command": "move", "args": {"by": "subwords", "forward": false} }, //NOTE: This must be rebound in Mac Settings, normally it's "Workspace Left"
+	{ "keys": ["control+right"], "command": "move", "args": {"by": "subword_ends", "forward": true} }, //NOTE: This must be rebound in Mac Settings, normally it's "Workspace Right"
 	
 	// { "keys": ["control+escape"],    "command": "do_nothing" },
 	// { "keys": ["control+backspace"], "command": "do_nothing" }, //NOTE: This is actually Control+"Delete"
@@ -662,8 +667,8 @@
 	
 	// { "keys": ["control+shift+up"],    "command": "do_nothing" },
 	// { "keys": ["control+shift+down"],  "command": "do_nothing" },
-	// { "keys": ["control+shift+left"],  "command": "do_nothing" },
-	// { "keys": ["control+shift+right"], "command": "do_nothing" },
+	{ "keys": ["control+shift+left"],  "command": "move", "args": {"by": "subwords", "forward": false, "extend": true} }, //default binding
+	{ "keys": ["control+shift+right"], "command": "move", "args": {"by": "subword_ends", "forward": true,  "extend": true} }, //default binding
 	
 	// { "keys": ["control+shift+escape"],    "command": "do_nothing" },
 	// { "keys": ["control+shift+backspace"], "command": "do_nothing" }, //NOTE: This is actually Control+Shift+"Delete"
