@@ -1,0 +1,7 @@
+{
+	"binary": "auto",
+	// "binary": "custom",
+	// "initializationOptions": {
+	// 	"custom_command": [ "/home/robbitay/my_stuff/python_env/bin/lsp-devtools", "agent", "--", "/home/robbitay/.cache/sublime-text/Package Storage/LSP-clangd/clangd_21.1.8/bin/clangd" ],
+	// },
+}

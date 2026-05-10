@@ -19,7 +19,9 @@
 	// Note that json has some special characters like '\' should be escaped.
 	"permanent_highlight_keyword_color_mappings": [
 		{"keyword": "TODO:", "color": "support.function"},
+		{"keyword": "TODO(robbitay):", "color": "support.function"},
 		{"keyword": "NOTE:", "color": "entity.name.class"},
+		{"keyword": "NOTE(robbitay):", "color": "entity.name.class"},
 	]
 
 }

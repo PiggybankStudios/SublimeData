@@ -3,5 +3,6 @@
 	[
 		"sublime-snippet",
 		"vssettings",
+		"sln",
 	],
 }
