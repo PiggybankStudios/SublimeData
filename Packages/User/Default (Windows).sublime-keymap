@@ -54,13 +54,13 @@
 	{ "keys": ["ctrl+\\"],  "command": "set_layout", "args": {"cols": [0.0, 0.5, 1.0], "rows": [0.0, 1.0], "cells": [[0, 0, 1, 1], [1, 0, 2, 1]]} },
 	
 	{ "keys": ["ctrl+a"],   "command": "select_line" },
-	{ "keys": ["ctrl+s"],   "command": "save" },
+	{ "keys": ["ctrl+s"],   "command": "save", "args": { "async": true } },
 	{ "keys": ["ctrl+d"],   "command": "find_under_expand" }, //"grab_next", "args": { "case_sensitive": true, "forward": true, "word_bounded": false, "show_new_location": true, "print_success_info": true } },
 	{ "keys": ["ctrl+f"],   "command": "show_panel", "args": {"panel": "find", "reverse": false} },
 	{ "keys": ["ctrl+g"],   "command": "my_google_search" },
 	{ "keys": ["ctrl+h"],   "command": "open_header", "args": {"extensions": ["cpp", "c", "h", "hpp"]} },
 	{ "keys": ["ctrl+j"],   "command": "do_nothing" }, //TODO: Rebind me
-	{ "keys": ["ctrl+k"],   "command": "toggle_record_macro" },
+	{ "keys": ["ctrl+k"],   "command": "toggle_record_macro" }, //TODO: Should we remove this binding and bring back all the multi-stroke ctrl+k default bindings
 	{ "keys": ["ctrl+l"],   "command": "collapse_braces" },
 	{ "keys": ["ctrl+;"],   "command": "taylor" },
 	{ "keys": ["ctrl+'"],   "command": "show_panel", "args": {"panel": "console", "toggle": true} },

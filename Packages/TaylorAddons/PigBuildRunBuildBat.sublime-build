@@ -1,0 +1,10 @@
+{
+	"cmd": "pig_build\\shell\\build.bat",
+	"working_dir": "$project_path\\..",
+	"shell": true,
+	
+	"syntax": "CompilerOutput.sublime-syntax",
+	
+	//This matches both Clang and MSVC compiler errors
+	"file_regex": "^((?:\\w\\:)?[^\\:\\n\\(]+)[\\:\\(](\\d+)[\\:\\)](?:(\\d+))?\\:\\s*(?:fatal error|error|warning|note)(?:\\s*C[0-9]+)?\\:\\s*(.+)$",
+}
