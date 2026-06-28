@@ -1115,7 +1115,7 @@
 	
 	// { "keys": ["option+control+a"], "command": "do_nothing" },
 	// { "keys": ["option+control+s"], "command": "do_nothing" },
-	// { "keys": ["option+control+d"], "command": "do_nothing" },
+	{ "keys": ["option+control+d"], "command": "toggle_define_endings" },
 	// { "keys": ["option+control+f"], "command": "do_nothing" },
 	// { "keys": ["option+control+g"], "command": "do_nothing" },
 	// { "keys": ["option+control+h"], "command": "do_nothing" },
