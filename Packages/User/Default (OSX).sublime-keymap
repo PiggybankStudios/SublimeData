@@ -51,7 +51,6 @@
 	//TODO: How do we move by subwords?
 	//TODO: How do we add multi-cursors up/down?
 	//TODO: How do we add/remove custom types/constants/globals/functions?
-	//TODO: "start_cswitch"
 	//TODO: "start_git_bash"?
 	//TODO: "insert_nums"/"insert_nums_hex"/"prompt_insert_nums"
 	//TODO: "check_off_todo_item"
@@ -936,7 +935,7 @@
 	
 	{ "keys": ["command+control+z"], "command": "prev_view" },
 	{ "keys": ["command+control+x"], "command": "next_view" },
-	// { "keys": ["command+control+c"], "command": "do_nothing" },
+	{ "keys": ["command+control+c"], "command": "start_cswitch" },
 	// { "keys": ["command+control+v"], "command": "do_nothing" },
 	// { "keys": ["command+control+b"], "command": "do_nothing" },
 	// { "keys": ["command+control+n"], "command": "do_nothing" },
